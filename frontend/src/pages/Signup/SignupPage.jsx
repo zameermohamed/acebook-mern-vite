@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { signup } from "../../services/authentication";
+import Header from "../../components/Header";
 
 export function SignupPage() {
   const [email, setEmail] = useState("");
@@ -29,6 +30,7 @@ export function SignupPage() {
 
   return (
     <>
+      <Header></Header>
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
