@@ -8,8 +8,6 @@ export function HomePage() {
     <div className="home">
       <Header></Header>
       <h1>Welcome to Acebook!</h1>
-      <Link to="/signup">Sign Up</Link>
-      <Link to="/login">Log In</Link>
     </div>
   );
 }

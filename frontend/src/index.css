@@ -43,6 +43,11 @@ body {
   padding: 1rem 2rem;
   background-color: #f8f9fa;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Ensure header stretches full width */
+  position: fixed; /* Keep header at the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure header stays on top of other content */
 }
 
 .logo {
@@ -70,15 +75,31 @@ body {
   color: #007bff;
 }
 
+/* Add space below header for content */
+.content {
+  margin-top: 4rem; /* Adjust based on your header height */
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .header {
-    flex-direction: column;
     padding: 1rem;
   }
 
   .nav {
-    margin-top: 1rem;
+    gap: 1rem;
+  }
+}
+
+/* For very small screens, stack the menu */
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+
+  .nav {
+    margin-top: 0.5rem;
     width: 100%;
     justify-content: space-between;
   }
