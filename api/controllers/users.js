@@ -1,9 +1,13 @@
 const User = require("../models/user");
 
-function create(req, res) {
+async function create(req, res) {
   const email = req.body.email;
   const password = req.body.password;
-
+  const existingUser = await User.findOne({ email: email });
+  if (existingUser) {
+    res.status(400).json({ message: "User already exists" });
+    return;
+  }
   const user = new User({ email, password });
   user
     .save()
