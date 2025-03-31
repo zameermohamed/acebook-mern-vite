@@ -130,3 +130,5 @@ they should then show up in the browser if you refresh the page.
    - frontend/src/pages/SignUp.js now includes a username field.
    - frontend/src/services/authentication.js was updated to include the username field in authentication requests.
 - api/controllers/authentication.js was updated to verify the input password against the hashed password in the database and generate a token upon successful authentication.
+- Error handling for username creation should be reevaluated.
+

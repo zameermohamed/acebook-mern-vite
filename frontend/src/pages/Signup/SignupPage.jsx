@@ -16,8 +16,17 @@ export function SignupPage() {
       await signup(email, password, username);
       navigate("/login");
     } catch (err) {
-      console.error(err);
-      setError(true);
+      console.error("Error response from server:", err);
+      if (err.response) {
+        console.log("Full error response:", err.response);
+        if (err.response.data && err.response.data.message) {
+          setError(err.response.data.message); // Store actual error message
+        } else {
+          setError("An unexpected error occurred"); // Fallback error message
+        }
+      } else {
+        setError("An unexpected error occurred");
+      }
       navigate("/signup");
     }
   }
@@ -66,7 +75,7 @@ export function SignupPage() {
       </form>
       {error && (
         <div className="auth-error-msg">
-          <p>Email already exists</p>
+          <p>{error}</p> 
         </div>
       )}
       <div>

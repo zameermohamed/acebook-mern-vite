@@ -8,13 +8,15 @@ async function create(req, res) {
     const fullName = req.body.fullName;
     const profilePicture = req.body.profilePicture;
     const bio = req.body.bio;
-
-    if (!email || !password) {
+    console.log("Request body:", req.body);
+    console.log("Username:", req.body.username);
+    if (!email || !password || !username) {
       return res.status(400).json({ message: "Email and password are required" });
     }
     if (password.length < 6) {
       return res.status(400).json({ message: "Password must be at least 6 characters" });
     }
+    console.log("Username:", username);
     if (username.length < 3) {
       return res.status(400).json({ message: "Username must be at least 3 characters" });
     }
