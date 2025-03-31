@@ -23,7 +23,7 @@ const Header = () => {
           </Link>
         </nav>
       </header>
-      <div className="content">{/* Your page content goes here */}</div>
+      <div className="content"></div>
     </>
   );
 };

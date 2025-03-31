@@ -5,9 +5,13 @@ import Header from "../../components/Header";
 
 export function HomePage() {
   return (
-    <div className="home">
-      <Header></Header>
-      <h1>Welcome to Acebook!</h1>
-    </div>
+    <>
+      <div>
+        <Header></Header>
+      </div>
+      <div className="home">
+        <h1>Welcome to Acebook!</h1>
+      </div>
+    </>
   );
 }
