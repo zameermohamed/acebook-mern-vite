@@ -121,3 +121,12 @@ Then, after signing up, you should be able to log in by going to
 
 After logging in, you won't see much but you can create posts using PostMan and
 they should then show up in the browser if you refresh the page.
+
+### PR7 by Aysin
+- The User model/collection was updated to include the following fields: username (required), full name (optional), profilePicture (optional), bio (optional), and dateCreated.
+- The create function in api/controllers/users.js was modified to include these new fields when adding a user to the database.
+- Password hashing is now handled with bcrypt in models/user.js.
+- The frontend was updated to support username during signup:
+   - frontend/src/pages/SignUp.js now includes a username field.
+   - frontend/src/services/authentication.js was updated to include the username field in authentication requests.
+- api/controllers/authentication.js was updated to verify the input password against the hashed password in the database and generate a token upon successful authentication.
