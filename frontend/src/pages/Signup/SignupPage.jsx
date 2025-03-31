@@ -7,12 +7,13 @@ import Header from "../../components/Header";
 export function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUserName] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState(false);
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      await signup(email, password);
+      await signup(email, password, username);
       navigate("/login");
     } catch (err) {
       console.error(err);
@@ -27,6 +28,9 @@ export function SignupPage() {
 
   function handlePasswordChange(event) {
     setPassword(event.target.value);
+  }
+  function handleUserNameChange(event) {
+    setUserName(event.target.value);
   }
 
   return (
@@ -51,6 +55,13 @@ export function SignupPage() {
           onChange={handlePasswordChange}
           required
         />
+        <label htmlFor="username">Username:</label>
+        <input
+          id="username"
+          type="text"
+          value={username}
+          onChange={handleUserNameChange}
+        /> 
         <input role="submit-button" id="submit" type="submit" value="Submit" />
       </form>
       {error && (
