@@ -5,7 +5,6 @@ import { HomePage } from "./pages/Home/HomePage";
 import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { FeedPage } from "./pages/Feed/FeedPage";
-import LogoutButton from "./components/LogoutButton";
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -17,10 +16,10 @@ const router = createBrowserRouter([
     path: "/login",
     element: <LoginPage />,
   },
-  {
-    path: "/logout",
-    element: <LogoutButton />,
-  },
+  // {
+  //   path: "/logout",
+  //   element: <LogOut />,
+  // },
   {
     path: "/signup",
     element: <SignupPage />,

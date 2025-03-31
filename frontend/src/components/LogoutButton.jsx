@@ -1,12 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import LogOut from "./Logout";
 function LogoutButton() {
-  const navigate = useNavigate();
-
-  function logOut() {
-    localStorage.removeItem("token");
-    navigate("/");
-  }
-  return <button onClick={logOut}>Log out</button>;
+  return <button onClick={LogOut}>Log out</button>;
 }
 
 export default LogoutButton;
