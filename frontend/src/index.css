@@ -109,3 +109,29 @@ body {
     justify-content: space-between;
   }
 }
+
+.auth-error-msg {
+  margin-top: 2rem;
+  border: 1px solid rgb(175, 3, 3);
+  color: rgb(175, 3, 3);
+}
+
+.auth-form {
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: start;
+  }
+  input {
+    display: block;
+    margin-bottom: 1rem;
+    width: 260px;
+    height: 1.4rem;
+    padding: 8px;
+  }
+  input[type="submit"] {
+    cursor: pointer;
+    height: 2rem;
+    width: 100%;
+  }
+}
