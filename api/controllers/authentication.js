@@ -1,20 +1,33 @@
 const User = require("../models/user");
 const { generateToken } = require("../lib/token");
+const bcrypt = require("bcryptjs");
 
 async function createToken(req, res) {
   const email = req.body.email;
   const password = req.body.password;
 
-  const user = await User.findOne({ email: email });
-  if (!user) {
-    console.log("Auth Error: User not found");
-    res.status(401).json({ message: "User not found" });
-  } else if (user.password !== password) {
-    console.log("Auth Error: Passwords do not match");
-    res.status(401).json({ message: "Password incorrect" });
-  } else {
+  try {
+    // 1️⃣ Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log("Auth Error: User not found");
+      return res.status(401).json({ message: "User not found" });
+    }
+
+    // 2️⃣ Compare the plain-text password with the hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      console.log("Auth Error: Passwords do not match");
+      return res.status(401).json({ message: "Password incorrect" });
+    }
+
+    // 3️⃣ Generate JWT token if password matches
     const token = generateToken(user.id);
     res.status(201).json({ token: token, message: "OK" });
+
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 }
 
