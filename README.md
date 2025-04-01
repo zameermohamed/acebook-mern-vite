@@ -133,7 +133,7 @@ they should then show up in the browser if you refresh the page.
 - api/controllers/authentication.js was updated to verify the input password against the hashed password in the database and generate a token upon successful authentication.
 - Error handling for username creation should be reevaluated.
 
-### PR10 by Jack & Michal
+### PR12 by Jack & Michal
 
 - Created new component for displaying posts
   - New CSS for PostContainer component
