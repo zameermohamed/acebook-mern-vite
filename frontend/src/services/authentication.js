@@ -23,7 +23,7 @@ export async function login(email, password) {
     return data.token;
   } else {
     throw new Error(
-      `Received status ${response.status} when logging in. Expected 201`
+      `Received status ${response.status} when logging in. Expected 201`,
     );
   }
 }
@@ -50,7 +50,7 @@ export async function signup(email, password, username) {
     return;
   } else {
     throw new Error(
-      `Received status ${response.status} when signing up. Expected 201`
+      `Received status ${response.status} when signing up. Expected 201`,
     );
   }
 }
