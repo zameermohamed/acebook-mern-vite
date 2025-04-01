@@ -15,13 +15,13 @@ const Header = () => {
         </Link>
         <nav className="nav">
           {!loggedIn && (
-            <Link to="/login" className="nav-link">
-              Login
+            <Link to="/signup" className="nav-link">
+              Signup
             </Link>
           )}
           {!loggedIn && (
-            <Link to="/signup" className="nav-link">
-              Signup
+            <Link to="/login" className="nav-link">
+              Login
             </Link>
           )}
           {loggedIn && (
