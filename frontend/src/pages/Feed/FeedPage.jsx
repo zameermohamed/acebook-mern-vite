@@ -22,14 +22,11 @@ export function FeedPage() {
           console.error(err);
           navigate("/login");
         });
+    } else {
+      navigate("/login");
+      return;
     }
   }, [navigate]);
-
-  const token = localStorage.getItem("token");
-  if (!token) {
-    navigate("/login");
-    return;
-  }
 
   return (
     <>
