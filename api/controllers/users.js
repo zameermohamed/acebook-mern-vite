@@ -29,7 +29,7 @@ async function create(req, res) {
     res.status(201).json({ message:  "OK"  });
 
   } catch (err) {
-    console.error("Error caught:", err);
+    // console.error("Error caught:", err);
     //validation errors from user model
     if (err.name == 'ValidationError')
     {
