@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "../index.css"; // Import the CSS file
 import LogOut from "./Logout";
-import acebook from "../../public/images/acebook.png";
+import acebook from "../../src/images/acebook.png";
 
 const Header = () => {
   return (
