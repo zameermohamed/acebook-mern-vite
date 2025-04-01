@@ -15,7 +15,7 @@ describe("Post model", () => {
 
     user = await User.create({
       email: "someone@example.com",
-      password: "password",
+      password: "Password123!",
       username: "someone",
     });
 
