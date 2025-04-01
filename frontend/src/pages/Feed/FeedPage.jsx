@@ -7,7 +7,7 @@ export function FeedPage() {
     <>
       <Header></Header>
       <h2>Posts</h2>
-      <div className="NewPost"><NewPost posts={posts} setPosts={setPosts}/></div>
+      <div className="NewPost"><NewPost /></div>
       <PostContainer></PostContainer>
     </>
   );
