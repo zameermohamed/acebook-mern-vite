@@ -10,7 +10,7 @@ async function create(req, res) {
     const bio = req.body.bio;
 
     if (!email || !password || !username) {
-      return res.status(400).json({ message: "Email and password are required" });
+      return res.status(400).json({ message: "Email, password and username are required" });
     }
 
     const existingUserEmail = await User.findOne({ email });
