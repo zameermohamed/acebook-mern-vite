@@ -198,3 +198,4 @@ they should then show up in the browser if you refresh the page.
 ### PR18 by Jack & Michal
 
 - Added a useState hook on FeedPage so that when it is triggered by a NewPost being created, the PostContainer re-renders
+- Temporarily changed UserId required on post.js model back to false so creating a new post via the NewPost component (which doesn't have an associated UserId currently) doesn't cause the backend server to crash.
