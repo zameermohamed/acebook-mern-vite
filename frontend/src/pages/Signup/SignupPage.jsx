@@ -67,7 +67,6 @@ export function SignupPage() {
       {error && (
         <div className="auth-error-msg">
           <p>{error}</p> 
-          <p>This is the error {error}</p>
         </div>
       )}
       <div>
