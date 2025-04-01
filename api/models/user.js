@@ -4,12 +4,12 @@ const bcrypt = require("bcryptjs");
 const UserSchema = new mongoose.Schema({
   email: { 
     type: String, 
-    required: [true,  "Email is required"],
+    required: [true, "Email is required"],
     unique: true 
   },
   password: { 
     type: String, 
-    required: true, 
+    required: [true, "Password is required"],
     unique: true,
     minlength: [8,"Password must be at least 8 characters"],
     validate: {
@@ -49,7 +49,7 @@ UserSchema.pre("save", async function (next) {
   }
 });
 
-// Method to compare passwords
+// Method to compare passwords to be used in log in and any other required fields
 UserSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
