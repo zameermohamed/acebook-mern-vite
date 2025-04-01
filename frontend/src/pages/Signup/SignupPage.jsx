@@ -40,6 +40,7 @@ export function SignupPage() {
       <form onSubmit={handleSubmit} className="auth-form">
         <label htmlFor="email">Email</label>
         <input
+          placeholder="Email"
           id="email"
           type="text"
           value={email}
@@ -48,7 +49,7 @@ export function SignupPage() {
         />
         <label htmlFor="password">Password</label>
         <input
-          placeholder="password"
+          placeholder="Password"
           id="password"
           type="password"
           value={password}
@@ -57,6 +58,7 @@ export function SignupPage() {
         />
         <label htmlFor="username">Username:</label>
         <input
+          placeholder="Username"
           id="username"
           type="text"
           value={username}

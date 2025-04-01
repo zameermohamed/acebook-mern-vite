@@ -147,3 +147,51 @@ they should then show up in the browser if you refresh the page.
   - Plan is to render a NewPost component above the PostContainer so this will always be at the top of the screen with the post feed rendering below with newest posts at the top
 - conditional rendering to display login/register when not logged in and logout/posts when user is logged in
 - change token valid for time from 10 minutes to 24 hours
+
+### PR15 by Aysin
+- User model test were created:
+     User model
+    ✓ has an email address (13 ms)
+    ✓ has a password (1 ms)
+    ✓ has a username (1 ms)
+    ✓ can list all users (2 ms)
+    ✓ can save a user with password hashing and date created at (155 ms)
+    ✓ Email is required (3 ms)
+  Password validations
+    ✓ Display 'Password is required' error (2 ms)
+    ✓ Password must be at leat 8 characters (1 ms)
+    ✓ Password must include at least one lower case letter (1 ms)
+    ✓ Password must include at least one upper case letter (1 ms)
+    ✓ Password must include at least one number (1 ms)
+    ✓ Password must include at least one special character (1 ms)
+  Username validations
+    ✓ Username is required
+    ✓ Username must be at least 3 characters (1 ms)
+    ✓ Username cannot be more than 20 characters (1 ms)
+    ✓ Username can only contain letters, numbers, and underscores (1 ms)
+  User model with optional fields 
+    ✓ create a user with full name (128 ms)
+    ✓ create a user with profile picture (133 ms)
+    ✓ create a user with a bio and date created at (137 ms)
+- Users controller tests were created:
+     /users
+    POST, when email, password and username are provided
+      ✓ the response code is 201 (114 ms)
+      ✓ a user is created (72 ms)
+    POST, when password is missing
+      ✓ response code is 400 (3 ms)
+      ✓ does not create a user (3 ms)
+    POST, when email is missing
+      ✓ response code is 400 (2 ms)
+      ✓ does not create a user (2 ms)
+    POST, when username is missing
+      ✓ response code is 400 (2 ms)
+      ✓ does not create a user (2 ms)
+    POST, when email isn't unique
+      ✓ response code is 400 (72 ms)
+      ✓ does not create a user (70 ms)
+    POST, when username isn't unique
+      ✓ response code is 400 (70 ms)
+      ✓ does not create a user (81 ms)
+
+

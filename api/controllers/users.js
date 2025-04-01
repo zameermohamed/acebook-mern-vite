@@ -10,7 +10,7 @@ async function create(req, res) {
     const bio = req.body.bio;
 
     if (!email || !password || !username) {
-      return res.status(400).json({ message: "Email and password are required" });
+      return res.status(400).json({ message: "Email, password and username are required" });
     }
 
     const existingUserEmail = await User.findOne({ email });
@@ -29,7 +29,7 @@ async function create(req, res) {
     res.status(201).json({ message:  "OK"  });
 
   } catch (err) {
-    // console.error("Error caught:", err);
+    console.error("Error caught:", err);
     //validation errors from user model
     if (err.name == 'ValidationError')
     {
