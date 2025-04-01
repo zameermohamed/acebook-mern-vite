@@ -8,35 +8,38 @@ async function create(req, res) {
     const fullName = req.body.fullName;
     const profilePicture = req.body.profilePicture;
     const bio = req.body.bio;
-    console.log("Request body:", req.body);
-    console.log("Username:", req.body.username);
+
     if (!email || !password || !username) {
       return res.status(400).json({ message: "Email and password are required" });
     }
-    if (password.length < 6) {
-      return res.status(400).json({ message: "Password must be at least 6 characters" });
-    }
-    console.log("Username:", username);
-    if (username.length < 3) {
-      return res.status(400).json({ message: "Username must be at least 3 characters" });
-    }
 
-    const existingUser = await User.findOne({ email });
-      if (existingUser) {
+    const existingUserEmail = await User.findOne({ email });
+      if (existingUserEmail) {
         return res.status(400).json({ message: "Email is already in use" });
+      }
+    
+    const existingUserUserName = await User.findOne({ username });
+      if (existingUserUserName) {
+        return res.status(400).json({ message: "Username is already in use" });
       }
     
     const user = new User({ email, password, username, fullName, profilePicture, bio });
     await user.save();
       
-    console.log("User created, id:", user._id.toString());
     res.status(201).json({ message:  "OK"  });
 
   } catch (err) {
     console.error(err);
+    //validation errors from user model
+    if (err.name == 'ValidationError')
+    {
+      const errorMessages = Object.values(err.errors).map(val => val.message);
+      return res.status(400).json({ message: errorMessages.join(", ") });
+    }
+    // other errors
     return res.status(400).json({ message: "Something went wrong" });
-  }
-};
+    }
+}
 
 const UsersController = {
   create: create,
