@@ -23,7 +23,7 @@ export async function login(email, password) {
     return data.token;
   } else {
     throw new Error(
-      `Received status ${response.status} when logging in. Expected 201`
+      `Received status ${response.status} when logging in. Expected 201`,
     );
   }
 }
@@ -47,9 +47,11 @@ export async function signup(email, password, username) {
   let data = await response.json();
 
   // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
+
   if (!response.ok) {
     console.error("Signup error response:", data); // Log the full response
     throw new Error(data.message || `Received status ${response.status}`);
+
   }
 
   return data; // Return success response if needed
