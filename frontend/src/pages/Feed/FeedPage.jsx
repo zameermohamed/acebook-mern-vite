@@ -7,7 +7,7 @@ export function FeedPage() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const refreshPosts = () => {
-    setRefreshTrigger((prev) => prev + 1);
+    setRefreshTrigger(refreshTrigger + 1);
   };
 
   return (
