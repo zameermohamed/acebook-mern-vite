@@ -1,14 +1,21 @@
+import { useState } from "react";
 import Header from "../../components/Header";
 import PostContainer from "../../components/PostContainer/PostContainer";
 import NewPost from "../../components/newPost";
 
 export function FeedPage() {
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const refreshPosts = () => {
+    setRefreshTrigger((prev) => prev + 1);
+  };
+
   return (
     <>
       <Header></Header>
       <h2>Posts</h2>
-      <div className="NewPost"><NewPost /></div>
-      <PostContainer></PostContainer>
+      <NewPost onPostCreated={refreshPosts} />
+      <PostContainer refreshTrigger={refreshTrigger} />
     </>
   );
 }
