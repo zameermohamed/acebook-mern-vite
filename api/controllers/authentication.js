@@ -1,6 +1,5 @@
 const User = require("../models/user");
 const { generateToken } = require("../lib/token");
-const bcrypt = require("bcryptjs");
 
 async function createToken(req, res) {
   const email = req.body.email;
@@ -15,7 +14,7 @@ async function createToken(req, res) {
     }
 
     // 2️⃣ Compare the plain-text password with the hashed password
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       console.log("Auth Error: Passwords do not match");
       return res.status(401).json({ message: "Password incorrect" });

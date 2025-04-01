@@ -17,16 +17,7 @@ export function SignupPage() {
       navigate("/login");
     } catch (err) {
       console.error("Error response from server:", err);
-      if (err.response) {
-        console.log("Full error response:", err.response);
-        if (err.response.data && err.response.data.message) {
-          setError(err.response.data.message); // Store actual error message
-        } else {
-          setError("An unexpected error occurred"); // Fallback error message
-        }
-      } else {
-        setError("An unexpected error occurred");
-      }
+      setError(err.message || "An unexpected error occurred");
       navigate("/signup");
     }
   }
