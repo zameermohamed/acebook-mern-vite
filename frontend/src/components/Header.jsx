@@ -19,11 +19,6 @@ const Header = () => {
               Login
             </Link>
           )}
-          {loggedIn && (
-            <Link to="/" onClick={LogOut} className="nav-link">
-              Logout
-            </Link>
-          )}
           {!loggedIn && (
             <Link to="/signup" className="nav-link">
               Signup
@@ -32,6 +27,11 @@ const Header = () => {
           {loggedIn && (
             <Link to="/posts" className="nav-link">
               Posts
+            </Link>
+          )}
+          {loggedIn && (
+            <Link to="/" onClick={LogOut} className="nav-link">
+              Logout
             </Link>
           )}
         </nav>
