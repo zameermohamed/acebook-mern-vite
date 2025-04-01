@@ -139,3 +139,4 @@ they should then show up in the browser if you refresh the page.
   - New CSS for PostContainer component
 - Updated FeedPage component to render posts within PostContainer
   - Plan is to render a NewPost component above the PostContainer so this will always be at the top of the screen with the post feed rendering below with newest posts at the top
+- conditional rendering to display login/register when not logged in and logout/posts when user is logged in
