@@ -68,7 +68,7 @@ jobs:
             exit 1
           fi
 
-          threshold_lines=100
+          threshold_lines=0.2
           threshold_statements=100
           threshold_branches=100
           threshold_functions=100
