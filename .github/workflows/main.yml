@@ -14,12 +14,6 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v3 # This is a reference to some code to run
 
-      # This step installs the Python version we want
-      - name: Set up Python 3.11.0
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11.0
-
       # This step installs pip and our dependencies
       - name: Install dependencies
         run: | # Note that there's no reference here — just commands to run
