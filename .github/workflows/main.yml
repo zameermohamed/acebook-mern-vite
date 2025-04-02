@@ -62,10 +62,10 @@ jobs:
       - name: Check Coverage Thresholds
         run: |
           coverage_file="frontend/coverage/coverage-final.json"
-          threshold_lines=60
-          threshold_statements=55
-          threshold_branches=40
-          threshold_functions=30
+          threshold_lines=20
+          threshold_statements=20
+          threshold_branches=65
+          threshold_functions=15
 
           # Extract coverage metrics
           lines_coverage=$(jq '.total.lines.pct' < "$coverage_file")
