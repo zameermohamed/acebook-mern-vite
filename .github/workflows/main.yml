@@ -21,7 +21,6 @@ jobs:
           export NVM_DIR="$HOME/.nvm"
           [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
           echo "NVM_DIR=$NVM_DIR" >> $GITHUB_ENV
-          echo "source $NVM_DIR/nvm.sh" >> $GITHUB_ENV
 
       - name: Verify NVM Installation
         run: |
