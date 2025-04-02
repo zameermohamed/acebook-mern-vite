@@ -6,13 +6,11 @@ on: push
 
 jobs:
   build:
-    # Similar to docker, we set up a virtual machine to run our tests
     runs-on: ubuntu-latest
 
     steps:
-      # Each step has a name, some code, and some options
       - name: Check out the code
-        uses: actions/checkout@v3 # This is a reference to some code to run
+        uses: actions/checkout@v3
 
       - name: Install Homebrew (Linux)
         run: |
@@ -20,34 +18,43 @@ jobs:
           sudo apt install -y build-essential curl file git
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-      - name: adding homebrew to path (Linux)
+      - name: Add Homebrew to PATH (Linux)
         run: |
-          echo >> /home/runner/.bashrc
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/runner/.bashrc
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $GITHUB_ENV
 
-      - name: install nvm (Linux)
+      - name: Install NVM (Linux)
         run: |
-          sudo brew install nvm
+          brew install nvm
+
+      - name: Load NVM
+        run: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          echo "NVM_DIR=$NVM_DIR" >> $GITHUB_ENV
+          echo "source $NVM_DIR/nvm.sh" >> $GITHUB_ENV
 
       - name: Verify NVM Installation
         run: |
+          source $NVM_DIR/nvm.sh
           nvm --version
 
-    #   - name: Install Dependencies
-    #     run: | # Note that there's no reference here — just commands to run
-    #       nvm install 20
-    #       cd frontend
-    #       npm install
-    #       cd ../api
-    #       npm install
-    #       Install MongoDB
-    #       brew tap mongodb/brew
-    #       brew install mongodb-community@6.0
-    #       brew services start mongodb-community@6.0
+      - name: Install Dependencies
+        run: |
+          source $NVM_DIR/nvm.sh
+          nvm install 20
+          nvm use 20
+          cd frontend
+          npm install
+          cd ../api
+          npm install
 
-    #   # Now we run our tests
-    #   - name: Test with jest
-    #     run: |
-    #       cd api
-    #       npm run test
+      - name: Install and Start MongoDB
+        run: |
+          brew tap mongodb/brew
+          brew install mongodb-community@6.0
+          brew services start mongodb-community@6.0
+
+      - name: Test with Jest
+        run: |
+          cd api
+          npm run test
