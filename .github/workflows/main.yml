@@ -7,7 +7,7 @@ on: push
 jobs:
   build:
     # Similar to docker, we set up a virtual machine to run our tests
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       # Each step has a name, some code, and some options
@@ -23,9 +23,17 @@ jobs:
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
       # This step installs pip and our dependencies
-      - name: Install dependencies
+      - name: Install NVM
         run: | # Note that there's no reference here — just commands to run
+          source ~/.bashrc
           brew install nvm
+          mkdir -p ~/.nvm
+          echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
+          echo '[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"' >> ~/.bashrc
+          source ~/.bashrc
+
+      - name: Install Dependencies
+        run: | # Note that there's no reference here — just commands to run
           nvm install 20
           cd frontend
           npm install
