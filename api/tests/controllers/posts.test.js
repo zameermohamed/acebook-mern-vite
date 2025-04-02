@@ -40,6 +40,7 @@ describe("/posts", () => {
     await Post.deleteMany({});
   });
 
+  // linter may cause issues - just make change and re save
   describe("POST, when a valid token is present", () => {
     test("responds with a 201", async () => {
       const response = await request(app)
