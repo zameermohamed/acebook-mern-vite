@@ -1,21 +1,41 @@
 import "../Post/Post.css";
 
 function Post(props) {
+    const formatDate = (date) => {
+        let dateFormat = new Date(date);
+
+        // Options for formatting
+        let options = {
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+        };
+
+        let formattedDate = dateFormat.toLocaleString("en-US", options);
+        console.log(formattedDate);
+        return formattedDate;
+    };
     return (
-        <div className="post-card-container">
-            <article className="post-card" key={props.post._id}>
-                <div className="post-card-user-info">
-                    <img
-                        className="post-card-user-picture"
-                        src={props.post.profile_picture}
-                    />
-                    <div className="post-card-user-name">
-                        {props.post.user_name}
-                    </div>
+        <article className="post-card" key={props.post._id}>
+            <p className="post-card-date">
+                {" "}
+                {formatDate(props.post.createdAt)}
+            </p>
+            <div className="post-card-user-info">
+                <img
+                    className="post-card-user-picture"
+                    src={props.post.profile_picture}
+                />
+                <div className="post-card-user-name">
+                    {props.post.user_name}
                 </div>
-                {props.post.message}
-            </article>
-        </div>
+            </div>
+
+            {props.post.message}
+        </article>
     );
 }
 export default Post;
