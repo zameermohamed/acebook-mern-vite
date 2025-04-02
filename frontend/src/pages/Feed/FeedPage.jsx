@@ -14,7 +14,7 @@ export function FeedPage() {
     <>
       <Header></Header>
       <h2>Posts</h2>
-      <NewPost onPostCreated={refreshPosts} />
+      <NewPost onPostCreated={refreshPosts}/>
       <PostContainer refreshTrigger={refreshTrigger} />
     </>
   );

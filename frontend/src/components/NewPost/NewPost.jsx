@@ -26,9 +26,12 @@ function NewPost({ onPostCreated }) {
   return (
     <div>
       <form className="form"onSubmit={handleSubmit}>
-        <img 
-          
+        <img className="profilePic"
+          src="https://tse3.mm.bing.net/th?id=OIP.dCpgPQ0i-xX2gZ-yonm54gHaHa&pid=Api"
         />
+        <p className="username"> 
+          
+        </p>
         <textarea className="textField"
           id="message"
           placeholder="Write your post here"
