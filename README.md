@@ -201,5 +201,11 @@ they should then show up in the browser if you refresh the page.
 - Temporarily changed UserId required on post.js model back to false so creating a new post via the NewPost component (which doesn't have an associated UserId currently) doesn't cause the backend server to crash.
 
 ### PR21 by Aysin
+
 - Backend tests were fixed by adding username and changing the password while creating the test user to meet the validations.
 - Expected token time was updated as 86400 in token.test as current token time is implemented as 24 hours.
+
+### PR22 by Jack & Aysin
+
+- Frontend tests are all now passing
+  - Caveat: 2 tests from the homePage have been commented out for now as they should get moved to a Header.test.jsx component (which has not been created yet)
