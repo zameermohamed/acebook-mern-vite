@@ -19,9 +19,15 @@ jobs:
           sudo apt update
           sudo apt install -y build-essential curl file git
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+      - name: adding homebrew to path (Linux)
+        run: |
           echo >> /home/runner/.bashrc
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/runner/.bashrc
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+      - name: install nvm (Linux)
+        run: |
           sudo brew install nvm
 
       - name: Verify NVM Installation
