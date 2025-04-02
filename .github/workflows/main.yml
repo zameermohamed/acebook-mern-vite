@@ -62,6 +62,12 @@ jobs:
       - name: Check Coverage Thresholds
         run: |
           coverage_file="frontend/coverage/coverage-final.json"
+
+          if [ ! -f "$coverage_file" ]; then
+            echo "Error: Coverage file not found. Ensure tests are generating coverage reports."
+            exit 1
+          fi
+
           threshold_lines=0
           threshold_statements=0
           threshold_branches=0
