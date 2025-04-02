@@ -39,11 +39,14 @@ jobs:
           cd ../api
           npm install
 
-      - name: Install and Start MongoDB (macOS)
+      - name: Install MongoDB (macOS)
         run: |
           brew tap mongodb/brew
           brew install mongodb-community@6.0
-          brew services start mongodb/brew/mongodb-community
+
+      - name: Start MongoDB Service (macOS)
+        run: |
+          brew services start mongodb/brew/mongodb-community@6.0
 
       - name: Test with Jest
         run: |
