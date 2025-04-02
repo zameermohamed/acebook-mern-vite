@@ -5,7 +5,7 @@ name: Build and Test
 on: push
 
 jobs:
-  test:
+  build:
     # Similar to docker, we set up a virtual machine to run our tests
     runs-on: ubuntu-latest
 
@@ -13,6 +13,14 @@ jobs:
       # Each step has a name, some code, and some options
       - name: Check out the code
         uses: actions/checkout@v3 # This is a reference to some code to run
+
+      - name: Install Homebrew
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential curl file git
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
       # This step installs pip and our dependencies
       - name: Install dependencies
