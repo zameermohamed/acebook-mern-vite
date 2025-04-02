@@ -39,6 +39,7 @@ export function LoginPage() {
         <label htmlFor="email">Email</label>
         <input
           id="email"
+          placeholder="Email"
           type="text"
           value={email}
           onChange={handleEmailChange}
@@ -48,7 +49,7 @@ export function LoginPage() {
         <input
           id="password"
           type="password"
-          placeholder="password"
+          placeholder="Password"
           value={password}
           onChange={handlePasswordChange}
           required
