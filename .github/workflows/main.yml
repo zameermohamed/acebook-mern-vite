@@ -19,6 +19,10 @@ jobs:
           sudo apt update
           sudo apt install -y build-essential curl file git
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      # Run these commands in your terminal to add Homebrew to your PATH:
+          echo >> /home/runner/.bashrc
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/runner/.bashrc
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           sudo brew install nvm
 
       - name: Verify NVM Installation
