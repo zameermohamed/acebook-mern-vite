@@ -1,0 +1,41 @@
+# The name of the workflow
+name: Build and Test
+
+# This workflow will run on any push to the repository
+on: push
+
+jobs:
+  test:
+    # Similar to docker, we set up a virtual machine to run our tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # Each step has a name, some code, and some options
+      - name: Check out the code
+        uses: actions/checkout@v3 # This is a reference to some code to run
+
+      # This step installs the Python version we want
+      - name: Set up Python 3.11.0
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.0
+
+      # This step installs pip and our dependencies
+      - name: Install dependencies
+        run: | # Note that there's no reference here — just commands to run
+          brew install nvm
+          nvm install 20
+          cd frontend
+          npm install
+          cd ../api
+          npm install
+          Install MongoDB
+          brew tap mongodb/brew
+          brew install mongodb-community@6.0
+          brew services start mongodb-community@6.0
+
+      # Now we run our tests
+      - name: Test with jest
+        run: |
+          cd api
+          npm run test
