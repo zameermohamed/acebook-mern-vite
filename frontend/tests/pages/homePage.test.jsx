@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-
 import { HomePage } from "../../src/pages/Home/HomePage";
 
 describe("Home Page", () => {
@@ -9,32 +8,35 @@ describe("Home Page", () => {
     render(
       <BrowserRouter>
         <HomePage />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
 
     const heading = screen.getByRole("heading");
     expect(heading.textContent).toEqual("Welcome to Acebook!");
   });
 
-  test("Displays a signup link", async () => {
-    render(
-      <BrowserRouter>
-        <HomePage />
-      </BrowserRouter>
-    );
+  // These tests should get moved to a test of the Header.jsx component
+  // since that is the element responsible for login/signup links now
 
-    const signupLink = screen.getByText("Sign Up");
-    expect(signupLink.getAttribute("href")).toEqual("/signup");
-  });
+  // test("Displays a signup link", async () => {
+  //   render(
+  //     <BrowserRouter>
+  //       <HomePage />
+  //     </BrowserRouter>,
+  //   );
 
-  test("Displays a login link", async () => {
-    render(
-      <BrowserRouter>
-        <HomePage />
-      </BrowserRouter>
-    );
+  //   const signupLink = screen.getByText("Sign Up");
+  //   expect(signupLink.getAttribute("href")).toEqual("/signup");
+  // });
 
-    const loginLink = screen.getByText("Log In");
-    expect(loginLink.getAttribute("href")).toEqual("/login");
-  });
+  // test("Displays a login link", async () => {
+  //   render(
+  //     <BrowserRouter>
+  //       <HomePage />
+  //     </BrowserRouter>,
+  //   );
+
+  //   const loginLink = screen.getByText("Log In");
+  //   expect(loginLink.getAttribute("href")).toEqual("/login");
+  // });
 });
