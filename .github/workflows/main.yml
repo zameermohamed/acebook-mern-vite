@@ -56,5 +56,5 @@ jobs:
 
       - name: Run Frontend Tests
         run: |
-          cd ../frontend
+          cd frontend
           npx vitest run
