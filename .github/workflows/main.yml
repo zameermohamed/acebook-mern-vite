@@ -22,30 +22,32 @@ jobs:
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-      # This step installs pip and our dependencies
-      - name: Install NVM
-        run: | # Note that there's no reference here — just commands to run
-          source ~/.bashrc
+      - name: Install NVM using Brew
+        run: |
           brew install nvm
           mkdir -p ~/.nvm
-          echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
-          echo '[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"' >> ~/.bashrc
-          source ~/.bashrc
+          echo 'export NVM_DIR="$HOME/.nvm"' >> $HOME/.bashrc
+          echo '[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"' >> $HOME/.bashrc
 
-      - name: Install Dependencies
-        run: | # Note that there's no reference here — just commands to run
-          nvm install 20
-          cd frontend
-          npm install
-          cd ../api
-          npm install
-          Install MongoDB
-          brew tap mongodb/brew
-          brew install mongodb-community@6.0
-          brew services start mongodb-community@6.0
-
-      # Now we run our tests
-      - name: Test with jest
+      - name: Verify NVM Installation
         run: |
-          cd api
-          npm run test
+          source $HOME/.bashrc
+          nvm --version
+
+    #   - name: Install Dependencies
+    #     run: | # Note that there's no reference here — just commands to run
+    #       nvm install 20
+    #       cd frontend
+    #       npm install
+    #       cd ../api
+    #       npm install
+    #       Install MongoDB
+    #       brew tap mongodb/brew
+    #       brew install mongodb-community@6.0
+    #       brew services start mongodb-community@6.0
+
+    #   # Now we run our tests
+    #   - name: Test with jest
+    #     run: |
+    #       cd api
+    #       npm run test
