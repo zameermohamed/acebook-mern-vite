@@ -27,11 +27,12 @@ describe("/posts", () => {
   beforeAll(async () => {
     const user = new User({
       email: "post-test@test.com",
-      password: "12345678",
+      password: "Post1234!",
+      username: "posttest"
     });
     await user.save();
     await Post.deleteMany({});
-    token = createToken(user.id);
+    token = createToken(user._id.toString());
   });
 
   afterEach(async () => {
@@ -44,7 +45,7 @@ describe("/posts", () => {
       const response = await request(app)
         .post("/posts")
         .set("Authorization", `Bearer ${token}`)
-        .send({ message: "Hello World!" });
+        .send({ message: "Hello World!",  });
       expect(response.status).toEqual(201);
     });
 
