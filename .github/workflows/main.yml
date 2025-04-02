@@ -68,10 +68,10 @@ jobs:
             exit 1
           fi
 
-          threshold_lines=0
-          threshold_statements=0
-          threshold_branches=0
-          threshold_functions=0
+          threshold_lines=100
+          threshold_statements=100
+          threshold_branches=100
+          threshold_functions=100
 
           # Extract coverage metrics
           lines_coverage=$(jq '.total.lines.pct' < "$coverage_file")
