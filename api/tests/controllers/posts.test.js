@@ -28,7 +28,7 @@ describe("/posts", () => {
     const user = new User({
       email: "post-test@test.com",
       password: "Post1234!",
-      username: "posttest"
+      username: "posttest",
     });
     await user.save();
     await Post.deleteMany({});
@@ -45,7 +45,7 @@ describe("/posts", () => {
       const response = await request(app)
         .post("/posts")
         .set("Authorization", `Bearer ${token}`)
-        .send({ message: "Hello World!",  });
+        .send({ message: "Hello World!" });
       expect(response.status).toEqual(201);
     });
 
