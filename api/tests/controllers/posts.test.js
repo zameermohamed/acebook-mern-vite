@@ -32,7 +32,7 @@ describe("/posts", () => {
     });
     await user.save();
     await Post.deleteMany({});
-    token = createToken(user._id.toString());
+    token = createToken(user.id);
   });
 
   afterEach(async () => {
