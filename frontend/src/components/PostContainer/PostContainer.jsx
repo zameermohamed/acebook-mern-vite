@@ -4,7 +4,7 @@ import { getPosts } from "../../services/posts";
 import Post from "../Post";
 import "../PostContainer/PostContainer.css";
 
-const PostContainer = () => {
+const PostContainer = ({ refreshTrigger }) => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const PostContainer = () => {
       navigate("/login");
       return;
     }
-  }, [navigate]);
+  }, [navigate, refreshTrigger]); // Add refreshTrigger to dependency array
 
   return (
     <>
