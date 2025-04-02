@@ -7,7 +7,8 @@ describe("/tokens", () => {
   beforeAll(async () => {
     const user = new User({
       email: "auth-test@test.com",
-      password: "12345678",
+      password: "Ab1234567!",
+      username: "authtest"
     });
 
     // We need to use `await` so that the "beforeAll" setup function waits for
@@ -25,7 +26,7 @@ describe("/tokens", () => {
     const testApp = supertest(app);
     const response = await testApp
       .post("/tokens")
-      .send({ email: "auth-test@test.com", password: "12345678" });
+      .send({ email: "auth-test@test.com", password: "Ab1234567!", username: "authtest" });
 
     expect(response.status).toEqual(201);
     expect(response.body.token).not.toEqual(undefined);
