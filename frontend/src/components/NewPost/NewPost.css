@@ -1,0 +1,30 @@
+    .textField {
+        width: 105%;
+        height: 60px;
+        text-align: left;
+        position: relative;
+        top: 20px;
+        resize: none;
+    }
+
+    .submitButton {
+        width: 90px;
+        height: 30px;
+        align-self: right;
+        margin-left: 73%;
+    }
+
+    .form {
+        width: 45%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        border: 0.5px solid grey;
+        border-radius: 15px;
+        margin-top: 3rem;
+    }
