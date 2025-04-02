@@ -6,23 +6,13 @@ on: push
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Check out the code
         uses: actions/checkout@v3
 
-      - name: Install Homebrew (Linux)
-        run: |
-          sudo apt update
-          sudo apt install -y build-essential curl file git
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-      - name: Add Homebrew to PATH (Linux)
-        run: |
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> $GITHUB_ENV
-
-      - name: Install NVM (Linux)
+      - name: Install NVM (macOS)
         run: |
           brew install nvm
 
@@ -48,11 +38,11 @@ jobs:
           cd ../api
           npm install
 
-      - name: Install and Start MongoDB
+      - name: Install and Start MongoDB (macOS)
         run: |
           brew tap mongodb/brew
           brew install mongodb-community@6.0
-          brew services start mongodb-community@6.0
+          brew services start mongodb/brew/mongodb-community
 
       - name: Test with Jest
         run: |
