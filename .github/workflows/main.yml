@@ -52,7 +52,7 @@ jobs:
         run: |
           # Run Jest with coverage enabled and thresholds set via jest.config.js
           cd api
-          npx jest --coverage --coverageThreshold='{"global":{"branches":40,"functions":30,"lines":60,"statements":55}}'
+          npx jest --coverage --coverageThreshold='{"global":{"branches":70,"functions":80,"lines":85,"statements":85}}'
 
       - name: Run Frontend Tests
         run: |
