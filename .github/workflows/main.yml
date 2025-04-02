@@ -7,7 +7,7 @@ on: push
 jobs:
   build:
     # Similar to docker, we set up a virtual machine to run our tests
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       # Each step has a name, some code, and some options
