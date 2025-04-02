@@ -25,7 +25,6 @@ jobs:
       # This step installs pip and our dependencies
       - name: Install dependencies
         run: | # Note that there's no reference here — just commands to run
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)
           brew install nvm
           nvm install 20
           cd frontend
