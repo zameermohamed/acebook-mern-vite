@@ -19,16 +19,7 @@ jobs:
           sudo apt update
           sudo apt install -y build-essential curl file git
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> $GITHUB_ENV
-
-      - name: Install NVM using Brew
-        run: |
-          brew install nvm
-          mkdir -p ~/.nvm
-          echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc
-          echo '[ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] && \. "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"' >> ~/.bashrc
+          sudo brew install nvm
 
       - name: Verify NVM Installation
         run: |
