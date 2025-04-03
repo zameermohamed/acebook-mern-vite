@@ -48,23 +48,15 @@ jobs:
         run: |
           brew services start mongodb/brew/mongodb-community@6.0
 
-  backend:
-    runs-on: macos-latest
-    environment: Backend_testing
-    needs: build
-    steps:
       - name: Run Backend Tests with Coverage and Threshold
+        environment: Backend_testing
         run: |
           # Run Jest with coverage enabled and thresholds set via jest.config.js
           cd api
           npx jest --coverage --coverageThreshold='{"global":{"branches":70,"functions":80,"lines":85,"statements":85}}'
 
-  frontend:
-    runs-on: macos-latest
-    environment: Frontend
-    needs: build
-    steps:
       - name: Run Frontend Tests
+        environment: Frontend
         run: |
           cd frontend
           npm run coverage
