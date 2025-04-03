@@ -56,7 +56,7 @@ describe("GET with a valid postId", () => {
     await Comment.deleteMany({});
   });
 
-  it("getAllCommentsFromPost", async () => {
+  it("getAllCommentsFromPost returns a valid comment for post", async () => {
     const response = await request(app)
       .get(`/posts/${post._id}`)
       .set("Authorization", `Bearer ${token}`);
@@ -69,5 +69,12 @@ describe("GET with a valid postId", () => {
         postId: post._id.toString(),
       }),
     );
+  });
+  it("getAllCommentsFromPost returns a Casterror when postId in invalid format", async () => {
+    const response = await request(app)
+      .get(`/posts/invalidPostId`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(response.status).toEqual(400);
+    expect(response.body.message).toEqual("Invalid post ID format");
   });
 });
