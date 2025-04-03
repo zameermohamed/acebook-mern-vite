@@ -42,8 +42,19 @@ async function create(req, res) {
     }
 }
 
+async function getUser(req, res) {
+  const users = await User.findOne();
+  console.log("REQUEEEEEEST:");
+  // const foundUser = await User.findOne({ user_id });
+  // const users = await User.find();
+  // const token = generateToken(req.user_id);
+  // return res.status(200).json({ user: foundUser });
+  // return res.json({user: foundUser});
+}
+
 const UsersController = {
   create: create,
+  getUser: getUser
 };
 
 module.exports = UsersController;
