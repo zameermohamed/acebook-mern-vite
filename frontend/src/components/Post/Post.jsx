@@ -13,24 +13,19 @@ function Post(props) {
             second: "2-digit",
             hour12: false,
         };
-
+        console.log(props.post);
         let formattedDate = dateFormat.toLocaleString("en-US", options);
         return formattedDate;
     };
     return (
         <article className="post-card" key={props.post._id}>
-            <p className="post-card-date">
-                {" "}
-                {formatDate(props.post.createdAt)}
-            </p>
+            <p className="post-card-date">{formatDate(props.post.createdAt)}</p>
             <div className="post-card-user-info">
                 <img
                     className="post-card-user-picture"
                     src={props.post.profile_picture}
                 />
-                <div className="post-card-user-name">
-                    {props.post.user_name}
-                </div>
+                <div className="post-card-user-name">{props.post.username}</div>
             </div>
 
             {props.post.message}

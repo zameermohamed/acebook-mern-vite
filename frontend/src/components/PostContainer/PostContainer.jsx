@@ -30,6 +30,7 @@ const PostContainer = ({ refreshTrigger }) => {
     return (
         <>
             <div className="post-container">
+                {console.log(posts)}
                 {posts.toReversed().map((post) => (
                     <Post post={post} key={post._id} />
                 ))}
