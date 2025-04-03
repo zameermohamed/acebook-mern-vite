@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use("/users", usersRouter);
 app.use("/posts", tokenChecker, postsRouter);
 app.use("/tokens", authenticationRouter);
-app.use("/posts/:postId", tokenChecker, commentsRouter);
+app.use("/posts", tokenChecker, commentsRouter);
 
 // 404 Handler
 app.use((_req, res) => {
