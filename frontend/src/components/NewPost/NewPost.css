@@ -33,12 +33,11 @@
 
 .user-info {
     display: flex;
-    align-items: left;
+    align-items: start;
     padding: 0 0 1rem 0;
-    /* margin: 1rem 0; */
     text-align: left;
-    justify-content: start;
-    margin-right: 80%;
+    margin-inline-end: auto;
+
 }
 .user-info img {
     height: 50px;
@@ -46,7 +45,10 @@
     border-radius: 15px;
     align-items: left;
     margin-right: 10px;
+    /* margin-left: 40px; */
+    align-items: start;
 }
 
-.user-info h3 {
+.post-error-msg {
+    color: red;
 }

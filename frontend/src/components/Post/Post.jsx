@@ -23,7 +23,7 @@ function Post(props) {
             <div className="post-card-user-info">
                 <img
                     className="post-card-user-picture"
-                    src={props.post.profile_picture}
+                    src={props.post.userId.profilePicture}
                 />
                 <div className="post-card-user-name">
                     {props.post.userId.username}

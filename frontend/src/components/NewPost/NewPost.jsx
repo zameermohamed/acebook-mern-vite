@@ -20,6 +20,7 @@ function NewPost({ onPostCreated }) {
     }, []);
 
     function handlePostChange(event) {
+        setError(false);
         setText(event.target.value);
     }
 
@@ -59,12 +60,12 @@ function NewPost({ onPostCreated }) {
                     type="submit"
                     value="Post"
                 />
-            </form>
             {error && (
                 <div className="post-error-msg">
                     <p>Post must contain some text</p>
                 </div>
             )}
+            </form>
         </div>
     );
 }
