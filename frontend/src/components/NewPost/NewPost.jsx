@@ -11,9 +11,7 @@ function NewPost({ onPostCreated }) {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        console.log(token);
         getUser(token).then((data) => {
-            console.log(data);
             setUsername(data.username);
             setProfilePicture(data.profilePicture);
         });

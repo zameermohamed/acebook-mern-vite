@@ -13,13 +13,12 @@ function Post(props) {
             second: "2-digit",
             hour12: false,
         };
-        console.log("FROM POST COMPONENT =>", props.post);
         let formattedDate = dateFormat.toLocaleString("en-US", options);
         return formattedDate;
     };
     return (
         <article className="post-card" key={props.post._id}>
-            <p className="post-card-date">{formatDate(props.post.createdAt)}</p>
+            <span className="post-card-date">{formatDate(props.post.createdAt)}</span>
             <div className="post-card-user-info">
                 <img
                     className="post-card-user-picture"
@@ -29,7 +28,7 @@ function Post(props) {
                     {props.post.userId.username}
                 </div>
             </div>
-            {props.post.message}
+            <p data-testid="post-message" className="post-message">{props.post.message}</p>
         </article>
     );
 }
