@@ -6,16 +6,19 @@ const Post = require("./post")
 // defining the columns of an SQL Database.
 const CommentSchema = new mongoose.Schema(
   {
-    message: { type: String, required: true },
+    message: { type: String, 
+      required: [true, "Comment field can not be empty"],
+      maxlength: [240, "Comment must be less than 240 character"],
+    },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: [true, "You must be logged in to comment"]
     },
     postId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post",
-        required: true,
+        required: [true, "Post isn't available"],
       },
   },
   {

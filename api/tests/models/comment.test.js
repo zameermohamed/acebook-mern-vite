@@ -77,3 +77,117 @@ describe("Comment model", () => {
     });
 
 });
+
+describe("Comment message validations", () => {
+    let user;
+    let post;
+
+    beforeEach(async () => {
+        await Post.deleteMany({});
+        await User.deleteMany({});
+        await Comment.deleteMany({});
+
+        user = await User.create({
+            email: "someone@example.com",
+            password: "Password123!",
+            username: "someone",
+        });
+
+        post = await Post.create({
+            message: "User's post",
+            userId: user._id, 
+        });
+    })
+    
+    it("Message is required", async () => {
+        let error;
+        try {
+            const comment = new Comment({
+                message: "",
+                userId: user._id,
+                postId: post._id,   
+            });
+            await comment.save();
+        } catch (err) {
+        error = err;
+        }
+    
+        expect(error.errors.message.message).toBe("Comment field can not be empty");
+    });
+
+    it("Message should be less than 240 characters", async () => {
+        let error;
+        try {
+            const comment = new Comment({
+                message: "a".repeat(241), // 241 characters
+                userId: user._id,
+                postId: post._id,   
+            });
+            await comment.save();
+        } catch (err) {
+        error = err;
+        }
+
+        expect(error.errors.message.message).toBe("Comment must be less than 240 character");
+    });
+    });
+
+
+describe("Comment userId, postID validations", () => {
+    let user;
+    let post;
+
+    beforeEach(async () => {
+        await Post.deleteMany({});
+        await User.deleteMany({});
+        await Comment.deleteMany({});
+
+        user = await User.create({
+            email: "someone@example.com",
+            password: "Password123!",
+            username: "someone",
+        });
+        
+        post = await Post.create({
+            message: "User's post",
+            userId: user._id, 
+        });
+    })
+
+    it("userId is required", async () => {
+        let error;
+
+        try {
+            const comment = new Comment({
+                message: "userId check",
+                userId: "" || null,
+                postId: post._id,   
+            });
+            await comment.save();
+        } catch (err) {
+        error = err;
+        }
+    
+        expect(error.errors.userId.message).toBe("You must be logged in to comment");
+        });
+
+    it("postId is required", async () => {
+        let error;
+
+        try {
+            const comment = new Comment({
+                message: "postId check",
+                userId: user._id,
+                postId: "" || null,  
+            });
+            await comment.save();
+        } catch (err) {
+        error = err;
+        }
+    
+        expect(error.errors.postId.message).toBe("Post isn't available");
+        });
+    });
+
+
+
