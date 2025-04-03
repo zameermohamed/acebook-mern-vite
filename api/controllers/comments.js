@@ -2,8 +2,17 @@ const Comment = require("../models/comment");
 const { decodeToken } = require("../lib/token");
 
 async function getAllCommentsPerPost(req, res) {
-  const commentsFromPost = await Comment.find({ postId: req.params.postId });
-  res.status(200).json({ comments: commentsFromPost });
+  try {
+    const commentsFromPost = await Comment.find({ postId: req.params.postId });
+    res.status(200).json({ comments: commentsFromPost });
+  } catch (err) {
+    console.error("Error retrieving comments:", err);
+
+    // Handle different error types
+    if (err.name === "CastError") {
+      return res.status(400).json({ message: "Invalid post ID format" });
+    }
+  }
 }
 
 async function createComment(req, res) {
