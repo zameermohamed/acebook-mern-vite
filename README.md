@@ -210,7 +210,7 @@ they should then show up in the browser if you refresh the page.
 - Frontend tests are all now passing
   - Caveat: 2 tests from the homePage have been commented out for now as they should get moved to a Header.test.jsx component (which has not been created yet)
 
-### PR24 by Alec & Michal
+### PR23 by Alec & Michal
 
 - Adds the username and profile picture of the user to each post and the new post feature
   - Caveat: user not yet able to set their profile picture
