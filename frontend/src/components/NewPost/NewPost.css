@@ -1,9 +1,8 @@
     .textField {
         width: 105%;
-        height: 60px;
+        height: 80px;
         text-align: left;
         position: relative;
-        top: 20px;
         resize: none;
         font-size: 17px;
     }
@@ -12,7 +11,9 @@
         width: 90px;
         height: 30px;
         align-self: right;
-        margin-left: 73%;
+        margin-left: 80%;
+        margin-top: 10px;
+        margin-right: 5%;
     }
 
     .form {
@@ -33,9 +34,9 @@
 
     .profilePic {
         height: 50px;
-        margin-right: 5px;
         width: 50px;
         border-radius: 15px;
         align-items: left;
         margin-right: 90%;
+        margin-top: 10px; 
     }

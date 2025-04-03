@@ -15,7 +15,6 @@ function Post(props) {
         };
 
         let formattedDate = dateFormat.toLocaleString("en-US", options);
-        console.log(formattedDate);
         return formattedDate;
     };
     return (

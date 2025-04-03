@@ -23,6 +23,7 @@ function NewPost({ onPostCreated }) {
     setError(false)
     }
   }
+
   return (
     <div>
       <form className="form"onSubmit={handleSubmit}>

@@ -7,13 +7,13 @@ export async function getUser(token) {
       Authorization: `Bearer ${token}`,
     },
   };
-
-  const response = await fetch(`${BACKEND_URL}/tokens`, requestOptions);
+  const response = await fetch(`${BACKEND_URL}/users`, requestOptions);
 
   if (response.status !== 200) {
-    throw new Error("Unable to fetch posts");
+    throw new Error("Unable to fetch users");
   }
 
   const data = await response.json();
-  console.log(data)
+  return data
 }
+
