@@ -25,7 +25,9 @@ function Post(props) {
                     className="post-card-user-picture"
                     src={props.post.profile_picture}
                 />
-                {/* <div className="post-card-user-name">{props.post.username}</div> */}
+                <div className="post-card-user-name">
+                    {props.post.userId.username}
+                </div>
             </div>
             {props.post.message}
         </article>
