@@ -12,10 +12,11 @@ const PostSchema = new mongoose.Schema(
       ref: "User",
       required: false,
     },
+    likesCount: { type: Number, default: 0 },
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 // We use the Schema to create the Post model. Models are classes which we can
