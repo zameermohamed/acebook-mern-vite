@@ -209,3 +209,9 @@ they should then show up in the browser if you refresh the page.
 
 - Frontend tests are all now passing
   - Caveat: 2 tests from the homePage have been commented out for now as they should get moved to a Header.test.jsx component (which has not been created yet)
+
+### PR24 by Jack & Aysin
+
+- Comment model and associated tests were implemented.
+
+
