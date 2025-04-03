@@ -1,42 +1,52 @@
-    .textField {
-        width: 105%;
-        height: 80px;
-        text-align: left;
-        position: relative;
-        resize: none;
-        font-size: 17px;
-    }
+.textField {
+    width: 105%;
+    height: 80px;
+    text-align: left;
+    position: relative;
+    resize: none;
+    font-size: 17px;
+}
 
-    .submitButton {
-        width: 90px;
-        height: 30px;
-        align-self: right;
-        margin-left: 80%;
-        margin-top: 10px;
-        margin-right: 5%;
-    }
+.submitButton {
+    width: 90px;
+    height: 30px;
+    align-self: right;
+    margin-left: 80%;
+    margin-top: 10px;
+    margin-right: 5%;
+}
 
-    .form {
-        width: 45%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        gap: 20px;
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-        border: 0.5px solid grey;
-        border-radius: 15px;
-        margin-top: 3rem;
+.form {
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 0.5px solid grey;
+    border-radius: 15px;
+    margin-top: 3rem;
+}
 
-    }
+.user-info {
+    display: flex;
+    align-items: left;
+    padding: 0 0 1rem 0;
+    /* margin: 1rem 0; */
+    text-align: left;
+    justify-content: start;
+    margin-right: 80%;
+}
+.user-info img {
+    height: 50px;
+    width: 50px;
+    border-radius: 15px;
+    align-items: left;
+    margin-right: 10px;
+}
 
-    .profilePic {
-        height: 50px;
-        width: 50px;
-        border-radius: 15px;
-        align-items: left;
-        margin-right: 90%;
-        margin-top: 10px; 
-    }
+.user-info h3 {
+}
