@@ -1,6 +1,5 @@
 .DS_Store
 .vscode
 .env
-*lock*
 api/coverage
 frontend/coverage
