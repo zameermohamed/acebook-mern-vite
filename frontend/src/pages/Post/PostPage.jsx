@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPost } from "../../services/posts";
+import Header from "../../components/Header";
 
 export function PostPage() {
     const [postData, setPostData] = useState();
@@ -17,5 +18,7 @@ export function PostPage() {
         }
     }, [id]);
 
-    return <>{postData && <h1>{postData.postData.message}</h1>}</>;
+    return <>
+    <Header />
+    {postData && <h1>{postData.postData.message}</h1>}</>;
 }
