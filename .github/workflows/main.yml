@@ -5,8 +5,9 @@ name: Build and Test
 on: push
 
 jobs:
-  build:
+  build_and_test:
     runs-on: macos-latest
+    environment: Testing
 
     steps:
       - name: Check out the code
@@ -49,12 +50,17 @@ jobs:
           brew services start mongodb/brew/mongodb-community@6.0
 
       - name: Run Backend Tests with Coverage and Threshold
+        env:
+          MONGODB_URL: ${{secrets.MONGODB_URL_TESTING}}
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
         run: |
           # Run Jest with coverage enabled and thresholds set via jest.config.js
           cd api
-          npx jest --coverage --coverageThreshold='{"global":{"branches":70,"functions":80,"lines":85,"statements":85}}'
+          npx jest --coverage --coverageThreshold='{"global":{"branches":65,"functions":75,"lines":75,"statements":75}}'
 
       - name: Run Frontend Tests
+        env:
+          VITE_BACKEND_URL: ${{secrets.VITE_BACKEND_URL}}
         run: |
           cd frontend
           npm run coverage

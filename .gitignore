@@ -1,5 +1,5 @@
 .DS_Store
 .vscode
-.env
+**.env**
 api/coverage
 frontend/coverage
