@@ -11,21 +11,24 @@ async function create(req, res) {
         const bio = req.body.bio;
 
         if (!email || !password || !username) {
-            return res
-                .status(400)
-                .json({ message: "Email, password and username are required" });
+            throw new Error("Email, password and username are required");
+            // return res
+            //     .status(400)
+            //     .json({ message: "Email, password and username are required" });
         }
 
         const existingUserEmail = await User.findOne({ email });
         if (existingUserEmail) {
-            return res.status(400).json({ message: "Email is already in use" });
+            throw new Error("Email is already in use");
+            // return res.status(400).json({ message: "Email is already in use" });
         }
 
         const existingUserUserName = await User.findOne({ username });
         if (existingUserUserName) {
-            return res
-                .status(400)
-                .json({ message: "Username is already in use" });
+            throw new Error("Username is already in use");
+            // return res
+            //     .status(400)
+            //     .json({ message: "Username is already in use" });
         }
 
         const user = new User({
@@ -41,27 +44,24 @@ async function create(req, res) {
         res.status(201).json({ message: "OK" });
     } catch (err) {
         console.error("Error caught:", err);
-        //validation errors from user model
-        if (err.name == "ValidationError") {
-            const errorMessages = Object.values(err.errors).map(
-                (val) => val.message
-            );
-            console.log("Validation Error Messages:", errorMessages);
-            return res.status(400).json({ message: errorMessages.join(", ") });
-        }
+
         // other errors
-        return res.status(400).json({ message: "Something went wrong" });
+        return res.status(400).json({ message: err.message });
     }
 }
 
 async function getUser(req, res) {
-    const foundUser = await User.findOne({ _id: req.user_id });
-    const token = generateToken(req.user_id);
-    res.status(200).json({
-        username: foundUser.username,
-        profilePicture: foundUser.profilePicture,
-        token: token,
-    });
+    try {
+        const foundUser = await User.findOne({ _id: req.user_id });
+        const token = generateToken(req.user_id);
+        res.status(200).json({
+            username: foundUser.username,
+            profilePicture: foundUser.profilePicture,
+            token: token,
+        });
+    } catch (err) {
+        return res.status(400).json({ message: "User not found" });
+    }
 }
 
 const UsersController = {

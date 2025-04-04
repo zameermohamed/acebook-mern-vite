@@ -28,15 +28,11 @@ const PostContainer = ({ refreshTrigger }) => {
     }, [navigate, refreshTrigger]); // Add refreshTrigger to dependency array
 
     return (
-        <>
-            <div className="post-container">
-                {posts.toReversed().map((post) => (
-                    <>
-                        <Post post={post} key={post._id} />
-                    </>
-                ))}
-            </div>
-        </>
+        <div className="post-container">
+            {posts.toReversed().map((post) => (
+                <Post post={post} key={post._id} />
+            ))}
+        </div>
     );
 };
 
