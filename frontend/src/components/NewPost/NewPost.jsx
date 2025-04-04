@@ -4,6 +4,7 @@ import "../NewPost/NewPost.css";
 import { getUser } from "../../services/users";
 
 function NewPost({ onPostCreated }) {
+    // c
     const [error, setError] = useState(false);
     const [text, setText] = useState("");
     const [username, setUsername] = useState("");
@@ -58,11 +59,11 @@ function NewPost({ onPostCreated }) {
                     type="submit"
                     value="Post"
                 />
-            {error && (
-                <div className="post-error-msg">
-                    <p>Post must contain some text</p>
-                </div>
-            )}
+                {error && (
+                    <div className="post-error-msg">
+                        <p>Post must contain some text</p>
+                    </div>
+                )}
             </form>
         </div>
     );
