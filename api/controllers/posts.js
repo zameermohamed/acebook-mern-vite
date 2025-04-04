@@ -8,15 +8,19 @@ async function getAllPosts(req, res) {
     res.status(200).json({ posts: posts, token: token });
 }
 
-async function getPost(req, res) {
+async function getPost(req, res, next) {
     const postId = req.params.id;
     try {
         const foundPost = await Post.findOne({ _id: postId });
+        // const commentsFromPost = await Comment.find({ postId: req.params.id });
         const token = generateToken(req.user_id);
-        res.status(200).json({
-            postData: foundPost,
-            token: token,
-        });
+
+        // res.status(200).json({
+        //     postData: foundPost,
+        //     token: token,
+        // });
+        req.postData = foundPost;
+        next();
     } catch (err) {
         return res.status(400).json({ message: "User not found" });
     }
