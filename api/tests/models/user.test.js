@@ -322,3 +322,74 @@ describe("User model with optional fields ", () => {
     expect(isMatch).toBe(true);
   });
 })
+
+describe("when hashing fails throws an error", () => {
+  beforeEach(async () => {
+    await User.deleteMany({});
+  });
+
+  it("throws an error when bcrypt.hash fails", async () => {
+    const mockError = new Error("Hashing failed");
+
+    // Mock bcrypt functions to simulate the error, 
+    // It could be globally mocked but that would cause the other tests to fail
+    // which are testing saving a user
+    jest.spyOn(bcrypt, 'genSalt').mockResolvedValue('fakeSalt');
+    jest.spyOn(bcrypt, 'hash').mockRejectedValue(mockError);
+
+    const user = new User({
+      email: "someone@example.com",
+      password: "Password123!",
+      username: "username"
+    });
+    // Simulate a save operation in a try/catch block to trigger the pre-save hook and error handling
+    let error;
+    try {
+      await user.save();
+    } catch (err) {
+      error = err;
+    }
+
+    expect(error.message).toBe("Hashing failed");
+
+    bcrypt.genSalt.mockRestore();
+    bcrypt.hash.mockRestore();
+  });
+});
+
+describe("User model comparePassword after hashing method", () => {
+  beforeEach(async () => {
+    await User.deleteMany({});
+  });
+
+  it("returns true when passwords match", async () => {
+    const user = new User({
+      email: "someone@example.com",
+      password: "Password123!",
+      username: "username"
+    });
+
+    await user.save();
+
+    const savedUser = await User.findOne({ email: "someone@example.com" });
+
+    const isMatch = await savedUser.comparePassword("Password123!");
+    expect(isMatch).toBe(true);
+  });
+
+  it("returns false when passwords do not match", async () => {
+    const user = new User({
+      email: "someone@example.com",
+      password: "Password123!",
+      username: "username"
+    });
+
+    await user.save();
+
+    const savedUser = await User.findOne({ email: "someone@example.com" });
+
+    const isMatch = await savedUser.comparePassword("WrongPassword!");
+    expect(isMatch).toBe(false);
+  });
+});
+
