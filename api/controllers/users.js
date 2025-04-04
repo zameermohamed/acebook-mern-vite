@@ -59,6 +59,7 @@ async function getUser(req, res) {
             profilePicture: foundUser.profilePicture,
             token: token,
         });
+        console.log(foundUser);
     } catch (err) {
         return res.status(400).json({ message: "User not found" });
     }
