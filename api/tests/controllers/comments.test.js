@@ -41,14 +41,12 @@ describe("GET with a valid postId", () => {
       userId: user._id,
     });
     await post.save();
-    console.log("post._id:", post._id);
     comment = new Comment({
       message: "Hi right back at you!",
       userId: user._id,
       postId: post._id,
     });
     await comment.save();
-    console.log("comment.postId:", comment.postId);
   });
   afterEach(async () => {
     await User.deleteMany({});
@@ -76,5 +74,43 @@ describe("GET with a valid postId", () => {
       .set("Authorization", `Bearer ${token}`);
     expect(response.status).toEqual(400);
     expect(response.body.message).toEqual("Invalid post ID format");
+  });
+});
+
+describe("POST requests ", () => {
+  let post;
+  beforeEach(async () => {
+    await Post.deleteMany({});
+    await User.deleteMany({});
+    await Comment.deleteMany({});
+    user = new User({
+      email: "post-test@test.com",
+      password: "Post1234!",
+      username: "posttest",
+    });
+    await user.save();
+    token = createToken(user.id);
+    post = new Post({
+      message: "Hello World!",
+      userId: user._id,
+    });
+    await post.save();
+    postId = post._id;
+  });
+  afterEach(async () => {
+    await User.deleteMany({});
+    await Post.deleteMany({});
+    await Comment.deleteMany({});
+  });
+
+  it("createComment returns a created comment", async () => {
+    const response = await request(app)
+      .post(`/posts/${postId}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        message: "Hi right back at you!",
+      });
+    expect(response.status).toEqual(201);
+    expect(response.body.message).toEqual("Comment created");
   });
 });
