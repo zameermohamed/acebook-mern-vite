@@ -25,6 +25,10 @@ const router = createBrowserRouter([
         path: "/posts",
         element: <FeedPage />,
     },
+    {
+        path: "/profile",
+        element: <ProfilePage />,
+    },
     { path: "/posts/:id", element: <PostPage /> },
 ]);
 

@@ -25,6 +25,11 @@ const Header = () => {
             </Link>
           )}
           {loggedIn && (
+            <Link to="/profile" className="nav-link">
+              Profile
+            </Link>
+          )}
+          {loggedIn && (
             <Link to="/posts" className="nav-link">
               Posts
             </Link>
