@@ -1,0 +1,25 @@
+.post-card {
+    border: 0.5px solid gray;
+    width: 100%;
+    border-radius: 15px;
+    padding: 1rem;
+}
+
+.post-card-user-info {
+    display: flex;
+    align-items: center;
+    padding: 0 0 1rem 0;
+    /* margin: 1rem 0; */
+}
+
+.post-card-date {
+    font-size: 8px;
+    text-align: right;
+}
+
+.post-card-user-picture {
+    height: 50px;
+    margin-right: 5px;
+    width: 50px;
+    border-radius: 15px;
+}

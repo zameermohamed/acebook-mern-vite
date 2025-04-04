@@ -3,7 +3,7 @@ const router = express.Router();
 
 const CommentsController = require("../controllers/comments");
 
-router.get("/:postId", CommentsController.getAllCommentsPerPost);
-router.post("/:postId", CommentsController.createComment);
+router.get("/:id", CommentsController.getAllCommentsPerPost);
+router.post("/:id", CommentsController.createComment);
 
 module.exports = router;
