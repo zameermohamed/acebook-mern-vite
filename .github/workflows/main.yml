@@ -64,3 +64,21 @@ jobs:
         run: |
           cd frontend
           npm run coverage
+
+  deploy_backend:
+    needs: build_and_test
+    if: success() # Only run if the build_and_test job succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Backend to Render
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}
+
+  deploy_frontend:
+    needs: build_and_test
+    if: success() # Only run if the build_and_test job succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Frontend to Render
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}
