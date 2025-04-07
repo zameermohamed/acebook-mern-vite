@@ -32,3 +32,10 @@
     margin: 1rem 0;
   }
 }
+.feed-page {
+  background-color: var(--bg-color);
+}
+
+.feed-page-title {
+  color: var(--text-color);
+}

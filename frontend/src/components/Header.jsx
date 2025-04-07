@@ -1,17 +1,42 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-import "../index.css"; // Import the CSS file
+import "./Header.css"; // Make sure to import the CSS file
 import LogOut from "./Logout";
-import acebook from "../../src/images/acebook.png";
+import acebookLight from "../images/acebook.png"; // Import the light version
+import acebookDark from "../images/acebook-dark-mode.png"; // Import the dark version
 
 const Header = () => {
   const token = localStorage.getItem("token");
   const loggedIn = token !== null;
+
+  // Check if a theme is saved in localStorage, default to 'light'
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "light";
+  });
+
+  // Apply the theme when it changes
+  useEffect(() => {
+    // Save theme preference to localStorage
+    localStorage.setItem("theme", theme);
+
+    // Apply theme to document body
+    document.body.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  // Toggle between light and dark mode
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   return (
     <>
       <header className="header">
         <Link to="/" className="logo">
-          <img src={acebook}></img>
+          {/* Conditionally render the logo based on current theme */}
+          <img
+            src={theme === "light" ? acebookLight : acebookDark}
+            alt="Acebook logo"
+          />
         </Link>
         <nav className="nav">
           {!loggedIn && (
@@ -39,6 +64,13 @@ const Header = () => {
               Logout
             </Link>
           )}
+          <button
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          >
+            {theme === "light" ? "🌙" : "☀️"}
+          </button>
         </nav>
       </header>
       <div className="content"></div>

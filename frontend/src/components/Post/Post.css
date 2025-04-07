@@ -52,3 +52,21 @@
   overflow-wrap: break-word;
   color: #333;
 }
+.post-card {
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  color: var(--text-color);
+}
+
+.post-card-date {
+  color: var(--text-secondary);
+}
+
+.post-card-user-name {
+  color: var(--text-color);
+}
+
+.post-message {
+  color: var(--text-color);
+}

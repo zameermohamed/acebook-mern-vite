@@ -104,3 +104,37 @@
     width: 100%;
   }
 }
+.form {
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.user-info h3 {
+  color: var(--text-color);
+}
+
+.textField {
+  border: 1px solid var(--border-color);
+  background-color: var(--input-bg);
+}
+
+.textField:focus {
+  border-color: var(--accent-color);
+}
+
+.submitButton {
+  background-color: var(--accent-color);
+}
+
+.submitButton:hover {
+  background-color: var(--accent-hover);
+}
+
+.submitButton:active {
+  background-color: var(--accent-active);
+}
+
+.post-error-msg {
+  color: var(--error-color);
+}
