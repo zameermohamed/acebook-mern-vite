@@ -16,7 +16,6 @@ function Post(props) {
         let formattedDate = dateFormat.toLocaleString("en-US", options);
         return formattedDate;
     };
-    console.log("Post =>", props.singlePost);
     return (
         <a
             className="post-card"

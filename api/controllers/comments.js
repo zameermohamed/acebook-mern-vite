@@ -3,6 +3,7 @@ const { decodeToken } = require("../lib/token");
 
 async function getAllCommentsPerPost(req, res) {
     const commentsFromPost = await Comment.find({ postId: req.params.id });
+    console.log("comments from post", commentsFromPost);
     res.status(200).json({
         postData: req.postData,
         comments: commentsFromPost,
@@ -11,8 +12,10 @@ async function getAllCommentsPerPost(req, res) {
 
 async function createComment(req, res) {
     try {
-        const postId = req.params.postId;
-        const payload = decodeToken(req.headers.authorization);
+        const postId = req.params.id;
+        const token = req.headers.authorization.slice(7);
+        const payload = decodeToken(token);
+
         const userId = payload.user_id;
         const message = req.body.message;
 
