@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getPost } from "../../services/posts";
 import Header from "../../components/Header";
 import Post from "../../components/Post/Post";
+
 import AddComment from "../../components/AddComment/AddComment";
 import CommentContainer from "../../components/CommentContainer/CommentContainer";
 
