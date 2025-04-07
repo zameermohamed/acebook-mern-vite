@@ -1,5 +1,6 @@
 import "../Post/Post.css";
 import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Post(props) {
   const formatDate = (date) => {
