@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "../index.css"; // Import the global CSS file
 import "./Header.css"; // Make sure to import the CSS file
 import LogOut from "./Logout";
 import acebookLight from "../images/acebook.png"; // Import the light version

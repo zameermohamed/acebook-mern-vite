@@ -1,4 +1,55 @@
 :root {
+  /* Light theme (default) */
+  --bg-color: #f5f7fa;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --text-secondary: #757575;
+  --border-color: #e0e0e0;
+  --accent-color: #4a90e2;
+  --accent-hover: #3a7bc8;
+  --accent-active: #2a6cb8;
+  --error-color: #e53935;
+  --input-bg: #f9f9f9;
+  --header-bg: #ffffff;
+  --toggle-hover: rgba(0, 0, 0, 0.05);
+  --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a1c23;
+  --card-bg: #2a2d3a;
+  --text-color: #e4e4e7;
+  --text-secondary: #a1a1a9;
+  --border-color: #3f4152;
+  --accent-color: #5c9eea;
+  --accent-hover: #6ca9f0;
+  --accent-active: #7cb4f6;
+  --error-color: #ff5c5c;
+  --input-bg: #242631;
+  --header-bg: #222530 !important; /* Added !important for troubleshooting */
+  --toggle-hover: rgba(255, 255, 255, 0.1);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Apply theme variables to body */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure all transitions are smooth */
+* {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+:root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
@@ -134,58 +185,4 @@ body {
     height: 2rem;
     width: 100%;
   }
-}
-/* Theme variables - add to your index.css */
-
-:root {
-  /* Light theme (default) */
-  --bg-color: #f5f7fa;
-  --card-bg: #ffffff;
-  --text-color: #333333;
-  --text-secondary: #757575;
-  --border-color: #e0e0e0;
-  --accent-color: #4a90e2;
-  --accent-hover: #3a7bc8;
-  --accent-active: #2a6cb8;
-  --error-color: #e53935;
-  --input-bg: #f9f9f9;
-  --header-bg: #ffffff;
-  --toggle-hover: rgba(0, 0, 0, 0.05);
-  --shadow-color: rgba(0, 0, 0, 0.05);
-}
-
-/* Dark theme */
-[data-theme="dark"] {
-  --bg-color: #1a1c23;
-  --card-bg: #2a2d3a;
-  --text-color: #e4e4e7;
-  --text-secondary: #a1a1a9;
-  --border-color: #3f4152;
-  --accent-color: #5c9eea;
-  --accent-hover: #6ca9f0;
-  --accent-active: #7cb4f6;
-  --error-color: #ff5c5c;
-  --input-bg: #242631;
-  --header-bg: #222530;
-  --toggle-hover: rgba(255, 255, 255, 0.1);
-  --shadow-color: rgba(0, 0, 0, 0.2);
-}
-
-/* Apply theme variables to body */
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-  margin: 0;
-  padding: 0;
-}
-
-/* Ensure all transitions are smooth */
-* {
-  transition:
-    background-color 0.1s ease,
-    border-color 0.1s ease,
-    box-shadow 0.1s ease;
 }

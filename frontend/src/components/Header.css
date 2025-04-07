@@ -6,7 +6,7 @@
   background-color: var(--header-bg);
   box-shadow: 0 2px 8px var(--shadow-color);
   width: 100%;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .logo {
@@ -17,6 +17,7 @@
 .logo img {
   height: 40px;
   width: auto;
+  transition: opacity 0.3s ease;
 }
 
 .nav {
