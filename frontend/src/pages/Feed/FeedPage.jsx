@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "../../components/Header";
 import PostContainer from "../../components/PostContainer/PostContainer";
-import NewPost from "../../components/NewPost";
+import NewPost from "../../components/NewPost/NewPost";
 
 export function FeedPage() {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
