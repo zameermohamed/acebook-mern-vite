@@ -5,65 +5,65 @@ name: Build and Test
 on: push
 
 jobs:
-    build_and_test:
-        runs-on: macos-latest
-        environment: Testing
+  build_and_test:
+    runs-on: macos-latest
+    environment: Testing
 
-        steps:
-            - name: Check out the code
-              uses: actions/checkout@v3
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
 
-            - name: Install NVM (macOS)
-              run: |
-                  brew install nvm
-                  mkdir -p ~/.nvm
-                  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+      - name: Install NVM (macOS)
+        run: |
+          brew install nvm
+          mkdir -p ~/.nvm
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
-            - name: Load NVM
-              run: |
-                  export NVM_DIR="$HOME/.nvm"
-                  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" || echo "nvm.sh not found"
-                  echo "NVM_DIR=$NVM_DIR" >> $GITHUB_ENV
+      - name: Load NVM
+        run: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" || echo "nvm.sh not found"
+          echo "NVM_DIR=$NVM_DIR" >> $GITHUB_ENV
 
-            - name: Verify NVM Installation
-              run: |
-                  source $NVM_DIR/nvm.sh
-                  nvm --version
+      - name: Verify NVM Installation
+        run: |
+          source $NVM_DIR/nvm.sh
+          nvm --version
 
-            - name: Install Dependencies
-              run: |
-                  source $NVM_DIR/nvm.sh
-                  nvm install 20
-                  nvm use 20
-                  cd frontend
-                  npm install
-                  cd ../api
-                  npm install
+      - name: Install Dependencies
+        run: |
+          source $NVM_DIR/nvm.sh
+          nvm install 20
+          nvm use 20
+          cd frontend
+          npm install
+          cd ../api
+          npm install
 
-            - name: Install MongoDB (macOS)
-              run: |
-                  brew tap mongodb/brew
-                  brew install mongodb-community@6.0
+      - name: Install MongoDB (macOS)
+        run: |
+          brew tap mongodb/brew
+          brew install mongodb-community@6.0
 
-            - name: Start MongoDB Service (macOS)
-              run: |
-                  brew services start mongodb/brew/mongodb-community@6.0
+      - name: Start MongoDB Service (macOS)
+        run: |
+          brew services start mongodb/brew/mongodb-community@6.0
 
-            - name: Run Backend Tests with Coverage and Threshold
-              env:
-                  MONGODB_URL: ${{secrets.MONGODB_URL_TESTING}}
-                  JWT_SECRET: ${{secrets.JWT_SECRET}}
-              run: |
-                  # Run Jest with coverage enabled and thresholds set via jest.config.js
-                  cd api
-                  npx jest --coverage --coverageThreshold='{"global":{"branches":60,"functions":60,"lines":60,"statements":60}}'
+      - name: Run Backend Tests with Coverage and Threshold
+        env:
+          MONGODB_URL: ${{secrets.MONGODB_URL_TESTING}}
+          JWT_SECRET: ${{secrets.JWT_SECRET}}
+        run: |
+          # Run Jest with coverage enabled and thresholds set via jest.config.js
+          cd api
+          npx jest --coverage --coverageThreshold='{"global":{"branches":60,"functions":60,"lines":60,"statements":60}}'
 
-            - name: Run Frontend Tests
-              env:
-                  VITE_BACKEND_URL: ${{secrets.VITE_BACKEND_URL}}
-              run: |
-                  cd frontend
-                  npm run coverage
+      - name: Run Frontend Tests
+        env:
+          VITE_BACKEND_URL: ${{secrets.VITE_BACKEND_URL}}
+        run: |
+          cd frontend
+          npm run coverage
 
   deploy_backend:
     needs: build_and_test
