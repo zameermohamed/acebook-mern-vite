@@ -163,6 +163,7 @@ const deleteUser = async (req, res) =>
     }
 }
 
+
 const UsersController = {
     create: create,
     getUser: getUser,
