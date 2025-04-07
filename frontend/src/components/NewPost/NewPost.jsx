@@ -73,13 +73,14 @@ function NewPost({ onPostCreated }) {
                     />
                     <input
                         className="submitButton"
+                        data-testid="submit-button"
                         role="submit-button"
                         id="submit"
                         type="submit"
                         value="Post"
                     />
                     {error && (
-                        <div className="post-error-msg">
+                        <div className="post-error-msg" data-testid="post-error-msg">
                             <p>Post must contain some text</p>
                         </div>
                     )}
