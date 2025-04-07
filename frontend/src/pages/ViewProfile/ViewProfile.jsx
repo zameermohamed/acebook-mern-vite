@@ -13,31 +13,31 @@ export function ViewProfile() {
         let options = {
             month: "long",
             day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: false,
+            year: "numeric",
         };
         let formattedDate = dateFormat.toLocaleString("en-US", options);
         return formattedDate;
     };
     useEffect(() => {
         const token = localStorage.getItem("token");
-
-        async function fetchUser() {
-            try {
-            const userData = await getOtherUser(token, username);
-            setUser(userData)
-            console.log(userData)
-            } catch (error) {
-                console.error("failed to find user", error)
-            } 
+        const loggedIn = token !== null;
+        if (loggedIn) {
+            getOtherUser(token, username).then((data) => {
+                setUser(data);
+            });
         }
-
-        fetchUser();
-        }, [username]);
+    }, [username]);
 
     return (
-        <Header />
-    )
+        <>
+          <div>
+            <Header></Header>
+          </div>
+          {user && (<div className="profile-page">
+            <h1>{user.username}</h1>
+            {user.profilePicture && (<img src={user.profilePicture}/>)}
+            <p> User since: {formatDate(user.dateCreated)}</p>
+          </div>)}
+        </>
+      );
 }

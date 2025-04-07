@@ -8,20 +8,17 @@ export function MyProfile() {
   const formatDate = (date) => {
     let dateFormat = new Date(date);
 
-    // Options for formatting
-    let options = {
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
+        // Options for formatting
+        let options = {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+        };
+        let formattedDate = dateFormat.toLocaleString("en-US", options);
+        return formattedDate;
     };
-    let formattedDate = dateFormat.toLocaleString("en-US", options);
-    return formattedDate;
-  };
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+    useEffect(() => {
+        const token = localStorage.getItem("token");
 
     async function fetchUser() {
       try {
