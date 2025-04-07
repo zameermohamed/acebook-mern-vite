@@ -14,6 +14,7 @@ function Post(props) {
       second: "2-digit",
       hour12: false,
     };
+
     let formattedDate = dateFormat.toLocaleString("en-US", options);
     return formattedDate;
   };
