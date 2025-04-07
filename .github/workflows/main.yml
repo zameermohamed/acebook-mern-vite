@@ -67,7 +67,7 @@ jobs:
 
   deploy_backend:
     needs: build_and_test
-    if: success() # Only run if the build_and_test job succeeds
+    if: github.ref == 'refs/heads/main' && success()
     runs-on: ubuntu-latest
     steps:
       - name: Deploy Backend to Render
@@ -76,7 +76,7 @@ jobs:
 
   deploy_frontend:
     needs: build_and_test
-    if: success() # Only run if the build_and_test job succeeds
+    if: github.ref == 'refs/heads/main' && success()
     runs-on: ubuntu-latest
     steps:
       - name: Deploy Frontend to Render
