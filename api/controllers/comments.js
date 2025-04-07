@@ -4,7 +4,7 @@ const { decodeToken } = require("../lib/token");
 async function getAllCommentsPerPost(req, res) {
   const commentsFromPost = await Comment.find({
     postId: req.params.id,
-  }).populate("userId");
+  });
 
   console.log("comments from post", commentsFromPost);
   res.status(200).json({
