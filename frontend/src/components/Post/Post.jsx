@@ -1,4 +1,5 @@
 import "../Post/Post.css";
+import { Link } from "react-router-dom";
 
 function Post(props) {
   const formatDate = (date) => {
@@ -17,10 +18,10 @@ function Post(props) {
     return formattedDate;
   };
   return (
-    <link
+    <Link
       className="post-card"
       key={props.post._id}
-      href={`posts/${props.post._id}`}
+      to={`/posts/${props.post._id}`}
     >
       <p className="post-card-date">{formatDate(props.post.createdAt)}</p>
       <div className="post-card-user-info">
@@ -33,7 +34,7 @@ function Post(props) {
       <p data-testid="post-message" className="post-message">
         {props.post.message}
       </p>
-    </link>
+    </Link>
   );
 }
 export default Post;
