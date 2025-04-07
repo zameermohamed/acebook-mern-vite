@@ -64,6 +64,12 @@ function NewPost({ onPostCreated }) {
                         type="text"
                         value={text}
                         onChange={handlePostChange}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault(); // prevent newline
+                              handleSubmit(e);
+                            }
+                          }}
                     />
                     <input
                         className="submitButton"
