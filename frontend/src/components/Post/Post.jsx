@@ -16,11 +16,12 @@ function Post(props) {
         let formattedDate = dateFormat.toLocaleString("en-US", options);
         return formattedDate;
     };
+    console.log("Post =>", props.singlePost);
     return (
         <a
             className="post-card"
             key={props.post._id}
-            href={`posts/${props.post._id}`}
+            href={!props.singlePost ? `posts/${props.post._id}` : undefined}
         >
             <p className="post-card-date">{formatDate(props.post.createdAt)}</p>
             <div className="post-card-user-info">
