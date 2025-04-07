@@ -1,5 +1,4 @@
 const Comment = require("../models/comment");
-const { decodeToken } = require("../lib/token");
 
 async function getAllCommentsPerPost(req, res) {
   const commentsFromPost = await Comment.find({
