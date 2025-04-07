@@ -30,6 +30,7 @@ function Post(props) {
           className="post-card-user-picture"
           src={props.post.userId.profilePicture}
         />
+
         <div className="post-card-user-name">{props.post.userId.username}</div>
       </div>
       <p data-testid="post-message" className="post-message">
