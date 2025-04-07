@@ -59,6 +59,8 @@ async function getUser(req, res) {
       username: foundUser.username,
       profilePicture: foundUser.profilePicture,
       token: token,
+      dateCreated: foundUser.dateCreated,
+      email: foundUser.email,
     });
     console.log(foundUser);
   } catch (err) {
