@@ -68,16 +68,13 @@ async function getUser(req, res) {
     }
 }
 
-async function getOtherUser(req, res) {
+async function getOtherUser(req, res, next) {
     const username = req.params.username;
     try {
         const foundUser = await User.findOne({ username: username });
-        res.status(200).json({
-            username: foundUser.username,
-            profilePicture: foundUser.profilePicture,
-            dateCreated: foundUser.dateCreated,
-        });
+        req.foundUser = foundUser;
         console.log("from users: ")
+        next();
     } catch (err) {
         return res.status(400).json({ message: "Invalid username"})
     }

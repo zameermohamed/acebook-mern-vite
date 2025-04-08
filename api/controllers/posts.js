@@ -9,14 +9,16 @@ async function getAllPosts(req, res) {
 }
 
 async function getPostsByUser(req, res) {
-  const username = req.params.username; 
+  const username = req.params.username;
+  console.log(`from posts: controller`, req.user_id)
   try {
     const user = await User.findOne({ username: username });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const foundPosts = await Post.find({ userId: user._id }).populate("userId");
-    res.status(200).json({ posts: foundPosts })
+    const foundPosts = await Post.find({ userId: user._id })
+    console.log(req.foundUser)
+    res.status(200).json({ posts: foundPosts, foundUser: req.foundUser })
   } catch(err) {
     console.error(err)
   }
