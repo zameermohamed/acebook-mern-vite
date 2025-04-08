@@ -1,11 +1,9 @@
 const Like = require("../models/like");
 const Post = require("../models/post");
 
-// can access userId from req.user_id as seen in middleware
-
 async function likePost(req, res) {
   const userId = req.user_id;
-  const { postId } = req.params;
+  const postId = req.params.id;
 
   try {
     // duplicate check for a like
@@ -17,11 +15,7 @@ async function likePost(req, res) {
         .json({ error: "You have already liked this post" });
     }
 
-    // If no duplicate, creates a new like, incrementing the count by 1
-    // $inc is MongoDD incrementor, used to increment or decrement a number with + or -
     const like = await Like.create({ userId, postId });
-    await Post.findByIdAndUpdate(postId, { $inc: { likesCount: 1 } });
-
     res.status(201).json({ message: "Post liked!", like });
   } catch (error) {
     console.error("likes controller error:", error);
@@ -34,7 +28,7 @@ async function likePost(req, res) {
 
 async function unLikePost(req, res) {
   const userId = req.user_id;
-  const { postId } = req.params;
+  const postId = req.params.id;
 
   try {
     const existingLike = await Like.findOne({ userId, postId });
@@ -46,7 +40,6 @@ async function unLikePost(req, res) {
     }
 
     await Like.findOneAndDelete({ userId, postId });
-    await Post.findByIdAndUpdate(postId, { $inc: { likesCount: -1 } });
 
     res.status(200).json({ message: "Post unliked!" });
   } catch (error) {
@@ -58,13 +51,56 @@ async function unLikePost(req, res) {
   }
 }
 
-// Left comment in for now in case we want this functionality
-// async function getAllLikes(req, res) {}
+async function getLikesFromPostID(req, res) {
+  const userId = req.user_id;
+  const { postId } = req.params;
+
+  try {
+    const posts = req.posts;
+
+    const postIds = posts.map((post) => post._id);
+
+    // Fetch all likes for these postIds
+    const allLikes = await Like.find({ postId: { $in: postIds } });
+
+    // Create maps for fast lookup
+    const likesCountMap = {};
+    const userLikedSet = new Set();
+
+    allLikes.forEach((like) => {
+      const postIdStr = like.postId.toString();
+
+      // Count total likes per post
+      likesCountMap[postIdStr] = (likesCountMap[postIdStr] || 0) + 1;
+
+      // Track posts the current user has liked
+      if (like.userId.toString() === userId.toString()) {
+        userLikedSet.add(postIdStr);
+      }
+    });
+
+    // Add likes data to each post object
+    const enrichedPosts = posts.map((post) => {
+      const postIdStr = post._id.toString();
+
+      return {
+        ...post.toObject(),
+        likesCount: likesCountMap[postIdStr] || 0,
+        userHasLiked: userLikedSet.has(postIdStr),
+      };
+    });
+
+    res.json({ posts: enrichedPosts, token: req.token });
+  } catch (error) {
+    console.error("Error getting likes:", error);
+    res.status(400).json({ error: "Could not determine like status" });
+  }
+}
 
 const LikesController = {
   likePost,
   unLikePost,
-  // getAllLikes,
+  getLikesFromPostID,
 };
 
 module.exports = LikesController;
