@@ -28,7 +28,10 @@ export async function getPostsByUser(token, username) {
         },
     };
 
-    const response = await fetch(`${BACKEND_URL}/users/${username}`, requestOptions);
+    const response = await fetch(
+        `${BACKEND_URL}/users/${username}`,
+        requestOptions
+    );
 
     if (response.status !== 200) {
         throw new Error("Unable to fetch posts");
@@ -38,16 +41,22 @@ export async function getPostsByUser(token, username) {
     return data;
 }
 
-export async function createPost(token, text) {
+export async function createPost(token, text, picture) {
+    const formData = new FormData();
+
     const decodedToken = jwtDecode(token); // MICHAL - get decoded token
-    const payload = { message: text, userId: decodedToken.user_id }; // MICHAL - add userID here, to save it in the database
+    formData.append("picture", picture);
+    formData.append("message", text);
+    formData.append("userId", decodedToken.user_id);
+    console.log("form data => ", formData.getAll("picture"));
+
+    // MICHAL - add userID here, to save it in the database
     const requestOptions = {
         method: "POST",
         headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: formData,
     };
 
     const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);
