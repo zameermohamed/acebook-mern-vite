@@ -20,6 +20,24 @@ export async function getPosts(token) {
     return data;
 }
 
+export async function getPostsByUser(token, username) {
+    const requestOptions = {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
+
+    const response = await fetch(`${BACKEND_URL}/users/${username}`, requestOptions);
+
+    if (response.status !== 200) {
+        throw new Error("Unable to fetch posts");
+    }
+
+    const data = await response.json();
+    return data;
+}
+
 export async function createPost(token, text) {
     const decodedToken = jwtDecode(token); // MICHAL - get decoded token
     const payload = { message: text, userId: decodedToken.user_id }; // MICHAL - add userID here, to save it in the database

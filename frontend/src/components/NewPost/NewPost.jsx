@@ -20,7 +20,6 @@ function NewPost({ onPostCreated }) {
                     console.error("getUser returned undefined");
                     return;
                 }
-                console.log(data);
                 setUsername(data.username);
                 setProfilePicture(data.profilePicture);
             });
