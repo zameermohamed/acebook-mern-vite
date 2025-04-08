@@ -27,6 +27,7 @@ export function ViewProfile() {
       getPostsByUser(token, username).then((data) => {
         setUser(data.foundUser);
         setPosts(data.posts)
+        console.log(data)
       });
     }
   }, [username]);
@@ -37,7 +38,7 @@ export function ViewProfile() {
         <Header></Header>
       </div>
       {user && (<div className="profile-page">
-        <h1>{user.username}</h1>
+        <h1 data-testid="username">{user.username}</h1>
         {user.profilePicture && (<img src={user.profilePicture}/>)}
         <p> User since: {formatDate(user.dateCreated)}</p> 
         <ProfilePostContainer posts={posts}/>

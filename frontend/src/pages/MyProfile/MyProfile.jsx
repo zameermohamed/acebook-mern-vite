@@ -45,7 +45,7 @@ export function MyProfile() {
         <div className="profile-page">
           <h1>My Profile</h1>
           {user.profilePicture && <img src={user.profilePicture} />}
-          <p> Username: {user.username}</p>
+          <p data-testid="username"> Username: {user.username}</p>
           <p> Email: {user.email}</p>
           <p> User since: {formatDate(user.dateCreated)}</p>
           <NewPost />
