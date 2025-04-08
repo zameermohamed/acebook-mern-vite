@@ -2,6 +2,7 @@ const express = require("express");
 const tokenChecker = require("../middleware/tokenChecker");
 
 const UsersController = require("../controllers/users");
+const PostsController = require("../controllers/posts");
 
 const router = express.Router();
 
