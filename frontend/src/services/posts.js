@@ -27,7 +27,6 @@ export async function getPostsByUser(token, username) {
             Authorization: `Bearer ${token}`,
         },
     };
-    console.log(`from get posts`)
 
     const response = await fetch(`${BACKEND_URL}/users/${username}`, requestOptions);
 
