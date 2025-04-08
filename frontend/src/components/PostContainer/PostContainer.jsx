@@ -14,7 +14,6 @@ const PostContainer = ({ refreshTrigger }) => {
     if (loggedIn) {
       getPosts(token)
         .then((data) => {
-          console.log("post container =>", data);
           setPosts(data.posts);
           localStorage.setItem("token", data.token);
         })

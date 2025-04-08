@@ -1,5 +1,4 @@
 function CommentContainer(props) {
-    console.log("comment container =>", props.comments);
     return (
         <div className="comments-container">
             <h3>Comments</h3>

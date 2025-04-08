@@ -33,6 +33,7 @@ export async function signup(email, password, username) {
     email: email,
     password: password,
     username: username,
+    profilePicture: "https://tse4.mm.bing.net/th?id=OIP.Z5BlhFYs_ga1fZnBWkcKjQHaHz&pid=Api"
   };
 
   const requestOptions = {

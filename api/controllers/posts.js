@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const User = require("../models/user");
 const { generateToken } = require("../lib/token");
 
 async function getAllPosts(req, res) {
@@ -6,6 +7,20 @@ async function getAllPosts(req, res) {
 
   const token = generateToken(req.user_id);
   res.status(200).json({ posts: posts, token: token });
+}
+
+async function getPostsByUser(req, res) {
+  const username = req.params.username;
+  try {
+    const user = await User.findOne({ username: username });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const foundPosts = await Post.find({ userId: user._id });
+    res.status(200).json({ posts: foundPosts, foundUser: user });
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 async function getPost(req, res, next) {
@@ -55,6 +70,7 @@ const PostsController = {
   getPost: getPost,
   createPost: createPost,
   deletePost: deletePost,
+  getPostsByUser: getPostsByUser,
 };
 
 module.exports = PostsController;
