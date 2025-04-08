@@ -54,7 +54,7 @@ export function PostPage() {
               refreshTrigger={refreshTrigger}
               comments={commentsData}
             />
-            <AddComment onCommentCreated={refreshComments} />
+            <AddComment postId={id} onCommentCreated={refreshComments} />
           </>
         )}
       </div>

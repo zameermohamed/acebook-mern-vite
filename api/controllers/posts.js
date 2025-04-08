@@ -30,15 +30,6 @@ async function getPost(req, res, next) {
   const postId = req.params.id;
   try {
     const foundPost = await Post.findOne({ _id: postId }).populate("userId");
-    const postId = req.params.id;
-    try {
-      const foundPost = await Post.findOne({ _id: postId }).populate("userId");
-
-      req.postData = foundPost;
-      next();
-    } catch (err) {
-      return res.status(400).json({ message: "Invalid post ID format" });
-    }
     req.postData = foundPost;
     next();
   } catch (err) {

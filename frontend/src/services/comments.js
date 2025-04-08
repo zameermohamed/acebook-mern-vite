@@ -16,9 +16,10 @@ export async function createComment(token, text, post_id) {
     body: JSON.stringify(payload),
   };
 
+  // Keep using /posts/:id as per your existing routing
   const response = await fetch(
     `${BACKEND_URL}/posts/${post_id}`,
-    requestOptions
+    requestOptions,
   );
 
   if (response.status !== 201) {
