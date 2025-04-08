@@ -10,7 +10,6 @@ const UserSchema = new mongoose.Schema({
   password: { 
     type: String, 
     required: [true, "Password is required"],
-    unique: true,
     minlength: [8,"Password must be at least 8 characters"],
     validate: {
       validator: function (value) {
@@ -38,10 +37,11 @@ const UserSchema = new mongoose.Schema({
 // Hash password
 UserSchema.pre("save", async function (next) {
   try {
-    // Generate salt
-    const salt = await bcrypt.genSalt(10); 
-    // Hash password
-    this.password = await bcrypt.hash(this.password, salt); 
+    // If password is modified, hash it
+    if (this.isModified("password")) {
+      const salt = await bcrypt.genSalt(10);
+      this.password = await bcrypt.hash(this.password, salt);
+    }
     next();
   } catch (error) {
     next(error);
