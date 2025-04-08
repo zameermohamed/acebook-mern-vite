@@ -1,5 +1,6 @@
 const request = require("supertest");
 const JWT = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
 const app = require("../../app");
 const Post = require("../../models/post");
@@ -23,21 +24,19 @@ function createToken(userId) {
 }
 
 let token;
+let user;
 describe("/posts", () => {
-  beforeAll(async () => {
-    const user = new User({
+  beforeEach(async () => {
+    await User.deleteMany({});
+    await Post.deleteMany({});
+
+    user = new User({
       email: "post-test@test.com",
       password: "Post1234!",
       username: "posttest",
     });
     await user.save();
-    await Post.deleteMany({});
     token = createToken(user.id);
-  });
-
-  afterEach(async () => {
-    await User.deleteMany({});
-    await Post.deleteMany({});
   });
 
   // linter may cause issues - just make change and re save
@@ -106,8 +105,14 @@ describe("/posts", () => {
 
   describe("GET, when token is present", () => {
     test("the response code is 200", async () => {
-      const post1 = new Post({ message: "I love all my children equally" });
-      const post2 = new Post({ message: "I've never cared for GOB" });
+      const post1 = new Post({
+        message: "I love all my children equally",
+        userId: user.id,
+      });
+      const post2 = new Post({
+        message: "I've never cared for GOB",
+        userId: user.id,
+      });
       await post1.save();
       await post2.save();
 
@@ -119,8 +124,8 @@ describe("/posts", () => {
     });
 
     test("returns every post in the collection", async () => {
-      const post1 = new Post({ message: "howdy!" });
-      const post2 = new Post({ message: "hola!" });
+      const post1 = new Post({ message: "howdy!", userId: user.id });
+      const post2 = new Post({ message: "hola!", userId: user.id });
       await post1.save();
       await post2.save();
 
@@ -137,8 +142,8 @@ describe("/posts", () => {
     });
 
     test("returns a new token", async () => {
-      const post1 = new Post({ message: "First Post!" });
-      const post2 = new Post({ message: "Second Post!" });
+      const post1 = new Post({ message: "First Post!", userId: user.id });
+      const post2 = new Post({ message: "Second Post!", userId: user.id });
       await post1.save();
       await post2.save();
 
@@ -157,8 +162,8 @@ describe("/posts", () => {
 
   describe("GET, when token is missing", () => {
     test("the response code is 401", async () => {
-      const post1 = new Post({ message: "howdy!" });
-      const post2 = new Post({ message: "hola!" });
+      const post1 = new Post({ message: "howdy!", userId: user.id });
+      const post2 = new Post({ message: "hola!", userId: user.id });
       await post1.save();
       await post2.save();
 
@@ -168,8 +173,8 @@ describe("/posts", () => {
     });
 
     test("returns no posts", async () => {
-      const post1 = new Post({ message: "howdy!" });
-      const post2 = new Post({ message: "hola!" });
+      const post1 = new Post({ message: "howdy!", userId: user.id });
+      const post2 = new Post({ message: "hola!", userId: user.id });
       await post1.save();
       await post2.save();
 
@@ -179,14 +184,95 @@ describe("/posts", () => {
     });
 
     test("does not return a new token", async () => {
-      const post1 = new Post({ message: "howdy!" });
-      const post2 = new Post({ message: "hola!" });
+      const post1 = new Post({ message: "howdy!", userId: user.id });
+      const post2 = new Post({ message: "hola!", userId: user.id });
       await post1.save();
       await post2.save();
 
       const response = await request(app).get("/posts");
 
       expect(response.body.token).toEqual(undefined);
+    });
+  });
+
+  describe("DELETE, when a valid token is present", () => {
+    test("responds with a 200 when given valid post id", async () => {
+      await request(app)
+        .post("/posts")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ message: "Hello World!" });
+      const post_id = (await Post.find())[0]._id.toString();
+      const response = await request(app)
+        .delete(`/posts/${post_id}`)
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.status).toEqual(200);
+      expect(response.body.message).toBe("Post deleted successfully");
+    });
+    test("responds with a 404 when given invalid post id", async () => {
+      await request(app)
+        .post("/posts")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ message: "Hello World!" });
+      const invalidId = new mongoose.Types.ObjectId();
+      const response = await request(app)
+        .delete(`/posts/${invalidId}`)
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.status).toEqual(404);
+      expect(response.body.message).toBe("Post not found");
+    });
+
+    test("responds with a 403 when trying to delete anothers users post", async () => {
+      await request(app)
+        .post("/posts")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ message: "Hello World!" });
+      const post_id = (await Post.find())[0]._id.toString();
+
+      const user_2 = new User({
+        email: "post-test-2@test.com",
+        password: "Post4321!",
+        username: "posttest_2",
+      });
+      await user_2.save();
+      const token_2 = createToken(user_2.id);
+
+      const response = await request(app)
+        .delete(`/posts/${post_id}`)
+        .set("Authorization", `Bearer ${token_2}`);
+      expect(response.status).toEqual(403);
+      expect(response.body.message).toBe(
+        "Unable to delete - User id not matching post"
+      );
+    });
+    test("responds with a 400 for other errors", async () => {
+      await request(app)
+        .post("/posts")
+        .set("Authorization", `Bearer ${token}`)
+        .send({ message: "Hello World!" });
+      const response = await request(app)
+        .delete(`/posts/1111`)
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.status).toEqual(400);
+      expect(response.body.message).toBe("Error deleting post");
+    });
+  });
+  describe("GET /posts/:id", () => {
+    test("sets req.postData and calls next for a valid post ID", async () => {
+      const post = new Post({ message: "Test Post", userId: user.id });
+      await post.save();
+      const post_id = post._id.toString();
+      const response = await request(app)
+        .get(`/posts/${post_id}`)
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.status).toEqual(200);
+    });
+
+    test("responds with a 400 when given an invalid post ID format", async () => {
+      const response = await request(app)
+        .get("/posts/invalidId")
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.status).toEqual(400);
+      expect(response.body.message).toBe("Invalid post ID format");
     });
   });
 });
