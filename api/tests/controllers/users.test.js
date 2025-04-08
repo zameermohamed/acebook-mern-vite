@@ -3,6 +3,8 @@ const JWT = require("jsonwebtoken");
 
 const app = require("../../app");
 const User = require("../../models/user");
+const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 
 require("../mongodb_helper");
 
@@ -217,4 +219,267 @@ describe("/users", () => {
             expect(response.body.message).toEqual("User not found");
         });
     });
-});
+
+    describe("PUT, update user details", () => { 
+        test("successfully updates all user details", async () => {
+            const user = new User({
+                email: "test@user.com",
+                password: "InitialPassword123!",
+                username: "initialUser2",
+                fullName: "Initial Name",
+                bio: "Hello world!",
+            });
+            await user.save();
+            const token = createToken(user._id);
+            const response = await request(app)
+                .put("/users")
+                .set("Authorization", `Bearer ${token}`)
+                .send({
+                    username: "updatedUser",
+                    email: "updatedEmail@example.com",
+                    fullName: "Updated Name",
+                    profilePicture: "updatedProfilePicturePath",
+                    bio: "Updated bio!",
+                    currentPassword: "InitialPassword123!",
+                    password: "NewValidPassword123!"
+                })
+
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe("User updated successfully");
+            expect(response.body.user.username).toBe("updatedUser");
+            expect(response.body.user.email).toBe("updatedEmail@example.com");
+            expect(response.body.user.fullName).toBe("Updated Name");
+            expect(response.body.user.profilePicture).toBe("updatedProfilePicturePath");
+            expect(response.body.user.bio).toBe("Updated bio!");
+
+            const updatedUser = await User.findById(user._id);
+            expect(updatedUser.username).toBe("updatedUser");
+            expect(updatedUser.email).toBe("updatedEmail@example.com");
+            expect(updatedUser.fullName).toBe("Updated Name");
+            expect(updatedUser.profilePicture).toBe("updatedProfilePicturePath");
+            expect(updatedUser.bio).toBe("Updated bio!");
+        });
+
+        test("when username is in use throws an error", async () => {
+            const user1 = new User({
+                email: "test@user.com",
+                password: "InitialPassword123!",
+                username: "initialUser1",
+                fullName: "Initial Name",
+                bio: "Hello world!",
+            });
+            await user1.save();
+
+            const user2 = new User({
+                email: "test2@user.com",
+                password: "InitialPassword123!",
+                username: "initialUser2",
+                fullName: "Initial Namee",
+                bio: "Hello world!!",
+            });
+            await user2.save();
+
+            const token1 = createToken(user1._id);
+            const token2 = createToken(user2._id);
+
+            const response = await request(app)
+                .put("/users")
+                .set("Authorization", `Bearer ${token1}`)
+                .send({
+                    username: "initialUser2",
+                })
+
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe("Username is already in use");
+        });
+
+        test("when email is in use throws an error", async () => {
+            const user1 = new User({
+                email: "test@user.com",
+                password: "InitialPassword123!",
+                username: "initialUser1",
+                fullName: "Initial Name",
+                bio: "Hello world!",
+            });
+            await user1.save();
+
+            const user2 = new User({
+                email: "test2@user.com",
+                password: "InitialPassword123!",
+                username: "initialUser2",
+                fullName: "Initial Namee",
+                bio: "Hello world!!",
+            });
+            await user2.save();
+
+            const token1 = createToken(user1._id);
+            const token2 = createToken(user2._id);
+
+            const response = await request(app)
+                .put("/users")
+                .set("Authorization", `Bearer ${token1}`)
+                .send({
+                    email: "test2@user.com",
+                })
+
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe("Email is already in use");
+        });
+
+        test("successfully updates password", async () => {
+            const user = new User({
+                email: "test@user.com",
+                password: "InitialPassword123!",
+                username: "initialUser1",
+                fullName: "Initial Name",
+                bio: "Hello world!",
+            });
+            await user.save();
+            const token = createToken(user._id);
+            const response = await request(app)
+                .put("/users")
+                .set("Authorization", `Bearer ${token}`)
+                .send({
+                    password: "NewPassword123!",
+                    currentPassword: "InitialPassword123!"
+                })    
+                console.log(response.body);
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe("User updated successfully");
+        });
+
+        test("throws an error when current password is wrong", async () => {
+            const user = new User({
+                email: "test@user.com",
+                password: "InitialPassword123!",
+                username: "initialUser1",
+                fullName: "Initial Name",
+                bio: "Hello world!",
+            });
+            await user.save();
+            const token = createToken(user._id);
+            const response = await request(app)
+                .put("/users")
+                .set("Authorization", `Bearer ${token}`)
+                .send({
+                    password: "NewPassword123!",
+                    currentPassword: "InitialPassword13!"
+                })    
+                
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe("Current password is incorrect");
+        });
+
+        test("returns 400 if an error occurs during updateUser", async () => {
+            const user = new User({
+                email: "catchblock@test.com",
+                password: "Password123!",
+                username: "catchUser",
+                fullName: "Catch Block Test",
+            });
+            await user.save();
+            
+            const token = createToken(user._id);
+            
+            
+            jest.spyOn(User, "findById").mockImplementationOnce(() => {
+            throw new Error("Simulated DB failure");
+            });
+            
+            const response = await request(app)
+                .put("/users")
+                .set("Authorization", `Bearer ${token}`)
+                .send({
+                    username: "newUsername",
+                    fullName: "Updated Name",
+            });
+            
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe("Simulated DB failure");
+            
+            User.findById.mockRestore();
+        });
+
+        test("returns 404 if user not found", async () => {
+            const fakeUserId = new mongoose.Types.ObjectId();
+            const token = createToken(fakeUserId);
+        
+            const response = await request(app)
+                .put("/users")
+                .set("Authorization", `Bearer ${token}`)
+                .send({
+                    username: "Username",
+                    email: "newemail@example.com",
+                });
+        
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe("User not found");
+        });
+
+    });
+
+    describe("DELETE /users", () => {
+        test("successfully deletes a user", async () => {
+            const user = new User({
+                email: "deleteuser@example.com",
+                password: "Password123!",
+                username: "deleteUser",
+                fullName: "Delete Me",
+                bio: "Temporary user",
+            });
+            await user.save();
+        
+            const token = createToken(user._id);
+        
+
+            const response = await request(app)
+                .delete("/users")
+                .set("Authorization", `Bearer ${token}`);
+        
+            expect(response.status).toBe(200);
+            expect(response.body.message).toBe("User deleted successfully");
+        
+    
+            const deletedUser = await User.findById(user._id);
+            expect(deletedUser).toBeNull();
+        });
+        
+        test("returns 404 if user not found", async () => {
+
+            const fakeUserId = "643e47a4b4d8f6a8b96e25c1"; 
+            const token = createToken(fakeUserId);
+        
+            const response = await request(app)
+                .delete("/users")
+                .set("Authorization", `Bearer ${token}`);
+        
+            expect(response.status).toBe(404);
+            expect(response.body.message).toBe("User not found");
+        });
+
+        test("returns 400 if an error occurs during deletion", async () => {
+            const user = new User({
+                email: "erroruser@example.com",
+                password: "Password123!",
+                username: "errorUser",
+                fullName: "Error Test",
+            });
+            await user.save();
+        
+            const token = createToken(user._id);
+            
+            jest.spyOn(User, "findByIdAndDelete").mockImplementationOnce(() => {
+                throw new Error("Database error");
+            });
+        
+            const response = await request(app)
+                .delete("/users")
+                .set("Authorization", `Bearer ${token}`);
+        
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe("Database error");
+        
+            User.findByIdAndDelete.mockRestore();
+        });
+    });
+})
