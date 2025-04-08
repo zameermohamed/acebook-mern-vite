@@ -14,29 +14,4 @@ describe("Home Page", () => {
     const heading = screen.getByRole("heading");
     expect(heading.textContent).toEqual("Welcome to Acebook!");
   });
-
-  // These tests should get moved to a test of the Header.jsx component
-  // since that is the element responsible for login/signup links now
-
-  // test("Displays a signup link", async () => {
-  //   render(
-  //     <BrowserRouter>
-  //       <HomePage />
-  //     </BrowserRouter>,
-  //   );
-
-  //   const signupLink = screen.getByText("Sign Up");
-  //   expect(signupLink.getAttribute("href")).toEqual("/signup");
-  // });
-
-  // test("Displays a login link", async () => {
-  //   render(
-  //     <BrowserRouter>
-  //       <HomePage />
-  //     </BrowserRouter>,
-  //   );
-
-  //   const loginLink = screen.getByText("Log In");
-  //   expect(loginLink.getAttribute("href")).toEqual("/login");
-  // });
 });
