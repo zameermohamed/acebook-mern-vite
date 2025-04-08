@@ -87,6 +87,7 @@ describe("authentication service", () => {
           email: testEmail,
           password: testPassword,
           username: testUsername,
+          profilePicture: "https://tse4.mm.bing.net/th?id=OIP.Z5BlhFYs_ga1fZnBWkcKjQHaHz&pid=Api"
         }),
       );
       expect(options.headers["Content-Type"]).toEqual("application/json");

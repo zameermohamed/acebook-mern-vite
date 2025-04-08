@@ -5,7 +5,6 @@ async function getAllCommentsPerPost(req, res) {
     postId: req.params.id,
   });
 
-  console.log("comments from post", commentsFromPost);
   res.status(200).json({
     postData: req.postData,
     comments: commentsFromPost,
