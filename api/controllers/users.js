@@ -68,22 +68,9 @@ async function getUser(req, res) {
     }
 }
 
-async function getOtherUser(req, res, next) {
-    const username = req.params.username;
-    try {
-        const foundUser = await User.findOne({ username: username });
-        req.foundUser = foundUser;
-        console.log("from users: ")
-        next();
-    } catch (err) {
-        return res.status(400).json({ message: "Invalid username"})
-    }
-}
-
 const UsersController = {
     create: create,
     getUser: getUser,
-    getOtherUser: getOtherUser
 };
 
 module.exports = UsersController;
