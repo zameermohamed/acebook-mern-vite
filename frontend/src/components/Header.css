@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   background-color: var(--header-bg);
   box-shadow: 0 2px 8px var(--shadow-color);
   width: 100%;
