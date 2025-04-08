@@ -2,9 +2,13 @@ import Header from "../../components/Header";
 import "./MyProfile.css";
 import { getUser } from "../../services/users";
 import { useEffect, useState } from "react";
+import { getPostsByUser } from "../../services/posts";
+import ProfilePostContainer from "../../components/ProfilePostContainer";
+import NewPost from "../../components/NewPost/NewPost";
 
 export function MyProfile() {
   const [user, setUser] = useState(null);
+  const [posts, setPosts] = useState(null);
   const formatDate = (date) => {
     let dateFormat = new Date(date);
         // Options for formatting
@@ -18,12 +22,13 @@ export function MyProfile() {
   };
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     async function fetchUser() {
       try {
-        const userData = await getUser(token);
-        setUser(userData);
-        console.log(userData);
+        const userData = await getUser(token)
+        getPostsByUser(token, userData.username).then((data) => {
+          setUser(userData);
+          setPosts(data.posts);
+      })
       } catch (error) {
         console.error("failed to find user", error);
       }
@@ -31,7 +36,6 @@ export function MyProfile() {
 
     fetchUser();
   }, []);
-  console.log("user:", user);
   return (
     <>
       <div>
@@ -44,6 +48,8 @@ export function MyProfile() {
           <p> Username: {user.username}</p>
           <p> Email: {user.email}</p>
           <p> User since: {formatDate(user.dateCreated)}</p>
+          <NewPost />
+          <ProfilePostContainer posts={posts}/>
         </div>
       )}
     </>

@@ -2,7 +2,6 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 import { jwtDecode } from "jwt-decode"; // MICHAL - import jwt decode
 
 export async function createComment(token, text, post_id) {
-    console.log("From services");
     const decodedToken = jwtDecode(token);
     const payload = {
         message: text,
