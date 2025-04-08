@@ -19,24 +19,30 @@ function Post(props) {
     return formattedDate;
   };
   return (
-    <Link
-      className="post-card"
-      key={props.post._id}
-      to={`/posts/${props.post._id}`}
-    >
-      <p className="post-card-date">{formatDate(props.post.createdAt)}</p>
-      <div className="post-card-user-info">
-        <img
-          className="post-card-user-picture"
-          src={props.post.userId.profilePicture}
-        />
+    <>
+      {props.post.userId && (
+        <Link
+          className="post-card"
+          key={props.post._id}
+          to={`/posts/${props.post._id}`}
+        >
+          <p className="post-card-date">{formatDate(props.post.createdAt)}</p>
+          <div className="post-card-user-info">
+            <img
+              className="post-card-user-picture"
+              src={props.post.userId.profilePicture}
+            />
 
-        <div className="post-card-user-name">{props.post.userId.username}</div>
-      </div>
-      <p data-testid="post-message" className="post-message">
-        {props.post.message}
-      </p>
-    </Link>
+            <div className="post-card-user-name">
+              {props.post.userId.username}
+            </div>
+          </div>
+          <p data-testid="post-message" className="post-message">
+            {props.post.message}
+          </p>
+        </Link>
+      )}
+    </>
   );
 }
 export default Post;
