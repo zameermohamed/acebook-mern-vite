@@ -23,14 +23,17 @@ async function getPostsByUser(req, res) {
 }
 
 async function getPost(req, res, next) {
-  const postId = req.params.id;
-  try {
-    const foundPost = await Post.findOne({ _id: postId });
-    req.postData = foundPost;
-    next();
-  } catch (err) {
-    return res.status(400).json({ message: "Invalid post ID format" });
-  }
+    const postId = req.params.id;
+    try {
+        const foundPost = await Post.findOne({ _id: postId }).populate(
+            "userId"
+        );
+
+        req.postData = foundPost;
+        next();
+    } catch (err) {
+        return res.status(400).json({ message: "Invalid post ID format" });
+    }
 }
 
 async function createPost(req, res) {

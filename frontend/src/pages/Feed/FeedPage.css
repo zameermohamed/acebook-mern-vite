@@ -1,0 +1,41 @@
+.feed-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+.feed-page-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #333;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+/* Container to limit width of content */
+.feed-content {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .feed-page {
+    padding: 0.5rem;
+  }
+
+  .feed-page-title {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+  }
+}
+.feed-page {
+  background-color: var(--bg-color);
+}
+
+.feed-page-title {
+  color: var(--text-color);
+}

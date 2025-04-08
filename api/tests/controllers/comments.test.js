@@ -1,78 +1,175 @@
-const request = require("supertest");
-const JWT = require("jsonwebtoken");
-const app = require("../../app");
-const Post = require("../../models/post");
-const User = require("../../models/user");
+const CommentsController = require("../../controllers/comments");
 const Comment = require("../../models/comment");
-const { decodeToken } = require("../../lib/token");
-const { describe, beforeEach } = require("node:test");
-const secret = process.env.JWT_SECRET;
-require("../mongodb_helper");
 
-function createToken(userId) {
-    return JWT.sign(
-        {
-            user_id: userId,
-            // Backdate this token of 5 minutes
-            iat: Math.floor(Date.now() / 1000) - 5 * 60,
-            // Set the JWT token to expire in 10 minutes
-            exp: Math.floor(Date.now() / 1000) + 10 * 60,
-        },
-        secret
-    );
-}
+// Mock the Comment model
+jest.mock("../../models/comment");
 
-let token;
-describe("GET with a valid postId", () => {
-    let post;
-    beforeAll(async () => {
-        await Post.deleteMany({});
-        await User.deleteMany({});
-        await Comment.deleteMany({});
-        user = new User({
-            email: "post-test@test.com",
-            password: "Post1234!",
-            username: "posttest",
-        });
-        await user.save();
-        token = createToken(user.id);
-        post = new Post({
-            message: "Hello World!",
-            userId: user._id,
-        });
-        await post.save();
-        comment = new Comment({
-            message: "Hi right back at you!",
-            userId: user._id,
-            postId: post._id,
-        });
-        await comment.save();
-    });
-    afterEach(async () => {
-        await User.deleteMany({});
-        await Post.deleteMany({});
-        await Comment.deleteMany({});
+describe("CommentsController", () => {
+  let req;
+  let res;
+
+  beforeEach(() => {
+    // Reset mocks before each test
+    jest.clearAllMocks();
+
+    // Set up request and response objects
+    req = {
+      params: { id: "mockPostId" },
+      user_id: "mockUserId",
+      body: {},
+      postData: { title: "Mock Post" },
+    };
+
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    };
+  });
+
+  describe("getAllCommentsPerPost", () => {
+    it("should return all comments for a post", async () => {
+      // Arrange
+      const mockComments = [
+        { _id: "comment1", postId: "mockPostId", message: "First comment" },
+        { _id: "comment2", postId: "mockPostId", message: "Second comment" },
+      ];
+
+      Comment.find.mockResolvedValue(mockComments);
+
+      // Act
+      await CommentsController.getAllCommentsPerPost(req, res);
+
+      // Assert
+      expect(Comment.find).toHaveBeenCalledWith({ postId: "mockPostId" });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        postData: req.postData,
+        comments: mockComments,
+      });
     });
 
-    it("getAllCommentsFromPost returns a valid comment for post", async () => {
-        const response = await request(app)
-            .get(`/posts/${post._id}`)
-            .set("Authorization", `Bearer ${token}`);
-        expect(response.status).toEqual(200);
-        expect(response.body.comments).toBeDefined();
-        expect(response.body.comments).toContainEqual(
-            expect.objectContaining({
-                message: "Hi right back at you!",
-                userId: user._id.toString(),
-                postId: post._id.toString(),
-            })
-        );
+    it("should handle empty comment list", async () => {
+      // Arrange
+      Comment.find.mockResolvedValue([]);
+
+      // Act
+      await CommentsController.getAllCommentsPerPost(req, res);
+
+      // Assert
+      expect(Comment.find).toHaveBeenCalledWith({ postId: "mockPostId" });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        postData: req.postData,
+        comments: [],
+      });
     });
-    it("getAllCommentsFromPost returns a Casterror when postId in invalid format", async () => {
-        const response = await request(app)
-            .get(`/posts/invalidPostId`)
-            .set("Authorization", `Bearer ${token}`);
-        expect(response.status).toEqual(400);
-        expect(response.body.message).toEqual("Invalid post ID format");
+  });
+
+  describe("createComment", () => {
+    beforeEach(() => {
+      // Additional setup for createComment tests
+      req.body.message = "Test comment message";
+
+      // Mock the Comment constructor and its save method
+      Comment.mockImplementation(() => ({
+        save: jest.fn().mockResolvedValue(undefined),
+      }));
     });
+
+    it("should create a new comment successfully", async () => {
+      // Act
+      await CommentsController.createComment(req, res);
+
+      // Assert
+      expect(Comment).toHaveBeenCalledWith({
+        postId: "mockPostId",
+        userId: "mockUserId",
+        message: "Test comment message",
+      });
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ message: "Comment created" });
+    });
+
+    it("should handle validation errors", async () => {
+      // Arrange
+      const validationError = new Error("Validation failed");
+      validationError.name = "ValidationError";
+      validationError.errors = {
+        message: { message: "Message is required" },
+        postId: { message: "Post ID is required" },
+      };
+
+      const mockComment = {
+        save: jest.fn().mockRejectedValue(validationError),
+      };
+
+      Comment.mockImplementation(() => mockComment);
+
+      const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+      const consoleLogSpy = jest.spyOn(console, "log").mockImplementation();
+
+      // Act
+      await CommentsController.createComment(req, res);
+
+      // Assert
+      expect(Comment).toHaveBeenCalledWith({
+        postId: "mockPostId",
+        userId: "mockUserId",
+        message: "Test comment message",
+      });
+      expect(consoleSpy).toHaveBeenCalled();
+      expect(consoleLogSpy).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        message: "Message is required, Post ID is required",
+      });
+
+      // Clean up
+      consoleSpy.mockRestore();
+      consoleLogSpy.mockRestore();
+    });
+
+    it("should handle other errors", async () => {
+      // Arrange
+      const generalError = new Error("Something went wrong");
+
+      const mockComment = {
+        save: jest.fn().mockRejectedValue(generalError),
+      };
+
+      Comment.mockImplementation(() => mockComment);
+
+      const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+
+      // Act
+      await CommentsController.createComment(req, res);
+
+      // Assert
+      expect(consoleSpy).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({
+        message: "Something went wrong",
+      });
+
+      // Clean up
+      consoleSpy.mockRestore();
+    });
+
+    it("should handle missing message in request body", async () => {
+      // Arrange
+      req.body = {}; // Empty body
+
+      // Act
+      await CommentsController.createComment(req, res);
+
+      // Assert
+      // The controller doesn't specifically validate this case, but we can test
+      // that it attempts to create a Comment with an undefined message
+      expect(Comment).toHaveBeenCalledWith({
+        postId: "mockPostId",
+        userId: "mockUserId",
+        message: undefined,
+      });
+    });
+  });
 });

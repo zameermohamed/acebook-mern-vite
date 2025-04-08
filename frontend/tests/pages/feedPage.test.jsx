@@ -1,53 +1,63 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 
 import { FeedPage } from "../../src/pages/Feed/FeedPage";
 import { getPosts } from "../../src/services/posts";
-import { useNavigate } from "react-router-dom";
 
-// Mocking the getPosts service
-vi.mock("../../src/services/posts", () => {
-    const getPostsMock = vi.fn();
-    return { getPosts: getPostsMock };
+// Mocks
+const navigateMock = vi.fn();
+
+vi.mock("react-router-dom", async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    useNavigate: () => navigateMock, // returns the mock function
+  };
 });
 
-vi.mock("react-router-dom", () => {
-    const linkMock = vi.fn();
-    const LinkMock = () => linkMock; // Create a mock function for Link (used in the page header bar)
-    const navigateMock = vi.fn();
-    const useNavigateMock = () => navigateMock; // Create a mock function for useNavigate
-    return { useNavigate: useNavigateMock, Link: LinkMock };
+vi.mock("../../src/services/posts", () => {
+  const getPostsMock = vi.fn();
+  return { getPosts: getPostsMock };
 });
 
 describe("Feed Page", () => {
-    beforeEach(() => {
-        window.localStorage.removeItem("token");
+  beforeEach(() => {
+    window.localStorage.removeItem("token");
+    navigateMock.mockClear(); // reset between tests
+  });
+
+  test("It displays posts from the backend", async () => {
+    window.localStorage.setItem("token", "testToken");
+
+    const mockPosts = [{ userId: { _id: "1234" }, message: "Test Post 1" }];
+    const mockUser = [
+      { username: "testUser", email: "testEmail", password: "1!Acebook" },
+    ];
+
+    getPosts.mockResolvedValue({
+      user: mockUser,
+      posts: mockPosts,
+      token: "newToken",
     });
 
-    test("It displays posts from the backend", async () => {
-        window.localStorage.setItem("token", "testToken");
+    render(
+      <MemoryRouter>
+        <FeedPage />
+      </MemoryRouter>
+    );
 
-        const mockPosts = [{ userId: { _id: "1234" }, message: "Test Post 1" }];
-        const mockUser = [
-            { username: "testUser", email: "testEmail", password: "1!Acebook" },
-        ];
+    const post = await screen.findByTestId("post-message");
+    expect(post.textContent).toEqual("Test Post 1");
+  });
 
-        getPosts.mockResolvedValue({
-            user: mockUser,
-            posts: mockPosts,
-            token: "newToken",
-        });
+  test("It navigates to login if no token is present", async () => {
+    render(
+      <MemoryRouter>
+        <FeedPage />
+      </MemoryRouter>
+    );
 
-        render(<FeedPage />);
-
-        const post = await screen.findByTestId("post-message");
-        expect(post.textContent).toEqual("Test Post 1");
-        screen.debug();
-    });
-
-    test("It navigates to login if no token is present", async () => {
-        render(<FeedPage />);
-        const navigateMock = useNavigate();
-        expect(navigateMock).toHaveBeenCalledWith("/login");
-    });
+    expect(navigateMock).toHaveBeenCalledWith("/login");
+  });
 });

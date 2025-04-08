@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { login } from "../../services/authentication";
 import Header from "../../components/Header";
-
+import "../AuthPages.css";
 export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
