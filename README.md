@@ -225,3 +225,10 @@ they should then show up in the browser if you refresh the page.
 - Added lots more tests to both frontend and api to increase coverage
 - Changed <a href> tags to <Link> throughout the app (At Zameer's suggestion - Should reduce load times dramatically when app run on render)
 - Removed unecessary LogoutButton component
+
+### PR38 by Jack
+
+- Modified CSS throughout the app to have a consistent styling
+- Added light/dark toggle to header page to change theme of the app
+- Added a dark mode variant of the logo
+- Updated Readme

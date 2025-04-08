@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { signup } from "../../services/authentication";
 import Header from "../../components/Header";
-
+import "../AuthPages.css";
 export function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -63,12 +63,12 @@ export function SignupPage() {
           type="text"
           value={username}
           onChange={handleUserNameChange}
-        /> 
+        />
         <input role="submit-button" id="submit" type="submit" value="Submit" />
       </form>
       {error && (
         <div className="auth-error-msg">
-          <p>{error}</p> 
+          <p>{error}</p>
         </div>
       )}
       <div>

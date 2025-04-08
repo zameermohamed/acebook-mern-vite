@@ -1,31 +1,72 @@
 .post-card {
-    border: 0.5px solid gray;
-    width: 100%;
-    border-radius: 15px;
-    padding: 1rem;
-    color: black;
-    text-decoration: none;
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  width: 100%;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .post-card:hover {
-    color: black;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .post-card-user-info {
-    display: flex;
-    align-items: center;
-    padding: 0 0 1rem 0;
-    /* margin: 1rem 0; */
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0 1rem 0;
 }
 
 .post-card-date {
-    font-size: 8px;
-    text-align: right;
+  font-size: 0.75rem;
+  text-align: right;
+  color: #757575;
+  margin: 0 0 0.5rem 0;
 }
 
 .post-card-user-picture {
-    height: 50px;
-    margin-right: 5px;
-    width: 50px;
-    border-radius: 15px;
+  height: 48px;
+  width: 48px;
+  margin-right: 0.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-card-user-name {
+  font-weight: 600;
+  color: #333;
+}
+
+.post-message {
+  margin: 0;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  color: #333;
+}
+.post-card {
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  color: var(--text-color);
+}
+
+.post-card-date {
+  color: var(--text-secondary);
+}
+
+.post-card-user-name {
+  color: var(--text-color);
+}
+
+.post-message {
+  color: var(--text-color);
 }
