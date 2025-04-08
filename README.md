@@ -233,7 +233,7 @@ they should then show up in the browser if you refresh the page.
 - Added a dark mode variant of the logo
 - Updated Readme
 
-### PR42 by Aysin
+### PR41 by Aysin
 - User controller was updated to update and delete user details
 - routes/users updated to include PUT and DELETE requests with tokenchecker
 - User model updated for password hashing to handle password update by updateUser function in the controller.
