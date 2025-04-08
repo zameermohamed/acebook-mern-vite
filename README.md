@@ -231,3 +231,4 @@ they should then show up in the browser if you refresh the page.
 - Modified CSS throughout the app to have a consistent styling
 - Added light/dark toggle to header page to change theme of the app
 - Added a dark mode variant of the logo
+- Updated Readme
