@@ -232,3 +232,9 @@ they should then show up in the browser if you refresh the page.
 - Added light/dark toggle to header page to change theme of the app
 - Added a dark mode variant of the logo
 - Updated Readme
+
+### PR41 by Aysin
+- User controller was updated to update and delete user details
+- routes/users updated to include PUT and DELETE requests with tokenchecker
+- User model updated for password hashing to handle password update by updateUser function in the controller.
+- Tests were created to test updating and deleting the users by error handling.
