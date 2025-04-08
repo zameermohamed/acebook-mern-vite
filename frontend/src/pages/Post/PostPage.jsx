@@ -9,6 +9,7 @@ import PostContainer from "../../components/PostContainer/PostContainer";
 export function PostPage() {
   const [commentsData, setCommentsData] = useState([]);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const refreshComments = () => {
     setRefreshTrigger(refreshTrigger + 1);
@@ -19,29 +20,43 @@ export function PostPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const loggedIn = token !== null;
+
     if (loggedIn) {
-      getPost(token, id).then((data) => {
-        setCommentsData(data.comments);
-      });
+      setIsLoading(true);
+      getPost(token, id)
+        .then((data) => {
+          setCommentsData(data.comments || []);
+        })
+        .catch((error) => {
+          console.error("Error fetching post and comments:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   }, [id, refreshTrigger]);
 
   return (
     <div data-testid="post-page">
       <Header />
-      <div>
+      <div className="post-page-content">
         <PostContainer
           singlePost={true}
           postId={id}
           refreshTrigger={refreshTrigger}
         />
-        <div>
-          <CommentContainer
-            refreshTrigger={refreshTrigger}
-            comments={commentsData}
-          />
-        </div>
-        <AddComment onCommentCreated={refreshComments} />
+
+        {isLoading ? (
+          <p>Loading comments...</p>
+        ) : (
+          <>
+            <CommentContainer
+              refreshTrigger={refreshTrigger}
+              comments={commentsData}
+            />
+            <AddComment onCommentCreated={refreshComments} />
+          </>
+        )}
       </div>
     </div>
   );
