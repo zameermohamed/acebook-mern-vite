@@ -5,7 +5,6 @@ async function getAllCommentsPerPost(req, res) {
     postId: req.params.id,
   });
 
-  console.log("comments from post", commentsFromPost);
   res.status(200).json({
     postData: req.postData,
     comments: commentsFromPost,
@@ -27,7 +26,6 @@ async function createComment(req, res) {
     //validation errors from comment model
     if (err.name == "ValidationError") {
       const errorMessages = Object.values(err.errors).map((val) => val.message);
-      console.log("Validation Error Messages:", errorMessages);
       return res.status(400).json({ message: errorMessages.join(", ") });
     }
     // other errors

@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPost } from "../../services/posts";
 import Header from "../../components/Header";
-import Post from "../../components/Post/Post";
-
 import AddComment from "../../components/AddComment/AddComment";
 import CommentContainer from "../../components/CommentContainer/CommentContainer";
+import PostContainer from "../../components/PostContainer/PostContainer";
 
 export function PostPage() {
-  const [postData, setPostData] = useState();
   const [commentsData, setCommentsData] = useState([]);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
@@ -17,12 +15,12 @@ export function PostPage() {
   };
 
   const { id } = useParams();
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     const loggedIn = token !== null;
     if (loggedIn) {
       getPost(token, id).then((data) => {
-        setPostData(data.postData);
         setCommentsData(data.comments);
       });
     }
@@ -32,9 +30,11 @@ export function PostPage() {
     <div data-testid="post-page">
       <Header />
       <div>
-        <div className="post-container">
-          {postData && <Post post={postData} singlePost={true} />}
-        </div>
+        <PostContainer
+          singlePost={true}
+          postId={id}
+          refreshTrigger={refreshTrigger}
+        />
         <div>
           <CommentContainer
             refreshTrigger={refreshTrigger}

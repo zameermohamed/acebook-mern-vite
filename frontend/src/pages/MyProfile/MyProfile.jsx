@@ -27,7 +27,6 @@ export function MyProfile() {
       try {
         const userData = await getUser(token);
         setUser(userData);
-        console.log(userData);
       } catch (error) {
         console.error("failed to find user", error);
       }
@@ -35,7 +34,7 @@ export function MyProfile() {
 
     fetchUser();
   }, []);
-  console.log("user:", user);
+
   return (
     <>
       <div>
