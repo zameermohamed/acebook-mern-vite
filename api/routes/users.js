@@ -13,5 +13,6 @@ router.get("/", tokenChecker, UsersController.getUser);
 router.put("/", tokenChecker, UsersController.updateUser);
 // AYSIN - add token checker to delete the user
 router.delete("/", tokenChecker, UsersController.deleteUser);
+router.get("/:username", tokenChecker, PostsController.getPostsByUser)
 
 module.exports = router;

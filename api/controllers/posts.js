@@ -17,8 +17,8 @@ async function getPostsByUser(req, res) {
       return res.status(404).json({ message: "User not found" });
     }
     const foundPosts = await Post.find({ userId: user._id })
-    console.log(req.foundUser)
-    res.status(200).json({ posts: foundPosts, foundUser: req.foundUser })
+    console.log(user)
+    res.status(200).json({ posts: foundPosts, foundUser: user })
   } catch(err) {
     console.error(err)
   }
