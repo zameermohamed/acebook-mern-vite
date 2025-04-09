@@ -57,11 +57,11 @@ export function PostPage() {
           />
 
           <>
+            <AddComment postId={id} onCommentCreated={refreshComments} />
             <CommentContainer
               refreshTrigger={refreshTrigger}
               comments={commentsData}
             />
-            <AddComment postId={id} onCommentCreated={refreshComments} />
           </>
         </div>
       )}
