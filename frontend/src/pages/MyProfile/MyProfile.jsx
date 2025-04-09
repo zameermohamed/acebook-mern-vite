@@ -1,10 +1,10 @@
 import Header from "../../components/Header";
-import "./MyProfile.css";
+
 import { getUser } from "../../services/users";
 import { useEffect, useState } from "react";
 import NewPost from "../../components/NewPost/NewPost";
 import PostContainer from "../../components/PostContainer/PostContainer";
-
+import "./MyProfile.css";
 export function MyProfile() {
   const [user, setUser] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
@@ -46,12 +46,22 @@ export function MyProfile() {
       {user && (
         <div className="profile-page">
           <h1>My Profile</h1>
-          {user.profilePicture && <img src={user.profilePicture} />}
+          {user.profilePicture && (
+            <img
+              src={user.profilePicture}
+              className="profile-picture"
+              alt={`${user.username}'s profile`}
+            />
+          )}
           <p data-testid="username"> Username: {user.username}</p>
           <p> Email: {user.email}</p>
           <p> User since: {formatDate(user.dateCreated)}</p>
-          <NewPost onPostCreated={refreshPosts}/>
-          <PostContainer refreshTrigger={refreshTrigger} username={user.username} userPosts={true}/>
+          <NewPost onPostCreated={refreshPosts} />
+          <PostContainer
+            refreshTrigger={refreshTrigger}
+            username={user.username}
+            userPosts={true}
+          />
         </div>
       )}
     </>
