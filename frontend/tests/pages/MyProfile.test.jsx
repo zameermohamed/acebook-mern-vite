@@ -1,14 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { vi } from "vitest";
-import { getPostsByUser } from "../../src/services/posts";
 import { getUser } from "../../src/services/users";
 import { MemoryRouter } from "react-router-dom";
 import { MyProfile } from "../../src/pages/MyProfile/MyProfile";
 
-vi.mock("../../src/services/posts", () => {
-    const getPostsByUserMock = vi.fn();
-    return { getPostsByUser: getPostsByUserMock };
-  });
 vi.mock("../../src/services/users", () => {
     const getUserMock = vi.fn();
     return { getUser: getUserMock };
@@ -25,15 +20,12 @@ describe("View my profile", () => {
       { username: "testUser", dateCreated: "2025-04-07T14:10:05.266+00:00", profilePicture: "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg", email: "testEmail", password: "1!Acebook" },
       ];
         
-      getPostsByUser.mockResolvedValue({
-        foundUser: mockUser,
-        token: "testToken"
-      })
       getUser.mockResolvedValue({
         userData: mockUser.username,
         email: mockUser.email,
         profilePicture: mockUser.profilePicture,
         dateCreated: mockUser.dateCreated,
+        token: "testToken"
       })
       render(
         <MemoryRouter>

@@ -42,15 +42,18 @@ function Post(props) {
         >
           <p className="post-card-date">{formatDate(props.post.createdAt)}</p>
           <div className="post-card-user-info">
+            <Link to={`/users/${props.post.userId.username}`}>
             <img
               className="post-card-user-picture"
               src={props.post.userId.profilePicture}
               alt="User profile"
-            />
-
+              />
+              </Link>
             <div className="post-card-user-name">
+            <Link to={`/users/${props.post.userId.username}`}>
               {props.post.userId.username}
-            </div>
+            </Link>
+              </div>
           </div>
           <p data-testid="post-message" className="post-message">
             {props.post.message}

@@ -8,6 +8,9 @@ const PostContainer = ({
   refreshTrigger,
   singlePost,
   postId,
+  userPosts, 
+  username, 
+
   comments,
   theme,
 }) => {
@@ -39,12 +42,21 @@ const PostContainer = ({
 
   // Filter posts based on singlePost flag
   const filteredPosts = singlePost
-    ? posts.filter((post) => post._id === currentPostId)
+    ? posts.filter((post) => post._id === currentPostId).toReversed()
+    : posts.toReversed();
+
+
+  const filteredPostsByUser = userPosts
+    ? posts.filter((post) => post.userId.username === username).toReversed()
     : posts.toReversed();
 
   return (
     <div className="post-container">
-      {filteredPosts.map((post) => (
+      {!userPosts && filteredPosts.map((post) => (
+        <Post post={post} key={post._id} comments={comments} theme={theme}/>
+      ))}
+      {userPosts && filteredPostsByUser.map((post) => (
+
         <Post post={post} key={post._id} comments={comments} theme={theme} />
       ))}
     </div>
