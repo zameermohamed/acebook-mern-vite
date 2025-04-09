@@ -20,3 +20,47 @@ export async function getUser(token) {
         console.log(err);
     }
 }
+export async function updateUser(data, token) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/users`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData.message || "Failed to update user");
+        }
+
+        const updatedData = await response.json();
+        return updatedData;
+    } catch (err) {
+        console.error("Update Error:", err.message);
+        throw err;
+    }
+}
+
+export async function deleteUser(token) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/users`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            const errData = await response.json();
+            throw new Error(errData.message || "Failed to delete user");
+        }
+
+        return await response.json();
+    } catch (err) {
+        console.error("Delete Error:", err.message);
+        throw err;
+    }
+}
