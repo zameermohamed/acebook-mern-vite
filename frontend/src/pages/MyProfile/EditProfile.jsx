@@ -2,7 +2,7 @@ import Header from "../../components/Header";
 import React, { useState, useEffect } from "react";
 import { getUser, updateUser, deleteUser } from "../../services/users";
 import { useNavigate } from "react-router-dom";
-import "./EditProfile.css"; // Add this line to import your CSS
+import "./EditProfile.css";
 
 export function EditProfile() {
   const [form, setForm] = useState({
@@ -11,18 +11,28 @@ export function EditProfile() {
     fullName: "",
     profilePicture: "",
     bio: "",
+    currentPassword: "",
+    password: "", // new password
   });
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     async function fetchUser() {
       try {
         const userData = await getUser(token);
-        setForm(userData);
+        setForm((prev) => ({
+          ...prev,
+          username: userData.username,
+          email: userData.email,
+          fullName: userData.fullName,
+          profilePicture: userData.profilePicture,
+          bio: userData.bio,
+          password: "",
+          currentPassword: "",
+        }));
       } catch (err) {
         setError("Could not load user data.");
       }
@@ -37,10 +47,32 @@ export function EditProfile() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+  
+    // Prepare the payload
+    const payload = { ...form };
+  
+    // Check if the password fields are being changed
+    const isChangingPassword =
+      Boolean(payload.currentPassword?.trim()) && Boolean(payload.password?.trim());
+  
+    // If not changing password, remove those fields from the payload
+    if (!isChangingPassword) {
+      delete payload.currentPassword;
+      delete payload.password;
+    }
+    console.log("Payload:", payload);
     try {
-      const result = await updateUser(form, token);
+      // Make the API request to update the user
+      const result = await updateUser(payload, token);
       setMessage(result.message);
       setError("");
+  
+      // Reset the password fields
+      setForm((prev) => ({
+        ...prev,
+        currentPassword: "",
+        password: "",
+      }));
     } catch (err) {
       setError(err.message);
       setMessage("");
@@ -67,6 +99,7 @@ export function EditProfile() {
         {error && <p className="message error">{error}</p>}
         {message && <p className="message success">{message}</p>}
         <form onSubmit={handleSubmit}>
+          <label>Username</label>
           <input
             type="text"
             name="username"
@@ -74,6 +107,8 @@ export function EditProfile() {
             onChange={handleChange}
             placeholder="Username"
           />
+
+          <label>Email</label>
           <input
             type="email"
             name="email"
@@ -81,6 +116,8 @@ export function EditProfile() {
             onChange={handleChange}
             placeholder="Email"
           />
+
+          <label>Full Name</label>
           <input
             type="text"
             name="fullName"
@@ -88,6 +125,8 @@ export function EditProfile() {
             onChange={handleChange}
             placeholder="Full Name"
           />
+
+          <label>Profile Picture URL</label>
           <input
             type="text"
             name="profilePicture"
@@ -95,24 +134,45 @@ export function EditProfile() {
             onChange={handleChange}
             placeholder="Profile Picture URL"
           />
-            <input
-            type="text"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            placeholder="Password"
-          />
+
+          <label>Bio</label>
           <textarea
             name="bio"
             value={form.bio}
             onChange={handleChange}
             placeholder="Bio"
           />
+
+          <hr className="section-divider" />
+          <h3>Change Password</h3>
+
+          <label>Current Password</label>
+          <input
+            type="password"
+            name="currentPassword"
+            value={form.currentPassword}
+            onChange={handleChange}
+            placeholder="Current Password"
+          />
+
+          <label>New Password</label>
+          <input
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            placeholder="New Password"
+          />
+
           <div className="edit-profile-buttons">
             <button type="submit" className="save-button">
               Save Changes
             </button>
-            <button type="button" onClick={handleDelete} className="delete-button">
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="delete-button"
+            >
               Delete Account
             </button>
           </div>
@@ -121,4 +181,3 @@ export function EditProfile() {
     </>
   );
 }
-
