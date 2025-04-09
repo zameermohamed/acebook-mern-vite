@@ -6,7 +6,7 @@ import LogOut from "./Logout";
 import acebookLight from "../images/acebook.png"; // Import the light version
 import acebookDark from "../images/acebook-dark-mode.png"; // Import the dark version
 
-const Header = () => {
+const Header = ({ onThemeChange }) => {
   const token = localStorage.getItem("token");
   const loggedIn = token !== null;
 
@@ -27,6 +27,7 @@ const Header = () => {
   // Toggle between light and dark mode
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
+    if (onThemeChange) onThemeChange(); // Call the parent function to notify about theme change
   };
 
   return (
