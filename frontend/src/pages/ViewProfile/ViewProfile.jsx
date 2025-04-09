@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+
 import { useParams, useNavigate } from "react-router-dom";
 import { getPostsByUser } from "../../services/posts";
 import { getUser } from "../../services/users";
+
 import Header from "../../components/Header";
 import PostContainer from "../../components/PostContainer/PostContainer";
 
@@ -31,10 +33,12 @@ export function ViewProfile() {
     })
     if (loggedIn) {
       getPostsByUser(token, username).then((data) => {
+
         if (data.foundUser.username === currentUser) {
           navigate("/profile");
         } else {
         setUser(data.foundUser);}
+
       });
     }
   }, [username, navigate, currentUser]);
@@ -44,12 +48,14 @@ export function ViewProfile() {
       <div>
         <Header></Header>
       </div>
+
       {user && (<div className="profile-page">
         <h1 data-testid="username">{user.username}</h1>
         {user.profilePicture && (<img src={user.profilePicture}/>)}
         <p> User since: {formatDate(user.dateCreated)}</p> 
         <PostContainer username={username} userPosts={true}/>
       </div>)}
+
     </>
   );
 }
