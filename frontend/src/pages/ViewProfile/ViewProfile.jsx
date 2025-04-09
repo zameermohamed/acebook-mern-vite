@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPostsByUser } from "../../services/posts"
+import { getPostsByUser } from "../../services/posts";
 import { getUser } from "../../services/users";
 import Header from "../../components/Header";
 import PostContainer from "../../components/PostContainer/PostContainer";
@@ -14,14 +14,14 @@ export function ViewProfile() {
     let dateFormat = new Date(date);
     // Options for formatting
     let options = {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
     };
     let formattedDate = dateFormat.toLocaleString("en-US", options);
     return formattedDate;
-    };
-  
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     const loggedIn = token !== null;

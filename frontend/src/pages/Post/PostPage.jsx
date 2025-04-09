@@ -10,11 +10,16 @@ export function PostPage() {
   const [commentsData, setCommentsData] = useState([]);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const refreshComments = () => {
     setRefreshTrigger(refreshTrigger + 1);
   };
-
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
   const { id } = useParams();
 
   useEffect(() => {
@@ -38,7 +43,7 @@ export function PostPage() {
 
   return (
     <div data-testid="post-page">
-      <Header />
+      <Header onThemeChange={toggleTheme} />
       {isLoading ? (
         <p>Loading comments...</p>
       ) : (
@@ -48,6 +53,7 @@ export function PostPage() {
             postId={id}
             refreshTrigger={refreshTrigger}
             comments={commentsData}
+            theme={theme}
           />
 
           <>
