@@ -8,8 +8,15 @@ import "./MyProfile.css";
 export function MyProfile() {
   const [user, setUser] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const refreshPosts = () => {
     setRefreshTrigger(refreshTrigger + 1);
+  };
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
   };
   const formatDate = (date) => {
     let dateFormat = new Date(date);
@@ -41,7 +48,7 @@ export function MyProfile() {
   return (
     <>
       <div>
-        <Header></Header>
+        <Header onThemeChange={toggleTheme}></Header>
       </div>
       {user && (
         <div className="profile-page">
@@ -61,6 +68,7 @@ export function MyProfile() {
             refreshTrigger={refreshTrigger}
             username={user.username}
             userPosts={true}
+            theme={theme}
           />
         </div>
       )}
