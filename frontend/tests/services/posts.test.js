@@ -1,7 +1,8 @@
 import createFetchMock from "vitest-fetch-mock";
 import { describe, expect, vi } from "vitest";
 
-import { getPosts } from "../../src/services/posts";
+// Import the entire module to avoid destructuring issues
+import * as postsService from "../../src/services/posts";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -15,7 +16,7 @@ describe("posts service", () => {
         status: 200,
       });
 
-      await getPosts("testToken");
+      await postsService.getPosts("testToken");
 
       // This is an array of the arguments that were last passed to fetch
       const fetchArguments = fetch.mock.lastCall;
@@ -30,11 +31,11 @@ describe("posts service", () => {
     test("rejects with an error if the status is not 200", async () => {
       fetch.mockResponseOnce(
         JSON.stringify({ message: "Something went wrong" }),
-        { status: 400 }
+        { status: 400 },
       );
 
       try {
-        await getPosts("testToken");
+        await postsService.getPosts("testToken");
       } catch (err) {
         expect(err.message).toEqual("Unable to fetch posts");
       }

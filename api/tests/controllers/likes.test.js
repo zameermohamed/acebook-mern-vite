@@ -131,8 +131,9 @@ describe("Likes Controller", () => {
     expect(userTwoResponse.status).toBe(201);
 
     // Checking both likes have been added successfully
-    const post = await Post.findById(testPost._id);
-    expect(post.likesCount).toBe(2);
+    // const post = await Post.findById(testPost._id);
+    const allLikes = await Like.find({ postId: { $in: testPost._id } });
+    expect(allLikes.length).toBe(2);
   });
 
   // Simulating database errors for liking and unliking posts

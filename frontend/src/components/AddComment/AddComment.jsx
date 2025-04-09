@@ -6,27 +6,36 @@ import { useParams } from "react-router-dom";
 function AddComment({ onCommentCreated }) {
   const [error, setError] = useState(false);
   const [text, setText] = useState("");
-  const { id } = useParams();
+  const { id } = useParams(); // This correctly gets the post ID from the URL
 
   function handleCommentChange(event) {
     setError(false);
     setText(event.target.value);
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const token = localStorage.getItem("token");
-    if (!text) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Check if text is empty and show error if it is
+    if (!text.trim()) {
       setError(true);
-    } else {
-      // verify they're logged in to attach user id
-      await createComment(token, text, id);
-      setText("");
-      // Call the callback to notify parent that a post was created
-      if (onCommentCreated) onCommentCreated();
-      setError(false);
+      return;
     }
-  }
+
+    try {
+      await createComment(
+        localStorage.getItem("token"),
+        text, // Use 'text' instead of 'commentText'
+        id, // Use 'id' from useParams instead of 'props.postId'
+      );
+
+      setText(""); // Clear the input after successful submission
+      onCommentCreated(); // Call the callback to refresh comments
+    } catch (error) {
+      console.error("Error creating comment:", error);
+      setError(true);
+    }
+  };
 
   return (
     <div>
