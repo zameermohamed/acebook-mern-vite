@@ -4,7 +4,13 @@ import { getPosts } from "../../services/posts";
 import Post from "../Post/Post";
 import "../PostContainer/PostContainer.css";
 
-const PostContainer = ({ refreshTrigger, singlePost, postId, comments }) => {
+const PostContainer = ({
+  refreshTrigger,
+  singlePost,
+  postId,
+  comments,
+  theme,
+}) => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const params = useParams();
@@ -18,15 +24,6 @@ const PostContainer = ({ refreshTrigger, singlePost, postId, comments }) => {
     if (loggedIn) {
       getPosts(token)
         .then((data) => {
-          // Log the data from the API to see the comment counts
-          console.log(
-            "API response in PostContainer:",
-            data.posts.map((post) => ({
-              id: post._id,
-              commentsCount: post.commentsCount,
-            })),
-          );
-
           setPosts(data.posts);
           localStorage.setItem("token", data.token);
         })
@@ -45,19 +42,10 @@ const PostContainer = ({ refreshTrigger, singlePost, postId, comments }) => {
     ? posts.filter((post) => post._id === currentPostId)
     : posts.toReversed();
 
-  // Log the filtered posts to see if comments data is preserved
-  console.log(
-    "Filtered posts in PostContainer:",
-    filteredPosts.map((post) => ({
-      id: post._id,
-      commentsCount: post.commentsCount,
-    })),
-  );
-
   return (
     <div className="post-container">
       {filteredPosts.map((post) => (
-        <Post post={post} key={post._id} comments={comments} />
+        <Post post={post} key={post._id} comments={comments} theme={theme} />
       ))}
     </div>
   );

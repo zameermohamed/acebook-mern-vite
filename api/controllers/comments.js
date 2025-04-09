@@ -3,7 +3,7 @@ const Comment = require("../models/comment");
 async function getAllCommentsPerPost(req, res) {
   const commentsFromPost = await Comment.find({
     postId: req.params.id,
-  });
+  }).populate("userId");
 
   res.status(200).json({
     postData: req.postData,

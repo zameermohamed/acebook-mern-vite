@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import thumbsUpEmpty from "../../images/thumbs-up-empty.png";
 import thumbsUpFilled from "../../images/thumbs-up-filled.png";
+import thumbsUpEmptyDark from "../../images/thumbs-up-empty-dark-mode.png";
 import "./LikeComponent.css";
 
 function LikeComponent({
   likesCount: initialLikesCount,
   postId,
   userHasLiked,
+  theme,
 }) {
   const [liked, setLiked] = useState(userHasLiked);
   const [likesCount, setLikesCount] = useState(initialLikesCount);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  useEffect(() => {}, [theme]);
 
   const likePostToggle = async (e) => {
     e.preventDefault(); // Prevent event bubbling to parent Link component
@@ -66,7 +70,13 @@ function LikeComponent({
         className="like-button"
       >
         <img
-          src={liked ? thumbsUpFilled : thumbsUpEmpty}
+          src={
+            liked
+              ? thumbsUpFilled
+              : theme === "light"
+                ? thumbsUpEmpty
+                : thumbsUpEmptyDark
+          }
           alt={liked ? "Unlike post" : "Like post"}
           className="thumbs-icon"
         />

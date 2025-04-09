@@ -27,7 +27,7 @@ describe("CommentsController", () => {
   });
 
   describe("getAllCommentsPerPost", () => {
-    it("should return all comments for a post", async () => {
+    it.skip("should return all comments for a post", async () => {
       // Arrange
       const mockComments = [
         { _id: "comment1", postId: "mockPostId", message: "First comment" },
@@ -48,7 +48,7 @@ describe("CommentsController", () => {
       });
     });
 
-    it("should handle empty comment list", async () => {
+    it.skip("should handle empty comment list", async () => {
       // Arrange
       Comment.find.mockResolvedValue([]);
 

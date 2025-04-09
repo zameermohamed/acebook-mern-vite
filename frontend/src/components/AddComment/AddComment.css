@@ -1,0 +1,84 @@
+.comment-form {
+  width: 90%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  margin: 0 auto 1.5rem auto;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: var(--card-bg);
+  box-shadow: 0 1px 6px var(--shadow-color);
+}
+
+.comment-textField {
+  width: 100%;
+  height: 80px;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  resize: none;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background-color: var(--input-bg);
+  color: var(--text-color); /* Fix for dark mode text color */
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.comment-textField:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.comment-submitButton {
+  align-self: flex-end;
+  width: auto;
+  min-width: 80px;
+  height: 36px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 1.25rem;
+  transition: background-color 0.2s;
+}
+
+.comment-submitButton:hover {
+  background-color: var(--accent-hover);
+}
+
+.comment-submitButton:active {
+  background-color: var(--accent-active);
+}
+
+.comment-error-msg {
+  color: var(--error-color);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  text-align: right;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .comment-form {
+    width: 95%;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .comment-form {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .comment-submitButton {
+    width: 100%;
+  }
+}

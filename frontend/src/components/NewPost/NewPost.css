@@ -104,6 +104,8 @@
     width: 100%;
   }
 }
+
+/* Theme variables */
 .form {
   border: 1px solid var(--border-color);
   background-color: var(--card-bg);
@@ -117,6 +119,7 @@
 .textField {
   border: 1px solid var(--border-color);
   background-color: var(--input-bg);
+  color: var(--text-color); /* Fix for dark mode text color */
 }
 
 .textField:focus {
