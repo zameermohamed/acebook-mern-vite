@@ -4,14 +4,14 @@ import { getPosts } from "../../services/posts";
 import Post from "../Post/Post";
 import "../PostContainer/PostContainer.css";
 
-const PostContainer = ({ refreshTrigger, singlePost, postId }) => {
+const PostContainer = ({ refreshTrigger, singlePost, postId, userPosts, username }) => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
   const params = useParams();
 
   // Use postId from props or fallback to URL params
   const currentPostId = postId || params.id;
-
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     const loggedIn = token !== null;
@@ -36,9 +36,17 @@ const PostContainer = ({ refreshTrigger, singlePost, postId }) => {
     ? posts.filter((post) => post._id === currentPostId)
     : posts.toReversed();
 
+  const filteredPostsByUser = userPosts
+    ? posts.filter((post) => post.userId.username === username)
+    : posts.toReversed();
+    console.log(filteredPostsByUser[0])
+
   return (
     <div className="post-container">
-      {filteredPosts.map((post) => (
+      {!userPosts && filteredPosts.map((post) => (
+        <Post post={post} key={post._id} />
+      ))}
+      {userPosts && filteredPostsByUser.map((post) => (
         <Post post={post} key={post._id} />
       ))}
     </div>

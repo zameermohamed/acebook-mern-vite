@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPostsByUser } from "../../services/posts"
 import Header from "../../components/Header";
-import ProfilePostContainer from "../../components/ProfilePostContainer";
+import PostContainer from "../../components/PostContainer/PostContainer";
 
 export function ViewProfile() {
   const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState(null);
   const { username } = useParams();
   const formatDate = (date) => {
     let dateFormat = new Date(date);
@@ -26,7 +25,6 @@ export function ViewProfile() {
     if (loggedIn) {
       getPostsByUser(token, username).then((data) => {
         setUser(data.foundUser);
-        setPosts(data.posts)
         console.log(data)
       });
     }
@@ -41,7 +39,7 @@ export function ViewProfile() {
         <h1 data-testid="username">{user.username}</h1>
         {user.profilePicture && (<img src={user.profilePicture}/>)}
         <p> User since: {formatDate(user.dateCreated)}</p> 
-        <ProfilePostContainer posts={posts}/>
+        <PostContainer username={username} userPosts={true}/>
       </div>)}
     </>
   );
