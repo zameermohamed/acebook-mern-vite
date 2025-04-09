@@ -39,7 +39,7 @@ function AddComment({ onCommentCreated }) {
 
   return (
     <div>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="comment-form" onSubmit={handleSubmit}>
         {/* <div className="user-info">
                     <img src={profilePicture} />
                     <h3>{username}</h3>

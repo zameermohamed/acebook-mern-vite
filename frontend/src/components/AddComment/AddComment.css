@@ -1,6 +1,6 @@
 .comment-form {
   width: 90%;
-  max-width: 550px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
