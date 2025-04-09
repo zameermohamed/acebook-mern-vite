@@ -69,7 +69,7 @@ function Post(props) {
               userHasLiked={props.post.userHasLiked}
             />
           )}
-          <p>
+          <p className="post-comments-count">
             {commentCount} {commentCount === 1 ? "Comment" : "Comments"}
           </p>
         </Link>

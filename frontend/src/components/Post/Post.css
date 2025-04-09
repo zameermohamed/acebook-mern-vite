@@ -12,6 +12,7 @@
   text-decoration: none;
   color: inherit;
   display: block;
+  position: relative; /* Added to position child elements */
 }
 
 .post-card:hover {
@@ -51,7 +52,21 @@
   line-height: 1.5;
   overflow-wrap: break-word;
   color: #333;
+  margin-bottom: 2rem; /* Added space for the bottom elements */
 }
+
+/* Added for comments count */
+.post-comments-count {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  font-size: 0.85rem;
+  color: #757575;
+  display: flex;
+  align-items: center;
+}
+
+/* Themed versions */
 .post-card {
   border: 1px solid var(--border-color);
   background-color: var(--card-bg);
@@ -69,4 +84,8 @@
 
 .post-message {
   color: var(--text-color);
+}
+
+.post-comments-count {
+  color: var(--text-secondary);
 }
