@@ -2,13 +2,15 @@ import Header from "../../components/Header";
 import "./MyProfile.css";
 import { getUser } from "../../services/users";
 import { useEffect, useState } from "react";
-import { getPostsByUser } from "../../services/posts";
-import ProfilePostContainer from "../../components/ProfilePostContainer";
 import NewPost from "../../components/NewPost/NewPost";
+import PostContainer from "../../components/PostContainer/PostContainer";
 
 export function MyProfile() {
   const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const refreshPosts = () => {
+    setRefreshTrigger(refreshTrigger + 1);
+  };
   const formatDate = (date) => {
     let dateFormat = new Date(date);
 
@@ -26,9 +28,8 @@ export function MyProfile() {
     async function fetchUser() {
       try {
         const userData = await getUser(token);
-        getPostsByUser(token, userData.username).then((data) => {
-          setUser(userData);
-          setPosts(data.posts);
+        getUser(token, userData.username).then((data) => {
+          setUser(data);
         });
       } catch (error) {
         console.error("failed to find user", error);
@@ -49,8 +50,8 @@ export function MyProfile() {
           <p data-testid="username"> Username: {user.username}</p>
           <p> Email: {user.email}</p>
           <p> User since: {formatDate(user.dateCreated)}</p>
-          <NewPost />
-          <ProfilePostContainer posts={posts} />
+          <NewPost onPostCreated={refreshPosts}/>
+          <PostContainer refreshTrigger={refreshTrigger} username={user.username} userPosts={true}/>
         </div>
       )}
     </>

@@ -36,10 +36,10 @@ const PostContainer = ({ refreshTrigger, singlePost, postId, userPosts, username
     ? posts.filter((post) => post._id === currentPostId)
     : posts.toReversed();
 
+  // Filter posts based on viewing individual profile flag
   const filteredPostsByUser = userPosts
-    ? posts.filter((post) => post.userId.username === username)
+    ? posts.filter((post) => post.userId.username === username).toReversed()
     : posts.toReversed();
-    console.log(filteredPostsByUser[0])
 
   return (
     <div className="post-container">
