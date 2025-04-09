@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../NewPost/NewPost.css";
+import "../AddComment/AddComment.css";
 import { createComment } from "../../services/comments";
 import { useParams } from "react-router-dom";
 
@@ -63,7 +63,7 @@ function AddComment({ onCommentCreated }) {
           role="submit-button"
           id="submit"
           type="submit"
-          value="Post"
+          value="Comment"
         />
         {error && (
           <div data-testid="error-string" className="post-error-msg">
