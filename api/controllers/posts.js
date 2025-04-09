@@ -2,11 +2,14 @@ const Post = require("../models/post");
 const User = require("../models/user");
 const { generateToken } = require("../lib/token");
 
-async function getAllPosts(req, res) {
+async function getAllPosts(req, res, next) {
   const posts = await Post.find().populate("userId");
 
   const token = generateToken(req.user_id);
-  res.status(200).json({ posts: posts, token: token });
+  req.posts = posts;
+  req.token = token;
+  next();
+  // res.status(200).json({ posts: posts, token: token });
 }
 
 async function getPostsByUser(req, res) {
@@ -27,7 +30,6 @@ async function getPost(req, res, next) {
   const postId = req.params.id;
   try {
     const foundPost = await Post.findOne({ _id: postId }).populate("userId");
-
     req.postData = foundPost;
     next();
   } catch (err) {

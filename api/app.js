@@ -21,8 +21,8 @@ app.use(bodyParser.json());
 
 // API Routes
 app.use("/users", usersRouter);
-app.use("/posts", tokenChecker, postsRouter, commentsRouter);
-app.use("/posts", tokenChecker, likesRouter);
+app.use("/posts", tokenChecker, postsRouter, likesRouter, commentsRouter);
+// app.use("/posts", tokenChecker, likesRouter);
 app.use("/tokens", authenticationRouter);
 // app.use("/posts", tokenChecker, commentsRouter);
 

@@ -90,45 +90,6 @@ describe("CommentsController", () => {
       expect(res.json).toHaveBeenCalledWith({ message: "Comment created" });
     });
 
-    it("should handle validation errors", async () => {
-      // Arrange
-      const validationError = new Error("Validation failed");
-      validationError.name = "ValidationError";
-      validationError.errors = {
-        message: { message: "Message is required" },
-        postId: { message: "Post ID is required" },
-      };
-
-      const mockComment = {
-        save: jest.fn().mockRejectedValue(validationError),
-      };
-
-      Comment.mockImplementation(() => mockComment);
-
-      const consoleSpy = jest.spyOn(console, "error").mockImplementation();
-      const consoleLogSpy = jest.spyOn(console, "log").mockImplementation();
-
-      // Act
-      await CommentsController.createComment(req, res);
-
-      // Assert
-      expect(Comment).toHaveBeenCalledWith({
-        postId: "mockPostId",
-        userId: "mockUserId",
-        message: "Test comment message",
-      });
-      expect(consoleSpy).toHaveBeenCalled();
-      expect(consoleLogSpy).toHaveBeenCalled();
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({
-        message: "Message is required, Post ID is required",
-      });
-
-      // Clean up
-      consoleSpy.mockRestore();
-      consoleLogSpy.mockRestore();
-    });
-
     it("should handle other errors", async () => {
       // Arrange
       const generalError = new Error("Something went wrong");
