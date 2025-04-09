@@ -8,10 +8,10 @@ router.get("/", PostsController.getAllPosts);
 router.get(
   "/:id",
   PostsController.getPost,
-  CommentsController.getAllCommentsPerPost
+  CommentsController.getAllCommentsPerPost,
 );
 router.post("/", PostsController.createPost);
-router.post("/:id", CommentsController.createComment); // Add this for comments
+router.post("/:id", CommentsController.createComment);
 router.delete("/:id", PostsController.deletePost);
 
 module.exports = router;
