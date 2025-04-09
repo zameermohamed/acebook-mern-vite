@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getPostsByUser } from "../../services/posts"
+import { getUser } from "../../services/users";
 import Header from "../../components/Header";
 import PostContainer from "../../components/PostContainer/PostContainer";
 
 export function ViewProfile() {
   const [user, setUser] = useState(null);
   const { username } = useParams();
+  const [currentUser, setcurrentUser] = useState(null)
+  const navigate = useNavigate()
   const formatDate = (date) => {
     let dateFormat = new Date(date);
     // Options for formatting
@@ -22,13 +25,19 @@ export function ViewProfile() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const loggedIn = token !== null;
+    getUser(token)
+    .then((data) => {
+      setcurrentUser(data.username)
+    })
     if (loggedIn) {
       getPostsByUser(token, username).then((data) => {
-        setUser(data.foundUser);
-        console.log(data)
+        if (data.foundUser.username === currentUser) {
+          navigate("/profile");
+        } else {
+        setUser(data.foundUser);}
       });
     }
-  }, [username]);
+  }, [username, navigate, currentUser]);
 
   return (
     <>
