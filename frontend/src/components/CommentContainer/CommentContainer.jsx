@@ -3,8 +3,6 @@ import "./CommentContainer.css";
 function CommentContainer(props) {
   return (
     <div className="comments-container">
-      <h3>Comments ({props.comments?.length || 0})</h3>
-
       {(!props.comments || props.comments.length === 0) && (
         <p className="no-comments">No comments yet. Be the first to comment!</p>
       )}
