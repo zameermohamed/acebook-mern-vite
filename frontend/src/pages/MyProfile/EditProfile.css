@@ -1,41 +1,62 @@
 .edit-profile-container {
   max-width: 600px;
-  margin: 2rem auto;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 3rem auto;
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.edit-profile-container h2,
+.edit-profile-container h3 {
+  margin-bottom: 1rem;
+  color: #111827;
 }
 
 .edit-profile-container label {
   display: block;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.4rem;
   font-weight: 600;
-  margin-top: 1rem;
+  color: #374151;
+  margin-top: 1.25rem;
 }
 
 .edit-profile-container input,
 .edit-profile-container textarea {
   width: 100%;
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-bottom: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.edit-profile-container input:focus,
+.edit-profile-container textarea:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .edit-profile-buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 
 .save-button,
 .delete-button {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
   border: none;
-  color: #fff;
+  color: #ffffff;
   cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
 .save-button {
@@ -44,6 +65,7 @@
 
 .save-button:hover {
   background-color: #1d4ed8;
+  transform: translateY(-1px);
 }
 
 .delete-button {
@@ -52,17 +74,22 @@
 
 .delete-button:hover {
   background-color: #b91c1c;
+  transform: translateY(-1px);
 }
 
 .message.error {
   color: #dc2626;
+  margin-bottom: 1rem;
+  font-weight: 500;
 }
 
 .message.success {
   color: #16a34a;
+  margin-bottom: 1rem;
+  font-weight: 500;
 }
 
 .section-divider {
-  margin: 2rem 0 1rem;
-  border-top: 1px solid #ddd;
+  margin: 2.5rem 0 1.5rem;
+  border-top: 1px solid #e5e7eb;
 }
