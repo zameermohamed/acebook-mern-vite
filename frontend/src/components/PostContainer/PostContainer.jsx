@@ -41,11 +41,11 @@ const PostContainer = ({
 
   // Filter posts based on singlePost flag
   const filteredPosts = singlePost
-    ? posts.filter((post) => post._id === currentPostId)
+    ? posts.filter((post) => post._id === currentPostId).toReversed()
     : posts.toReversed();
 
   const filteredPostsByUser = userPosts
-    ? posts.filter((post) => post.userId.username === username)
+    ? posts.filter((post) => post.userId.username === username).toReversed()
     : posts.toReversed();
 
   return (
