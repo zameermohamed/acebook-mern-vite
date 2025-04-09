@@ -8,8 +8,8 @@ import PostContainer from "../../components/PostContainer/PostContainer";
 export function ViewProfile() {
   const [user, setUser] = useState(null);
   const { username } = useParams();
-  const [currentUser, setcurrentUser] = useState(null)
   const navigate = useNavigate()
+  const [currentUser, setcurrentUser] = useState(null)
   const formatDate = (date) => {
     let dateFormat = new Date(date);
     // Options for formatting
