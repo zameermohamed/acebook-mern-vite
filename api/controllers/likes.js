@@ -1,4 +1,5 @@
 const Like = require("../models/like");
+const Comment = require("../models/comment");
 const Post = require("../models/post");
 
 async function likePost(req, res) {
@@ -53,18 +54,20 @@ async function unLikePost(req, res) {
 
 async function getLikesFromPostID(req, res) {
   const userId = req.user_id;
-  const { postId } = req.params;
+  const posts = req.posts;
 
   try {
-    const posts = req.posts;
-
     const postIds = posts.map((post) => post._id);
 
     // Fetch all likes for these postIds
     const allLikes = await Like.find({ postId: { $in: postIds } });
 
+    // Fetch all comments for these postIds
+    const allComments = await Comment.find({ postId: { $in: postIds } });
+
     // Create maps for fast lookup
     const likesCountMap = {};
+    const commentsCountMap = {};
     const userLikedSet = new Set();
 
     allLikes.forEach((like) => {
@@ -79,7 +82,13 @@ async function getLikesFromPostID(req, res) {
       }
     });
 
-    // Add likes data to each post object
+    // Count comments per post
+    allComments.forEach((comment) => {
+      const postIdStr = comment.postId.toString();
+      commentsCountMap[postIdStr] = (commentsCountMap[postIdStr] || 0) + 1;
+    });
+
+    // Add likes and comments data to each post object
     const enrichedPosts = posts.map((post) => {
       const postIdStr = post._id.toString();
 
@@ -87,13 +96,16 @@ async function getLikesFromPostID(req, res) {
         ...post.toObject(),
         likesCount: likesCountMap[postIdStr] || 0,
         userHasLiked: userLikedSet.has(postIdStr),
+        commentsCount: commentsCountMap[postIdStr] || 0,
       };
     });
 
     res.json({ posts: enrichedPosts, token: req.token });
   } catch (error) {
-    console.error("Error getting likes:", error);
-    res.status(400).json({ error: "Could not determine like status" });
+    console.error("Error getting likes and comments:", error);
+    res
+      .status(400)
+      .json({ error: "Could not determine like and comment status" });
   }
 }
 

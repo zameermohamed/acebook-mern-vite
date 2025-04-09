@@ -27,6 +27,17 @@ function Post(props) {
     }
   };
 
+  // Log the post data to see what we're working with
+  console.log("Post data in Post component:", {
+    id: props.post._id,
+    commentsCount: props.post.commentsCount,
+    commentsLength: props.comments?.length,
+  });
+
+  // Get the comment count from props.comments (when in single post view)
+  // or from post.commentsCount (when in feed view)
+  const commentCount = props.comments?.length || props.post.commentsCount || 0;
+
   return (
     <>
       {props.post.userId && (
@@ -58,6 +69,7 @@ function Post(props) {
               userHasLiked={props.post.userHasLiked}
             />
           )}
+          <p>Comments ({commentCount})</p>
         </Link>
       )}
     </>

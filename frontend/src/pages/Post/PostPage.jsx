@@ -39,16 +39,17 @@ export function PostPage() {
   return (
     <div data-testid="post-page">
       <Header />
-      <div className="post-page-content">
-        <PostContainer
-          singlePost={true}
-          postId={id}
-          refreshTrigger={refreshTrigger}
-        />
+      {isLoading ? (
+        <p>Loading comments...</p>
+      ) : (
+        <div className="post-page-content">
+          <PostContainer
+            singlePost={true}
+            postId={id}
+            refreshTrigger={refreshTrigger}
+            comments={commentsData}
+          />
 
-        {isLoading ? (
-          <p>Loading comments...</p>
-        ) : (
           <>
             <CommentContainer
               refreshTrigger={refreshTrigger}
@@ -56,8 +57,8 @@ export function PostPage() {
             />
             <AddComment postId={id} onCommentCreated={refreshComments} />
           </>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
