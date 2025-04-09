@@ -19,7 +19,7 @@ const PostContainer = ({
 
   // Use postId from props or fallback to URL params
   const currentPostId = postId || params.id;
-  
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     const loggedIn = token !== null;
@@ -44,19 +44,9 @@ const PostContainer = ({
     ? posts.filter((post) => post._id === currentPostId)
     : posts.toReversed();
 
-  // Filter posts based on viewing individual profile flag
   const filteredPostsByUser = userPosts
-    ? posts.filter((post) => post.userId.username === username).toReversed()
+    ? posts.filter((post) => post.userId.username === username)
     : posts.toReversed();
-
-  // Log the filtered posts to see if comments data is preserved
-  console.log(
-    "Filtered posts in PostContainer:",
-    filteredPosts.map((post) => ({
-      id: post._id,
-      commentsCount: post.commentsCount,
-    })),
-  );
 
   return (
     <div className="post-container">
