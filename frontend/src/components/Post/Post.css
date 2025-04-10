@@ -25,12 +25,17 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 2.5rem; /* Space before the message */
+  margin-bottom: 1rem; /* Space before the message */
 }
 
 .user-details {
   display: flex;
+
   align-items: center;
+
+  width: 30%;
+  text-align: start;
+  margin: 0 0 0 0;
 }
 
 .post-card-date {
@@ -51,6 +56,7 @@
 .post-card-user-name {
   font-weight: 600;
   color: #333;
+  display: inline-block;
 }
 
 /* Message section */
@@ -103,13 +109,28 @@
 }
 
 .bin-icon {
-  width: 35px;
-  height: 35px;
+  position: absolute;
+  opacity: 1;
+  width: 22px;
+  height: 22px;
   cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.bin-icon-open {
+  opacity: 0;
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
 }
 
-.bin-icon:hover {
-  box-shadow: 4px 4px 2px 1px var(--accent-color);
+.bin-container:hover .bin-icon {
+  opacity: 0;
+}
+
+.bin-container:hover .bin-icon-open {
+  opacity: 1;
 }
 
 /* Themed versions */

@@ -41,7 +41,7 @@ export function ViewProfile() {
       });
     }
   }, [username, navigate, currentUser]);
-  console.log('user', user);
+  console.log("user", user);
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -58,15 +58,15 @@ export function ViewProfile() {
 
       {user && (
         <div className="profile-page">
-          <div className="user-details" >
+          <div className="view-profile-details">
             <h1 data-testid="username">{user.username}</h1>
             {user.profilePicture && (
               <img src={user.profilePicture} className="profile-picture" />
             )}
             <p> User since: {formatDate(user.dateCreated)}</p>
           </div>
-          <div className="post-feed" >
-            <PostContainer username={username} userPosts={true} theme={theme}/>
+          <div className="post-feed">
+            <PostContainer username={username} userPosts={true} theme={theme} />
           </div>
         </div>
       )}

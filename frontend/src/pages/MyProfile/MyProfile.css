@@ -20,13 +20,13 @@
     width: 80px;
   }
 }
-.user-details {
+.profile-details {
   display: inline-block;
   margin: 40px 1% 0 0;
   width: 30%;
   vertical-align: top;
 }
-.user-details button {
+.profile-details button {
   align-self: flex-end;
   width: auto;
   min-width: 80px;
@@ -42,11 +42,11 @@
   transition: background-color 0.2s;
 }
 
-.user-details button:hover {
+.profile-details button:hover {
   background-color: #3a7bc8;
 }
 
-.user-details button:active {
+.profile-details button:active {
   background-color: #2a6cb8;
 }
 
