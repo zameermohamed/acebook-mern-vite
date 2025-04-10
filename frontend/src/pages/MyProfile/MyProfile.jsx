@@ -1,7 +1,7 @@
 import Header from "../../components/Header";
-
 import { getUser } from "../../services/users";
-import { useEffect, useState } from "react";
+import { useEffect, useState, } from "react";
+import { useNavigate } from "react-router-dom";
 import NewPost from "../../components/NewPost/NewPost";
 import PostContainer from "../../components/PostContainer/PostContainer";
 import "./MyProfile.css";
@@ -9,7 +9,7 @@ export function MyProfile() {
   const [user, setUser] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
+  const navigate = useNavigate()
   const refreshPosts = () => {
     setRefreshTrigger(refreshTrigger + 1);
   };
@@ -66,6 +66,7 @@ export function MyProfile() {
           <p data-testid="username"> Username: {user.username}</p>
           <p> Email: {user.email}</p>
           <p> User since: {formatDate(user.dateCreated)}</p>
+          <button onClick={() => navigate("/profile/edit")}> Edit Profile</button>
         </div>
           <div className="post-feed" >
           <NewPost onPostCreated={refreshPosts} />
