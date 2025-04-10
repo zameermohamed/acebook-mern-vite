@@ -6,6 +6,8 @@ import { getUser } from "../../services/users";
 import { deletePost } from "../../services/posts";
 import bin from "../../images/bin.png";
 import binDarkMode from "../../images/bin-dark-mode.png";
+import binOpen from "../../images/bin-open-light.png";
+import binOpenDark from "../../images/bin-open-dark.png";
 
 function Post(props) {
   const [userId, setUserId] = useState();
@@ -106,6 +108,11 @@ function Post(props) {
                   <img
                     className="bin-icon"
                     src={props.theme === "light" ? bin : binDarkMode}
+                    alt="Delete"
+                  />
+                  <img
+                    className="bin-icon-open"
+                    src={props.theme === "light" ? binOpen : binOpenDark}
                     alt="Delete"
                   />
                 </div>
