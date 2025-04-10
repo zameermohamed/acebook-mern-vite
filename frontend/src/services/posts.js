@@ -29,7 +29,7 @@ export async function getPost(token, post_id) {
 
   const response = await fetch(
     `${BACKEND_URL}/posts/${post_id}`,
-    requestOptions,
+    requestOptions
   );
 
   if (response.status !== 200) {
@@ -50,7 +50,7 @@ export async function getPostsByUser(token, username) {
 
   const response = await fetch(
     `${BACKEND_URL}/users/${username}`,
-    requestOptions,
+    requestOptions
   );
 
   if (response.status !== 200) {
@@ -77,6 +77,26 @@ export async function createPost(token, text) {
 
   if (response.status !== 201) {
     throw new Error("Unable to add post");
+  }
+  const data = await response.json();
+  return data;
+}
+
+export async function deletePost(token, postId) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(
+    `${BACKEND_URL}/posts/${postId}`,
+    requestOptions
+  );
+
+  if (response.status !== 200) {
+    throw new Error("Unable to DELETE post");
   }
   const data = await response.json();
   return data;

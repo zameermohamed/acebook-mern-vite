@@ -5,11 +5,12 @@ import Post from "../Post/Post";
 import "../PostContainer/PostContainer.css";
 
 const PostContainer = ({
+  onPostDeleted,
   refreshTrigger,
   singlePost,
   postId,
-  userPosts, 
-  username, 
+  userPosts,
+  username,
 
   comments,
   theme,
@@ -45,20 +46,26 @@ const PostContainer = ({
     ? posts.filter((post) => post._id === currentPostId).toReversed()
     : posts.toReversed();
 
-
   const filteredPostsByUser = userPosts
     ? posts.filter((post) => post.userId.username === username).toReversed()
     : posts.toReversed();
 
   return (
     <div className="post-container">
-      {!userPosts && filteredPosts.map((post) => (
-        <Post post={post} key={post._id} comments={comments} theme={theme}/>
-      ))}
-      {userPosts && filteredPostsByUser.map((post) => (
-
-        <Post post={post} key={post._id} comments={comments} theme={theme} />
-      ))}
+      {!userPosts &&
+        filteredPosts.map((post) => (
+          <Post post={post} key={post._id} comments={comments} theme={theme} />
+        ))}
+      {userPosts &&
+        filteredPostsByUser.map((post) => (
+          <Post
+            onPostDeleted={onPostDeleted}
+            post={post}
+            key={post._id}
+            comments={comments}
+            theme={theme}
+          />
+        ))}
     </div>
   );
 };

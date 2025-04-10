@@ -8,6 +8,7 @@ export function FeedPage() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   const refreshPosts = () => {
+    console.log("MIKAL TEST.");
     setRefreshTrigger(refreshTrigger + 1);
   };
 
@@ -24,6 +25,7 @@ export function FeedPage() {
       <h2>Posts</h2>
       <NewPost onPostCreated={refreshPosts} />
       <PostContainer
+        onPostDeleted={refreshPosts}
         refreshTrigger={refreshTrigger}
         singlePost={false}
         theme={theme}
