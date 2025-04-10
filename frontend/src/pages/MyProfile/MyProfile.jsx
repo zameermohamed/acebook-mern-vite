@@ -9,6 +9,7 @@ export function MyProfile() {
   const [user, setUser] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
   const refreshPosts = () => {
     setRefreshTrigger(refreshTrigger + 1);
   };
