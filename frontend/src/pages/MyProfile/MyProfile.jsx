@@ -9,6 +9,7 @@ export function MyProfile() {
   const [user, setUser] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
   const refreshPosts = () => {
     setRefreshTrigger(refreshTrigger + 1);
   };
@@ -42,9 +43,10 @@ export function MyProfile() {
         console.error("failed to find user", error);
       }
     }
-
     fetchUser();
   }, []);
+
+  console.log('user from my profile', user)
   return (
     <>
       <div>

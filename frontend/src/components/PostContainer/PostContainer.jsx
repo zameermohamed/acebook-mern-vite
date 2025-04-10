@@ -9,8 +9,7 @@ const PostContainer = ({
   singlePost,
   postId,
   userPosts, 
-  username, 
-
+  username,
   comments,
   theme,
 }) => {
@@ -45,9 +44,8 @@ const PostContainer = ({
     ? posts.filter((post) => post._id === currentPostId).toReversed()
     : posts.toReversed();
 
-
   const filteredPostsByUser = userPosts
-    ? posts.filter((post) => post.userId.username === username).toReversed()
+    ? posts.filter((post) => post.userId && post.userId.username === username).toReversed()
     : posts.toReversed();
 
   return (
@@ -56,7 +54,6 @@ const PostContainer = ({
         <Post post={post} key={post._id} comments={comments} theme={theme}/>
       ))}
       {userPosts && filteredPostsByUser.map((post) => (
-
         <Post post={post} key={post._id} comments={comments} theme={theme} />
       ))}
     </div>

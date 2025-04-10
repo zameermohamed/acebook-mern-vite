@@ -12,6 +12,7 @@ export function ViewProfile() {
   const { username } = useParams();
   const navigate = useNavigate();
   const [currentUser, setcurrentUser] = useState(null);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const formatDate = (date) => {
     let dateFormat = new Date(date);
     // Options for formatting
@@ -40,11 +41,19 @@ export function ViewProfile() {
       });
     }
   }, [username, navigate, currentUser]);
+  console.log('user', user);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
 
   return (
     <>
       <div>
-        <Header></Header>
+        <Header onThemeChange={toggleTheme}></Header>
       </div>
 
       {user && (
@@ -54,7 +63,7 @@ export function ViewProfile() {
             <img src={user.profilePicture} className="profile-picture" />
           )}
           <p> User since: {formatDate(user.dateCreated)}</p>
-          <PostContainer username={username} userPosts={true} />
+          <PostContainer username={username} userPosts={true} theme={theme}/>
         </div>
       )}
     </>
