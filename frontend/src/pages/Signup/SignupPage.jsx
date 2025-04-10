@@ -1,17 +1,25 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { signup } from "../../services/authentication";
 import Header from "../../components/Header";
 import "../AuthPages.css";
+
 export function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUserName] = useState("");
-  const navigate = useNavigate();
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
+
   async function handleSubmit(event) {
     event.preventDefault();
+    
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     try {
       await signup(email, password, username);
       navigate("/login");
@@ -29,13 +37,18 @@ export function SignupPage() {
   function handlePasswordChange(event) {
     setPassword(event.target.value);
   }
+
+  function handleConfirmPasswordChange(event) {
+    setConfirmPassword(event.target.value);
+  }
+
   function handleUserNameChange(event) {
     setUserName(event.target.value);
   }
 
   return (
     <>
-      <Header></Header>
+      <Header />
       <h2>Signup</h2>
       <form onSubmit={handleSubmit} className="auth-form">
         <label htmlFor="email">Email</label>
@@ -56,6 +69,16 @@ export function SignupPage() {
           type="password"
           value={password}
           onChange={handlePasswordChange}
+          required
+        />
+        <label htmlFor="confirmPassword">Confirm Password</label>
+        <input
+          className="textField"
+          placeholder="Confirm Password"
+          id="confirmPassword"
+          type="password"
+          value={confirmPassword}
+          onChange={handleConfirmPasswordChange}
           required
         />
         <label htmlFor="username">Username:</label>
