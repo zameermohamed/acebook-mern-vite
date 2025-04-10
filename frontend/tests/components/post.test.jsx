@@ -9,7 +9,7 @@ describe("Post", () => {
     render(
       <MemoryRouter>
         <Post post={testPost} />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     const article = screen.getByTestId("post-message");

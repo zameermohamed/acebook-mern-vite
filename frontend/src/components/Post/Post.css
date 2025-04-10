@@ -6,13 +6,11 @@
   padding: 1.25rem;
   margin-bottom: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-decoration: none;
   color: inherit;
   display: block;
-  position: relative; /* Added to position child elements */
+  position: relative;
 }
 
 .post-card:hover {
@@ -23,7 +21,13 @@
 .post-card-user-info {
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Pushes the bin icon to the right */
   padding: 0.5rem 0 1rem 0;
+}
+
+.user-details {
+  display: flex;
+  align-items: center;
 }
 
 .post-card-date {
@@ -52,10 +56,9 @@
   line-height: 1.5;
   overflow-wrap: break-word;
   color: #333;
-  margin-bottom: 2rem; /* Added space for the bottom elements */
+  margin-bottom: 2rem;
 }
 
-/* Added for comments count */
 .post-comments-count {
   position: absolute;
   bottom: 1.25rem;
@@ -64,6 +67,12 @@
   color: #757575;
   display: flex;
   align-items: center;
+}
+
+.bin-icon {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
 }
 
 /* Themed versions */

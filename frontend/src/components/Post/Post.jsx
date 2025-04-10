@@ -1,8 +1,25 @@
 import "../Post/Post.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LikeComponent from "../LikeComponent/LikeComponent";
+import { useEffect, useState } from "react";
+import { getUser } from "../../services/users";
+import { deletePost } from "../../services/posts";
 
 function Post(props) {
+  const [userId, setUserId] = useState();
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getUser(token).then((data) => {
+      if (data && data.userId) {
+        setUserId(data.userId);
+      } else {
+        console.warn("User data missing or malformed:", data);
+      }
+    });
+  }, [token]);
+
   const formatDate = (date) => {
     let dateFormat = new Date(date);
 
@@ -25,6 +42,15 @@ function Post(props) {
     if (e.target.closest(".like-component")) {
       e.preventDefault();
     }
+    if (e.target.closest(".bin-container")) {
+      e.preventDefault();
+    }
+  };
+
+  const handlePostDelete = async () => {
+    await deletePost(token, props.post._id);
+    if (props.onPostDeleted) props.onPostDeleted();
+    navigate("/posts");
   };
 
   // Get the comment count from props.comments (when in single post view)
@@ -42,19 +68,32 @@ function Post(props) {
         >
           <p className="post-card-date">{formatDate(props.post.createdAt)}</p>
           <div className="post-card-user-info">
-            <Link to={`/users/${props.post.userId.username}`}>
-            <img
-              className="post-card-user-picture"
-              src={props.post.userId.profilePicture}
-              alt="User profile"
-              />
+            <div className="user-details">
+              <Link to={`/users/${props.post.userId.username}`}>
+                <img
+                  className="post-card-user-picture"
+                  src={props.post.userId.profilePicture}
+                  alt="User profile"
+                />
               </Link>
-            <div className="post-card-user-name">
-            <Link to={`/users/${props.post.userId.username}`}>
-              {props.post.userId.username}
-            </Link>
+              <div className="post-card-user-name">
+                <Link to={`/users/${props.post.userId.username}`}>
+                  {props.post.userId.username}
+                </Link>
               </div>
+            </div>
+
+            {userId === props.post.userId._id && (
+              <div className="bin-container" onClick={handlePostDelete}>
+                <img
+                  className="bin-icon"
+                  src="/src/images/bin.png"
+                  alt="Delete"
+                />
+              </div>
+            )}
           </div>
+
           <p data-testid="post-message" className="post-message">
             {props.post.message}
           </p>
