@@ -4,6 +4,8 @@ import LikeComponent from "../LikeComponent/LikeComponent";
 import { useEffect, useState } from "react";
 import { getUser } from "../../services/users";
 import { deletePost } from "../../services/posts";
+import bin from "../../images/bin.png";
+import binDarkMode from "../../images/bin-dark-mode.png";
 
 function Post(props) {
   const [userId, setUserId] = useState();
@@ -66,7 +68,6 @@ function Post(props) {
           to={`/posts/${props.post._id}`}
           onClick={handlePostClick}
         >
-          <p className="post-card-date">{formatDate(props.post.createdAt)}</p>
           <div className="post-card-user-info">
             <div className="user-details">
               <Link to={`/users/${props.post.userId.username}`}>
@@ -82,32 +83,39 @@ function Post(props) {
                 </Link>
               </div>
             </div>
-
-            {userId === props.post.userId._id && (
-              <div className="bin-container" onClick={handlePostDelete}>
-                <img
-                  className="bin-icon"
-                  src="/src/images/bin.png"
-                  alt="Delete"
-                />
-              </div>
-            )}
+            <p className="post-card-date">{formatDate(props.post.createdAt)}</p>
           </div>
 
           <p data-testid="post-message" className="post-message">
             {props.post.message}
           </p>
-          {(props.post.likesCount === 0 || props.post.likesCount) && (
-            <LikeComponent
-              likesCount={props.post.likesCount}
-              postId={props.post._id}
-              userHasLiked={props.post.userHasLiked}
-              theme={props.theme}
-            />
-          )}
-          <p className="post-comments-count">
-            {commentCount} {commentCount === 1 ? "Comment" : "Comments"}
-          </p>
+
+          <div className="post-card-bottom">
+            <div className="post-card-bottom-items">
+              {(props.post.likesCount === 0 || props.post.likesCount) && (
+                <LikeComponent
+                  likesCount={props.post.likesCount}
+                  postId={props.post._id}
+                  userHasLiked={props.post.userHasLiked}
+                  theme={props.theme}
+                />
+              )}
+
+              {userId === props.post.userId._id && (
+                <div className="bin-container" onClick={handlePostDelete}>
+                  <img
+                    className="bin-icon"
+                    src={props.theme === "light" ? bin : binDarkMode}
+                    alt="Delete"
+                  />
+                </div>
+              )}
+
+              <p className="post-comments-count">
+                {commentCount} {commentCount === 1 ? "Comment" : "Comments"}
+              </p>
+            </div>
+          </div>
         </Link>
       )}
     </>
