@@ -3,7 +3,7 @@ import "../MyProfile/MyProfile.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPostsByUser } from "../../services/posts";
 import { getUser } from "../../services/users";
-
+import "./ViewProfile.css";
 import Header from "../../components/Header";
 import PostContainer from "../../components/PostContainer/PostContainer";
 
@@ -58,12 +58,16 @@ export function ViewProfile() {
 
       {user && (
         <div className="profile-page">
-          <h1 data-testid="username">{user.username}</h1>
-          {user.profilePicture && (
-            <img src={user.profilePicture} className="profile-picture" />
-          )}
-          <p> User since: {formatDate(user.dateCreated)}</p>
-          <PostContainer username={username} userPosts={true} theme={theme}/>
+          <div className="user-details" >
+            <h1 data-testid="username">{user.username}</h1>
+            {user.profilePicture && (
+              <img src={user.profilePicture} className="profile-picture" />
+            )}
+            <p> User since: {formatDate(user.dateCreated)}</p>
+          </div>
+          <div className="post-feed" >
+            <PostContainer username={username} userPosts={true} theme={theme}/>
+          </div>
         </div>
       )}
     </>
