@@ -15,10 +15,16 @@ export function EditProfile() {
     password: "", 
   });
   const [error, setError] = useState("");
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
+  const toggleTheme = () => {
+  const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
   useEffect(() => {
     async function fetchUser() {
       if (!token) {
@@ -92,8 +98,9 @@ export function EditProfile() {
 
   return (
     <>
-      <Header />
+      <Header onThemeChange={toggleTheme}/>
       <EditProfileForm
+        theme={theme}
         form={form}
         error={error}
         message={message}
