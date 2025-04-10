@@ -84,7 +84,7 @@ export async function createPost(token, text, picture) {
             }
         });
     };
-    const baseImage = await transformImageToBase64(picture);
+    const baseImage = picture ? await transformImageToBase64(picture) : "";
 
     const payload = {
         message: text,
