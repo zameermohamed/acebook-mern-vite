@@ -1,4 +1,3 @@
-
 import Header from "../../components/Header";
 import React, { useState, useEffect } from "react";
 import { getUser, updateUser, deleteUser } from "../../services/users";
@@ -22,6 +21,11 @@ export function EditProfile() {
 
   useEffect(() => {
     async function fetchUser() {
+      if (!token) {
+        setError("No token found. Please log in again.");
+        return;
+      }
+
       try {
         const userData = await getUser(token);
         setForm((prev) => ({
@@ -69,7 +73,7 @@ export function EditProfile() {
         password: "",
       }));
     } catch (err) {
-      setError(err.message);
+      setError("Failed to update profile");
       setMessage("");
     }
   };
@@ -81,7 +85,7 @@ export function EditProfile() {
         localStorage.removeItem("token");
         navigate("/signup");
       } catch (err) {
-        setError(err.message);
+        setError("Failed to delete account");
       }
     }
   };
