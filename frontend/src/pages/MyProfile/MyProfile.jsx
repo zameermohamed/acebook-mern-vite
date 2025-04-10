@@ -54,6 +54,7 @@ export function MyProfile() {
       </div>
       {user && (
         <div className="profile-page">
+        <div className="user-details" >
           <h1>My Profile</h1>
           {user.profilePicture && (
             <img
@@ -65,13 +66,16 @@ export function MyProfile() {
           <p data-testid="username"> Username: {user.username}</p>
           <p> Email: {user.email}</p>
           <p> User since: {formatDate(user.dateCreated)}</p>
+        </div>
+          <div className="post-feed" >
           <NewPost onPostCreated={refreshPosts} />
-          <PostContainer
-            refreshTrigger={refreshTrigger}
-            username={user.username}
-            userPosts={true}
-            theme={theme}
-          />
+            <PostContainer
+              refreshTrigger={refreshTrigger}
+              username={user.username}
+              userPosts={true}
+              theme={theme}
+            />
+          </div>
         </div>
       )}
     </>
