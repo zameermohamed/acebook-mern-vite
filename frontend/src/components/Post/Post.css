@@ -25,12 +25,17 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 2.5rem; /* Space before the message */
+  margin-bottom: 1rem; /* Space before the message */
 }
 
 .user-details {
   display: flex;
+
   align-items: center;
+
+  width: 30%;
+  text-align: start;
+  margin: 0 0 0 0;
 }
 
 .post-card-date {
@@ -51,6 +56,7 @@
 .post-card-user-name {
   font-weight: 600;
   color: #333;
+  display: inline-block;
 }
 
 /* Message section */
