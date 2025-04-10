@@ -9,6 +9,7 @@ function NewPost({ onPostCreated }) {
     const [text, setText] = useState("");
     const [username, setUsername] = useState("");
     const [profilePicture, setProfilePicture] = useState("");
+    const [file, setFile] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -36,16 +37,22 @@ function NewPost({ onPostCreated }) {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        if (!text) {
+        if (!text && !file) {
             setError(true);
         } else {
             // verify they're logged in to attach user id
-            await createPost(localStorage.getItem("token"), text);
+            await createPost(localStorage.getItem("token"), text, file);
             setText("");
             // Call the callback to notify parent that a post was created
             if (onPostCreated) onPostCreated();
             setError(false);
         }
+    }
+    function handleFileChange(event) {
+        const file = event.target.files[0];
+        setFile(file);
+        setError(false);
+        console.log(file);
     }
 
     return (
@@ -56,6 +63,7 @@ function NewPost({ onPostCreated }) {
                         <img src={profilePicture} />
                         <h3>{username}</h3>
                     </div>
+                    <input type="file" onChange={handleFileChange} />
                     <textarea
                         className="textField"
                         id="message"
@@ -64,11 +72,11 @@ function NewPost({ onPostCreated }) {
                         value={text}
                         onChange={handlePostChange}
                         onKeyDown={(e) => {
-                            if (e.key === 'Enter' && !e.shiftKey) {
-                              e.preventDefault(); // prevent newline
-                              handleSubmit(e);
+                            if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault(); // prevent newline
+                                handleSubmit(e);
                             }
-                          }}
+                        }}
                     />
                     <input
                         className="submitButton"
@@ -79,7 +87,10 @@ function NewPost({ onPostCreated }) {
                         value="Post"
                     />
                     {error && (
-                        <div className="post-error-msg" data-testid="post-error-msg">
+                        <div
+                            className="post-error-msg"
+                            data-testid="post-error-msg"
+                        >
                             <p>Post must contain some text</p>
                         </div>
                     )}
