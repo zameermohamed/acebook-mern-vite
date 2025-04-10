@@ -8,6 +8,7 @@ const PostContainer = ({
   refreshTrigger,
   singlePost,
   postId,
+
   userPosts,
   username,
   comments,
@@ -48,9 +49,7 @@ const PostContainer = ({
     : posts.toReversed();
 
   const filteredPostsByUser = userPosts
-    ? posts
-        .filter((post) => post.userId && post.userId.username === username)
-        .toReversed()
+    ? posts.filter((post) => post.userId && post.userId.username === username).toReversed()
     : posts.toReversed();
 
   return (
