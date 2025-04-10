@@ -81,7 +81,7 @@ export function SignupPage() {
           onChange={handleConfirmPasswordChange}
           required
         />
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="username">Username</label>
         <input
           className="textField"
           placeholder="Username"

@@ -1,36 +1,36 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
-
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../src/services/authentication";
-
 import { SignupPage } from "../../src/pages/Signup/SignupPage";
 
 vi.mock("react-router-dom", () => {
   const linkMock = vi.fn();
-  const LinkMock = () => linkMock; // Create a mock function for Link (used in the page header bar)
+  const LinkMock = () => linkMock;
   const navigateMock = vi.fn();
-  const useNavigateMock = () => navigateMock; // Create a mock function for useNavigate
+  const useNavigateMock = () => navigateMock;
   return { useNavigate: useNavigateMock, Link: LinkMock };
 });
 
-// Mocking the signup service
 vi.mock("../../src/services/authentication", () => {
   const signupMock = vi.fn();
   return { signup: signupMock };
 });
 
-// Reusable function for filling out signup form
-async function completeSignupForm() {
+async function completeSignupForm(email, password, confirmPassword, username) {
   const user = userEvent.setup();
 
   const emailInputEl = screen.getByLabelText("Email");
   const passwordInputEl = screen.getByLabelText("Password");
+  const confirmPasswordInputEl = screen.getByLabelText("Confirm Password");
+  const usernameInputEl = screen.getByLabelText("Username");
   const submitButtonEl = screen.getByRole("submit-button");
 
-  await user.type(emailInputEl, "test@email.com");
-  await user.type(passwordInputEl, "1234");
+  await user.type(emailInputEl, email);
+  await user.type(passwordInputEl, password);
+  await user.type(confirmPasswordInputEl, confirmPassword);
+  await user.type(usernameInputEl, username);
   await user.click(submitButtonEl);
 }
 
@@ -39,24 +39,22 @@ describe("Signup Page", () => {
     vi.resetAllMocks();
   });
 
-  // test("allows a user to signup", async () => {
-  //   render(<SignupPage />);
-
-  //   await completeSignupForm();
-
-  //   expect(signup).toHaveBeenCalledWith(
-  //     "test@email.com",
-  //     "A!12345678",
-  //     "username",
-  //   );
-  // });
+  test("shows error when passwords do not match", async () => {
+    render(<SignupPage />);
+  
+    await completeSignupForm("test@email.com", "password123", "password124", "testuser");
+  
+    expect(screen.getByText("Passwords do not match.")).toBeDefined();
+  });
 
   test("navigates to /login on successful signup", async () => {
     render(<SignupPage />);
 
+    signup.mockResolvedValueOnce();
+
     const navigateMock = useNavigate();
 
-    await completeSignupForm();
+    await completeSignupForm("test@email.com", "password123", "password123", "testuser");
 
     expect(navigateMock).toHaveBeenCalledWith("/login");
   });
@@ -64,10 +62,11 @@ describe("Signup Page", () => {
   test("navigates to /signup on unsuccessful signup", async () => {
     render(<SignupPage />);
 
-    signup.mockRejectedValue(new Error("Error signing up"));
+    signup.mockRejectedValueOnce(new Error("Error signing up"));
+
     const navigateMock = useNavigate();
 
-    await completeSignupForm();
+    await completeSignupForm("test@email.com", "password123", "password123", "testuser");
 
     expect(navigateMock).toHaveBeenCalledWith("/signup");
   });
