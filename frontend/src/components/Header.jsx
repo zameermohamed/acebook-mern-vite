@@ -5,10 +5,18 @@ import "./Header.css"; // Make sure to import the CSS file
 import LogOut from "./Logout";
 import acebookLight from "../images/acebook.png"; // Import the light version
 import acebookDark from "../images/acebook-dark-mode.png"; // Import the dark version
-
+import { getUser } from "../services/users"; // Import the getUser function
 const Header = ({ onThemeChange }) => {
+  const [username, setUsername] = useState("");
   const token = localStorage.getItem("token");
   const loggedIn = token !== null;
+  getUser(token).then((data) => {
+    if (!data) {
+      console.error("getUser returned undefined");
+      return;
+    }
+    setUsername(data.username);
+  });
 
   // Check if a theme is saved in localStorage, default to 'light'
   const [theme, setTheme] = useState(() => {
@@ -53,7 +61,7 @@ const Header = ({ onThemeChange }) => {
           )}
           {loggedIn && (
             <Link to="/profile" className="nav-link">
-              Profile
+              Profile - {username}
             </Link>
           )}
           {loggedIn && (
