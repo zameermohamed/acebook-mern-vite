@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "../MyProfile/MyProfile.css";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPostsByUser } from "../../services/posts";
 import { getUser } from "../../services/users";
