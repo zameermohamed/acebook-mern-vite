@@ -6,7 +6,9 @@
   padding: 1.25rem;
   margin-bottom: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   text-decoration: none;
   color: inherit;
   display: block;
@@ -18,11 +20,12 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Top section */
 .post-card-user-info {
   display: flex;
-  align-items: center;
-  justify-content: space-between; /* Pushes the bin icon to the right */
-  padding: 0.5rem 0 1rem 0;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 2.5rem; /* Space before the message */
 }
 
 .user-details {
@@ -32,9 +35,8 @@
 
 .post-card-date {
   font-size: 0.75rem;
-  text-align: right;
   color: #757575;
-  margin: 0 0 0.5rem 0;
+  margin: 0;
 }
 
 .post-card-user-picture {
@@ -51,22 +53,53 @@
   color: #333;
 }
 
+/* Message section */
 .post-message {
-  margin: 0;
+  margin: 0 0 3.5rem 0; /* Bottom margin to ensure space for likes/comments */
   line-height: 1.5;
   overflow-wrap: break-word;
   color: #333;
-  margin-bottom: 2rem;
+  text-align: center; /* Changed to left-aligned for better readability of longer text */
+  width: 100%;
+  display: block;
+  clear: both;
+}
+
+/* Bottom section */
+.post-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  width: calc(100% - 2.5rem); /* Account for the left and right padding */
+}
+
+/* New class to hold all bottom items with flexbox */
+.post-card-bottom-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .post-comments-count {
-  position: absolute;
-  bottom: 1.25rem;
-  right: 1.25rem;
   font-size: 0.85rem;
   color: #757575;
   display: flex;
   align-items: center;
+  margin: 0;
+}
+
+/* Updated bin container for bottom positioning */
+.bin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 1rem; /* Add some space on both sides */
 }
 
 .bin-icon {
