@@ -42,9 +42,10 @@ export function MyProfile() {
         console.error("failed to find user", error);
       }
     }
-
     fetchUser();
   }, []);
+
+  console.log('user from my profile', user)
   return (
     <>
       <div>

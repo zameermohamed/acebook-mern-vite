@@ -40,6 +40,7 @@ export function ViewProfile() {
       });
     }
   }, [username, navigate, currentUser]);
+  console.log('user', user);
 
   return (
     <>
