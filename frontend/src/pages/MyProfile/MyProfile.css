@@ -1,5 +1,22 @@
-.profile-page img {
-    height: 120px;
-    width: 120px;
-    border-radius: 60px;
+.profile-page img.profile-picture {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .profile-page img.profile-picture {
+    height: 100px;
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-page img.profile-picture {
+    height: 80px;
+    width: 80px;
+  }
 }
