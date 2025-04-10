@@ -4,6 +4,7 @@ import LikeComponent from "../LikeComponent/LikeComponent";
 import { useEffect, useState } from "react";
 import { getUser } from "../../services/users";
 import { deletePost } from "../../services/posts";
+import binIcon from "../../images/bin.png";
 
 function Post(props) {
   const [userId, setUserId] = useState();
@@ -85,11 +86,7 @@ function Post(props) {
 
             {userId === props.post.userId._id && (
               <div className="bin-container" onClick={handlePostDelete}>
-                <img
-                  className="bin-icon"
-                  src="/src/images/bin.png"
-                  alt="Delete"
-                />
+                <img className="bin-icon" src={binIcon} alt="Delete" />
               </div>
             )}
           </div>
