@@ -108,6 +108,10 @@
   cursor: pointer;
 }
 
+.bin-icon:hover {
+  box-shadow: 4px 4px 2px 1px var(--accent-color);
+}
+
 /* Themed versions */
 .post-card {
   border: 1px solid var(--border-color);
