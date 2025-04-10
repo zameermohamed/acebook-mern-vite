@@ -162,5 +162,12 @@
 
 .post-image {
     height: 200px;
-    width: auto;
+    width: fit-content;
+}
+
+@media (max-width: 480px) {
+    .post-image {
+        height: 100px;
+        width: fit-content;
+    }
 }
