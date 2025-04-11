@@ -10,8 +10,10 @@ export function HomePage() {
       </div>
       <div className="home">
         <h1>Welcome to Acebook!</h1>
+        <h2>Who we are</h2>
       </div>
       <AboutUsContainer />
+      <h3>Many thanks from the acebook dev team!</h3>
     </>
   );
 }
