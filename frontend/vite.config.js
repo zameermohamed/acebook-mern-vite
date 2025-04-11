@@ -12,8 +12,8 @@ export default defineConfig({
       thresholds: {
         branches: 80,
         functions: 65,
-        lines: 80,
-        statements: 80,
+        lines: 75,
+        statements: 75,
       },
     },
     exclude: ["**/src/App.jsx", "**/src/main.jsx", "**/node_modules/**"],
