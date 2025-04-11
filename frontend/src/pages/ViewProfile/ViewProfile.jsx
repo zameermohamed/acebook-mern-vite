@@ -40,7 +40,6 @@ export function ViewProfile() {
       });
     }
   }, [username, navigate, currentUser]);
-  console.log("user", user);
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";

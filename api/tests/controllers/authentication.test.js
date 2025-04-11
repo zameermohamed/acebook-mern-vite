@@ -8,13 +8,9 @@ describe("/tokens", () => {
     const user = new User({
       email: "auth-test@test.com",
       password: "Ab1234567!",
-      username: "authtest"
+      username: "authtest",
     });
 
-    // We need to use `await` so that the "beforeAll" setup function waits for
-    // the asynchronous user.save() to be done before exiting.
-    // Otherwise, the tests belowc ould run without the user actyakkt being
-    // saved, causing tests to fail inconsistently.
     await user.save();
   });
 
@@ -26,7 +22,11 @@ describe("/tokens", () => {
     const testApp = supertest(app);
     const response = await testApp
       .post("/tokens")
-      .send({ email: "auth-test@test.com", password: "Ab1234567!", username: "authtest" });
+      .send({
+        email: "auth-test@test.com",
+        password: "Ab1234567!",
+        username: "authtest",
+      });
 
     expect(response.status).toEqual(201);
     expect(response.body.token).not.toEqual(undefined);

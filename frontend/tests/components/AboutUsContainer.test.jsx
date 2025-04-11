@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import "@testing-library/jest-dom"; // Add this import
+import "@testing-library/jest-dom";
 import AboutUsContainer from "../../src/components/AboutUsContainer";
 
 describe("AboutUsContainer", () => {

@@ -19,7 +19,7 @@ function createToken(userId) {
       // Set the JWT token to expire in 10 minutes
       exp: Math.floor(Date.now() / 1000) + 10 * 60,
     },
-    secret
+    secret,
   );
 }
 
@@ -39,7 +39,6 @@ describe("/posts", () => {
     token = createToken(user.id);
   });
 
-  // linter may cause issues - just make change and re save
   describe("POST, when a valid token is present", () => {
     test("responds with a 201", async () => {
       const response = await request(app)
@@ -241,7 +240,7 @@ describe("/posts", () => {
         .set("Authorization", `Bearer ${token_2}`);
       expect(response.status).toEqual(403);
       expect(response.body.message).toBe(
-        "Unable to delete - User id not matching post"
+        "Unable to delete - User id not matching post",
       );
     });
     test("responds with a 400 for other errors", async () => {

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 function AddComment({ onCommentCreated }) {
   const [error, setError] = useState(false);
   const [text, setText] = useState("");
-  const { id } = useParams(); // This correctly gets the post ID from the URL
+  const { id } = useParams();
 
   function handleCommentChange(event) {
     setError(false);
@@ -23,11 +23,7 @@ function AddComment({ onCommentCreated }) {
     }
 
     try {
-      await createComment(
-        localStorage.getItem("token"),
-        text, // Use 'text' instead of 'commentText'
-        id, // Use 'id' from useParams instead of 'props.postId'
-      );
+      await createComment(localStorage.getItem("token"), text, id);
 
       setText(""); // Clear the input after successful submission
       onCommentCreated(); // Call the callback to refresh comments
@@ -40,10 +36,6 @@ function AddComment({ onCommentCreated }) {
   return (
     <div>
       <form className="comment-form" onSubmit={handleSubmit}>
-        {/* <div className="user-info">
-                    <img src={profilePicture} />
-                    <h3>{username}</h3>
-                </div> */}
         <textarea
           className="textField"
           id="message"

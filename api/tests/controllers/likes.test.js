@@ -18,7 +18,7 @@ function createToken(userId) {
       // Set the JWT token to expire in 10 minutes
       exp: Math.floor(Date.now() / 1000) + 10 * 60,
     },
-    secret
+    secret,
   );
 }
 
@@ -101,7 +101,7 @@ describe("Likes Controller", () => {
 
     expect(response.status).toBe(400);
     expect(response.body.error).toBe(
-      "Can't unlike - you have not liked this post yet"
+      "Can't unlike - you have not liked this post yet",
     );
   });
 
@@ -131,7 +131,7 @@ describe("Likes Controller", () => {
     expect(userTwoResponse.status).toBe(201);
 
     // Checking both likes have been added successfully
-    // const post = await Post.findById(testPost._id);
+
     const allLikes = await Like.find({ postId: { $in: testPost._id } });
     expect(allLikes.length).toBe(2);
   });
@@ -149,7 +149,7 @@ describe("Likes Controller", () => {
 
     expect(likeResponse.status).toBe(400);
     expect(likeResponse.body.error).toBe(
-      "Something went wrong whilst liking this post"
+      "Something went wrong whilst liking this post",
     );
   });
 
@@ -173,7 +173,7 @@ describe("Likes Controller", () => {
 
     expect(unlikeResponse.status).toBe(400);
     expect(unlikeResponse.body.error).toBe(
-      "Something went wrong whilst unliking this post"
+      "Something went wrong whilst unliking this post",
     );
   });
 });

@@ -9,7 +9,6 @@ async function getAllPosts(req, res, next) {
   req.posts = posts;
   req.token = token;
   next();
-  // res.status(200).json({ posts: posts, token: token });
 }
 
 async function getPostsByUser(req, res) {
