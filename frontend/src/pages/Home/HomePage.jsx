@@ -1,7 +1,7 @@
 import "../../components/Header";
 import "./HomePage.css";
 import Header from "../../components/Header";
-
+import AboutUsContainer from "../../components/AboutUsContainer";
 export function HomePage() {
   return (
     <>
@@ -11,6 +11,7 @@ export function HomePage() {
       <div className="home">
         <h1>Welcome to Acebook!</h1>
       </div>
+      <AboutUsContainer />
     </>
   );
 }
