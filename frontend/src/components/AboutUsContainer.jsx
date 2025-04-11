@@ -1,5 +1,5 @@
 import AboutUs from "./AboutUs";
-import "./AboutUs.css"; // Add this import line
+import "./AboutUs.css";
 const AboutUsContainer = () => {
   const us = [
     {

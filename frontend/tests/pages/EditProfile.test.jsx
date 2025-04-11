@@ -35,7 +35,10 @@ async function completeEditProfileForm() {
   await user.type(screen.getByLabelText("Full Name"), "New Full Name");
 
   await user.clear(screen.getByLabelText("Profile Picture URL"));
-  await user.type(screen.getByLabelText("Profile Picture URL"), "http://example.com/newpic.jpg");
+  await user.type(
+    screen.getByLabelText("Profile Picture URL"),
+    "http://example.com/newpic.jpg",
+  );
 
   await user.clear(screen.getByLabelText("Bio"));
   await user.type(screen.getByLabelText("Bio"), "Updated bio content.");
@@ -82,7 +85,7 @@ describe("EditProfile Page", () => {
         currentPassword: "oldpassword",
         password: "newpassword",
       },
-      "fake-token"
+      "fake-token",
     );
 
     await waitFor(() => screen.getByText("Profile updated successfully"));
@@ -121,7 +124,9 @@ describe("EditProfile Page", () => {
     render(<EditProfile />);
     await screen.findByDisplayValue("testuser");
 
-    const deleteButton = screen.getByRole("button", { name: /delete account/i });
+    const deleteButton = screen.getByRole("button", {
+      name: /delete account/i,
+    });
     await userEvent.click(deleteButton);
 
     expect(deleteUser).toHaveBeenCalledWith("fake-token");
@@ -142,25 +147,11 @@ describe("EditProfile Page", () => {
     render(<EditProfile />);
     await screen.findByDisplayValue("testuser");
 
-    const deleteButton = screen.getByRole("button", { name: /delete account/i });
+    const deleteButton = screen.getByRole("button", {
+      name: /delete account/i,
+    });
     await userEvent.click(deleteButton);
 
     await waitFor(() => screen.getByText("Failed to delete account"));
   });
-
-  // test("shows error when user data fails to load", async () => {
-
-  //   getUser.mockRejectedValue(new Error("Failed to load user"));
-  
-
-  //   render(<EditProfile />);
-  
-  //   await waitFor(() => {
-  //     expect(screen.getByText("Could not load user data.")).toBeInTheDocument();
-  //   });
-  
-  
-  //   const token = localStorage.getItem("token");
-  //   expect(getUser).toHaveBeenCalledWith(token);
-  // });
 });

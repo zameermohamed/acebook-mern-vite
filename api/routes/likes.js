@@ -12,7 +12,4 @@ router.post("/:id/unlike", LikesController.unLikePost);
 // Check if user has liked a post
 router.get("/", LikesController.getLikesFromPostID);
 
-// Get all likes for a post - tbd
-// router.get("/postId/likes", getAllLikes);
-
 module.exports = router;

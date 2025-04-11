@@ -9,9 +9,9 @@ import { LoginPage } from "../../src/pages/Login/LoginPage";
 
 vi.mock("react-router-dom", () => {
   const linkMock = vi.fn();
-  const LinkMock = () => linkMock; // Create a mock function for Link (used in the page header bar)
+  const LinkMock = () => linkMock;
   const navigateMock = vi.fn();
-  const useNavigateMock = () => navigateMock; // Create a mock function for useNavigate
+  const useNavigateMock = () => navigateMock;
   return { useNavigate: useNavigateMock, Link: LinkMock };
 });
 
@@ -21,7 +21,6 @@ vi.mock("../../src/services/authentication", () => {
   return { login: loginMock };
 });
 
-// Reusable function for filling out login form
 async function completeLoginForm() {
   const user = userEvent.setup();
 

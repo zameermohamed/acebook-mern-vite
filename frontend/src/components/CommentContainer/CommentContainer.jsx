@@ -1,7 +1,6 @@
 import "./CommentContainer.css";
 
 function CommentContainer(props) {
-  console.log("props.comments:", props.comments);
   return (
     <div className="comments-container">
       {(!props.comments || props.comments.length === 0) && (

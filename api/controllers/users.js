@@ -14,23 +14,16 @@ async function create(req, res) {
 
     if (!email || !password || !username) {
       throw new Error("Email, password and username are required");
-      // return res
-      //     .status(400)
-      //     .json({ message: "Email, password and username are required" });
     }
 
     const existingUserEmail = await User.findOne({ email });
     if (existingUserEmail) {
       throw new Error("Email is already in use");
-      // return res.status(400).json({ message: "Email is already in use" });
     }
 
     const existingUserUserName = await User.findOne({ username });
     if (existingUserUserName) {
       throw new Error("Username is already in use");
-      // return res
-      //     .status(400)
-      //     .json({ message: "Username is already in use" });
     }
 
     const user = new User({
@@ -72,14 +65,8 @@ async function getUser(req, res) {
 async function updateUser(req, res) {
   try {
     const userId = req.user_id;
-    const {
-      username,
-      email,
-      password,
-      fullName,
-      profilePicture,
-      bio
-    } = req.body;
+    const { username, email, password, fullName, profilePicture, bio } =
+      req.body;
 
     const user = await User.findById(userId);
     if (!user) {
@@ -91,10 +78,17 @@ async function updateUser(req, res) {
     if (username) {
       const usernameRegex = /^[a-zA-Z0-9_]+$/;
       if (username.length < 3 || username.length > 20) {
-        return res.status(400).json({ message: "Username must be between 3 and 20 characters" });
+        return res
+          .status(400)
+          .json({ message: "Username must be between 3 and 20 characters" });
       }
       if (!usernameRegex.test(username)) {
-        return res.status(400).json({ message: "Username can only contain letters, numbers, and underscores" });
+        return res
+          .status(400)
+          .json({
+            message:
+              "Username can only contain letters, numbers, and underscores",
+          });
       }
 
       const existingUserName = await User.findOne({ username });
@@ -107,7 +101,9 @@ async function updateUser(req, res) {
     if (email) {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailRegex.test(email)) {
-        return res.status(400).json({ message: "Please provide a valid email address" });
+        return res
+          .status(400)
+          .json({ message: "Please provide a valid email address" });
       }
 
       const existingEmail = await User.findOne({ email });
@@ -120,12 +116,18 @@ async function updateUser(req, res) {
     if (password) {
       const { currentPassword, password: newPassword } = req.body;
 
-      const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+      const passwordMatch = await bcrypt.compare(
+        currentPassword,
+        user.password,
+      );
       if (!passwordMatch) {
-        return res.status(400).json({ message: "Current password is incorrect" });
+        return res
+          .status(400)
+          .json({ message: "Current password is incorrect" });
       }
 
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      const passwordRegex =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
       if (!passwordRegex.test(newPassword)) {
         return res.status(400).json({
           message:
@@ -152,7 +154,7 @@ async function updateUser(req, res) {
         fullName: updatedUser.fullName,
         profilePicture: updatedUser.profilePicture,
         bio: updatedUser.bio,
-      }
+      },
     });
   } catch (err) {
     console.error("Error caught:", err);
@@ -162,22 +164,19 @@ async function updateUser(req, res) {
   }
 }
 
-
-const deleteUser = async (req, res) =>
-{
-    try {
-        const userId = req.user_id;
-        const deletedUser = await User.findByIdAndDelete(userId);
-        if (!deletedUser) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        res.status(200).json({ message: "User deleted successfully" });
-    } catch (err) {
-        console.error("Error caught:", err);
-        return res.status(400).json({ message: err.message });
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.user_id;
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
     }
-}
-
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error("Error caught:", err);
+    return res.status(400).json({ message: err.message });
+  }
+};
 
 const UsersController = {
   create: create,

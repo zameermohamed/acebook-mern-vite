@@ -46,7 +46,6 @@ export function MyProfile() {
     fetchUser();
   }, []);
 
-  console.log("user from my profile", user);
   return (
     <>
       <div>

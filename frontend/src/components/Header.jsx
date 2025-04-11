@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../index.css"; // Import the global CSS file
-import "./Header.css"; // Make sure to import the CSS file
+import "../index.css";
+import "./Header.css";
 import LogOut from "./Logout";
-import acebookLight from "../images/acebook.png"; // Import the light version
-import acebookDark from "../images/acebook-dark-mode.png"; // Import the dark version
-import { getUser } from "../services/users"; // Import the getUser function
+import acebookLight from "../images/acebook.png";
+import acebookDark from "../images/acebook-dark-mode.png";
+import { getUser } from "../services/users";
 const Header = ({ onThemeChange }) => {
   const [username, setUsername] = useState("");
   const [loggedInforHeader, setLoggedInForHeader] = useState(true);
@@ -52,7 +52,6 @@ const Header = ({ onThemeChange }) => {
     <>
       <header className="header">
         <Link to="/" className="logo">
-          {/* Conditionally render the logo based on current theme */}
           <img
             src={theme === "light" ? acebookLight : acebookDark}
             alt="Acebook logo"
