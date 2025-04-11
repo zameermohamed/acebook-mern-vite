@@ -2,11 +2,19 @@ import "../../components/Header";
 import "./HomePage.css";
 import Header from "../../components/Header";
 import AboutUsContainer from "../../components/AboutUsContainer";
+import { useState } from "react";
 export function HomePage() {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
   return (
     <>
       <div>
-        <Header></Header>
+        <Header onThemeChange={toggleTheme}></Header>
       </div>
       <div className="home">
         <h1>Welcome to Acebook!</h1>
