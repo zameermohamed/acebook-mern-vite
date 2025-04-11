@@ -8,6 +8,7 @@ import acebookDark from "../images/acebook-dark-mode.png"; // Import the dark ve
 import { getUser } from "../services/users"; // Import the getUser function
 const Header = ({ onThemeChange }) => {
   const [username, setUsername] = useState("");
+  const [loggedInforHeader, setLoggedInForHeader] = useState(true);
   const token = localStorage.getItem("token");
   const loggedIn = token !== null;
   getUser(token).then((data) => {
@@ -18,10 +19,19 @@ const Header = ({ onThemeChange }) => {
     setUsername(data.username);
   });
 
+  const handleLoggedInForHeader = () => {
+    setLoggedInForHeader(!loggedInforHeader);
+  };
+
   // Check if a theme is saved in localStorage, default to 'light'
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "light";
   });
+
+  const handleClick = () => {
+    LogOut();
+    handleLoggedInForHeader();
+  };
 
   // Apply the theme when it changes
   useEffect(() => {
@@ -30,7 +40,7 @@ const Header = ({ onThemeChange }) => {
 
     // Apply theme to document body
     document.body.setAttribute("data-theme", theme);
-  }, [theme]);
+  }, [theme, loggedInforHeader]);
 
   // Toggle between light and dark mode
   const toggleTheme = () => {
@@ -70,7 +80,7 @@ const Header = ({ onThemeChange }) => {
             </Link>
           )}
           {loggedIn && (
-            <Link to="/" onClick={LogOut} className="nav-link">
+            <Link to="/" onClick={handleClick} className="nav-link">
               Logout
             </Link>
           )}
