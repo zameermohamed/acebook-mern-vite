@@ -5,9 +5,9 @@ const { generateToken } = require("../lib/token");
 async function getAllPosts(req, res, next) {
   const posts = await Post.find().populate("userId");
 
-  const token = generateToken(req.user_id);
+  // const token = generateToken(req.user_id);
   req.posts = posts;
-  req.token = token;
+  // req.token = token;
   next();
   // res.status(200).json({ posts: posts, token: token });
 }

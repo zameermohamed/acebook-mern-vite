@@ -52,7 +52,6 @@ function NewPost({ onPostCreated }) {
         const file = event.target.files[0];
         setFile(file);
         setError(false);
-        console.log(file);
     }
 
     return (

@@ -64,11 +64,11 @@ const Header = ({ onThemeChange }) => {
               Profile - {username}
             </Link>
           )}
-          {loggedIn && (
+          (
             <Link to="/posts" className="nav-link">
               Posts
             </Link>
-          )}
+          )
           {loggedIn && (
             <Link to="/" onClick={LogOut} className="nav-link">
               Logout

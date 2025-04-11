@@ -2,12 +2,12 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 import { jwtDecode } from "jwt-decode"; // MICHAL - import jwt decode
 
-export async function getPosts(token) {
+export async function getPosts() {
     const requestOptions = {
         method: "GET",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //     Authorization: `Bearer ${token}`,
+        // },
     };
 
     const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);
