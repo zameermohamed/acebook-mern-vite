@@ -86,23 +86,94 @@
   text-align: right;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .form {
-    width: 95%;
-    padding: 1.25rem;
-  }
+.file-input-container {
+  position: relative;
+  width: fit-content;
+  margin-bottom: 0.5rem;
 }
 
-@media (max-width: 480px) {
-  .form {
-    width: 100%;
-    padding: 1rem;
-  }
+/* Making attach file input look like a button */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 0.5rem;
+}
 
-  .submitButton {
-    width: 100%;
-  }
+.file-section {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.file-input-container {
+  position: relative;
+  margin-right: 8px;
+}
+
+.file-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.file-input-label {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: var(--text-secondary);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.file-input-label:hover {
+  background-color: #616161;
+}
+
+.file-name {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  max-width: 200px;
+
+}
+
+.file-name-text {
+  max-width: calc(100%-30px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.remove-file-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 8px;
+  padding: 0 5px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.remove-file-btn:hover {
+  background-color: var(--toggle-hover);
 }
 
 /* Theme variables */
@@ -140,4 +211,22 @@
 
 .post-error-msg {
   color: var(--error-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form {
+    width: 95%;
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .form {
+    width: 100%;
+    padding: 1rem;
+  }
+  .file-name {
+    max-width: 150px;
+  }
 }
