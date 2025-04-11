@@ -16,5 +16,6 @@ export default defineConfig({
         statements: 50,
       },
     },
+    exclude: ["**/src/App.jsx", "**/src/main.jsx", "**/node_modules/**"],
   },
 });

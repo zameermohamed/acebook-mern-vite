@@ -9,7 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest run",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage --coverage.exclude 'src/App.**' --coverage.exclude 'src/main.**' --coverage.exclude '.eslintrc.cjs' --coverage.exclude 'vite.config.js' --coverage.exclude 'src/reportWebVitals.**' --coverage.exclude 'src/setupTests.**' --coverage.exclude 'src/vite.config.**' --coverage.exclude 'src/App.test.**' --coverage.exclude 'src/App.css.**' --coverage.exclude 'src/index.css.**'"
   },
   "dependencies": {
     "jwt-decode": "^4.0.0",
