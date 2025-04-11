@@ -3,15 +3,16 @@ import "./AboutUs.css"; // Add this import line
 const AboutUsContainer = () => {
   const us = [
     {
-      name: "Jack Misner",
-      github: "https://github.com/jackmisner",
-      picture: "https://avatars.githubusercontent.com/u/189114969?v=4",
+      name: "Alec McGill",
+      github: "https://github.com/AMcGill3",
+      picture:
+        "https://ca.slack-edge.com/T03ALA7H4-U0892FD1SH2-86ad26fdcf23-512",
     },
     {
-      name: "Zameer Mohamamed",
-      github: "https://github.com/zameermohamed",
+      name: "Amritpal Chahal",
+      github: "https://github.com/AmritpalC",
       picture:
-        "https://ca.slack-edge.com/T03ALA7H4-U089G9FCB09-04f19359577d-512",
+        "https://ca.slack-edge.com/T03ALA7H4-U089649Q1B6-a66c0b0f2581-512",
     },
     {
       name: "Aysin Akpinar",
@@ -19,10 +20,9 @@ const AboutUsContainer = () => {
       picture: "https://avatars.githubusercontent.com/u/186265762?v=4",
     },
     {
-      name: "Alec McGill",
-      github: "https://github.com/AMcGill3",
-      picture:
-        "https://ca.slack-edge.com/T03ALA7H4-U0892FD1SH2-86ad26fdcf23-512",
+      name: "Jack Misner",
+      github: "https://github.com/jackmisner",
+      picture: "https://avatars.githubusercontent.com/u/189114969?v=4",
     },
     {
       name: "Michal Podolak",
@@ -31,10 +31,10 @@ const AboutUsContainer = () => {
         "https://ca.slack-edge.com/T03ALA7H4-U08188F7N01-a99979029cde-512",
     },
     {
-      name: "Amritpal Chahal",
-      github: "https://github.com/AmritpalC",
+      name: "Zameer Mohamamed",
+      github: "https://github.com/zameermohamed",
       picture:
-        "https://ca.slack-edge.com/T03ALA7H4-U089649Q1B6-a66c0b0f2581-512",
+        "https://ca.slack-edge.com/T03ALA7H4-U089G9FCB09-04f19359577d-512",
     },
     {
       name: "Ziaur Rahman",
